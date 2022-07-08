@@ -1,11 +1,11 @@
 import './App.css'
-import SearchInput from './components/UI/searchInput/SearchInput'
+import Footer from './components/UI/footer/Footer'
 
 function App() {
    return (
       <div className="App">
          <p>development</p>
-         <SearchInput/>
+         <Footer/>
       </div>
    )
 }
