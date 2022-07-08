@@ -1,22 +1,22 @@
 import React from 'react'
 import { styled } from '@mui/material'
 import Box from '@mui/material/Box'
-import Modal from '@mui/material/Modal'
+import MuiModal from '@mui/material/Modal'
 
-const UsableModal = ({ open, handleClose, children }) => {
+const Modal = ({ open, handleClose, children }) => {
    return (
-      <Modal
+      <MuiModal
          open={open}
          onClose={handleClose}
          aria-labelledby="modal-modal-title"
          aria-describedby="modal-modal-description"
       >
          <BoxModal>{children}</BoxModal>
-      </Modal>
+      </MuiModal>
    )
 }
 
-export default UsableModal
+export default Modal
 
 const BoxModal = styled(Box)`
    position: absolute;

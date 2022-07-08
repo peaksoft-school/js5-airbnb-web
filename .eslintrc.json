@@ -22,7 +22,7 @@
     ],
     "rules": {
         "import/order": [
-            "warn",
+            "error",
             {
               "alphabetize": {
                 "order": "asc",
@@ -56,7 +56,7 @@
         "react-hooks/exhaustive-deps": "off",
         "react/function-component-definition": "off",
         "max-len": [
-            "warn",
+            "error",
             {
                 "code": 100,
                 "ignoreStrings": true,
@@ -75,7 +75,7 @@
         ],
         "react-hooks/rules-of-hooks": "error",
         "jsx-a11y/label-has-associated-control": [
-            "warn",
+            "error",
             {
                 "required": {
                     "some": [
@@ -86,7 +86,7 @@
             }
         ],
         "no-param-reassign": [
-            "warn",
+            "error",
             {
                 "props": true,
                 "ignorePropertyModificationsFor": [
@@ -95,7 +95,7 @@
             }
         ],
         "prettier/prettier": [
-            "warn",
+            "error",
             {
                 "singleQuote": true,
                 "parser": "flow"
