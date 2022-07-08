@@ -5,11 +5,8 @@ const Input = (props) => {
   return (
     <div>
       <Inputt
-        style={{
-          width: props.width,
-          height: props.height,
-          backgroundColor: props.backgroundColor,
-        }}
+        width={props.width}
+        height={props.height}
         type={props.type}
         placeholder={props.placeholder}
         onChange={(e) => props.onChange(e.target.value)}
@@ -22,13 +19,15 @@ const Input = (props) => {
 export default Input;
 
 const Inputt = styled.input`
+  width: ${(props) => props.width};
+  height: ${(props) => props.height};
   border: 1px solid #c4c4c4;
   border-radius: 2px;
   outline: none;
   &::placeholder {
     width: 70px;
     height: 19px;
-    font-family: "Roboto";
+    font-family: "Inter";
     font-style: normal;
     font-weight: 400;
     font-size: 16px;
