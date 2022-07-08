@@ -7,6 +7,7 @@ function Button(props) {
          width={props.width}
          height={props.height}
          fontSize={props.fontSize}
+         variant={props.variant}
       >
          {props.children}
       </CustomButton>
@@ -18,19 +19,22 @@ const CustomButton = styled.button`
    width: ${(props) => props.width};
    height: ${(props) => props.height};
    font-size: ${(props) => props.fontSize};
-   background: #dd8a08;
+   background: ${(props) => (props.variant ? 'white' : '#dd8a08')};
    border-radius: 2px;
-   border: none;
+   border: ${(props) => (props.variant ? '1px solid #828282;' : 'none')};
    font-weight: 500;
-   color: #f7f7f7;
+   color: ${(props) => (props.variant ? '#828282' : '#f7f7f7')};
    line-height: 17px;
    gap: 10px;
    cursor: pointer;
    &:hover {
-      background-color: #a0522d;
+      background-color: ${(props) => (props.variant ? 'none' : '#a0522d')};
+      border: ${(props) =>
+         props.variant ? '1px solid rgb(100, 98, 98)' : 'none'};
    }
    &:active {
-      background-color: #f4a460;
+      background-color: ${(props) => (props.variant ? '#f4a460' : '#dd8a08')};
+      color: #f7f7f7;
    }
    &:disabled {
       background-color: #a9a9a9;
