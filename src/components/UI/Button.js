@@ -2,29 +2,28 @@ import styled from 'styled-components'
 
 function Button(props) {
    return (
-      <Btn
+      <CustomButton
          onClick={props.onClick}
-         style={{
-            width: props.width,
-            height: props.height,
-            fontSize: props.fontSize,
-         }}
+         width={props.width}
+         height={props.height}
+         fontSize={props.fontSize}
       >
          {props.children}
-      </Btn>
+      </CustomButton>
    )
 }
 export default Button
 
-const Btn = styled.button`
+const CustomButton = styled.button`
+   width: ${(props) => props.width};
+   height: ${(props) => props.height};
+   font-size: ${(props) => props.fontSize};
    background: #dd8a08;
    border-radius: 2px;
    border: none;
    font-weight: 500;
-   font-size: 12px;
    color: #f7f7f7;
    line-height: 17px;
-   padding: 10px 16px;
    gap: 10px;
    cursor: pointer;
    &:hover {
