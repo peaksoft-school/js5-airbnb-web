@@ -2,18 +2,20 @@ import ReactDOM from 'react-dom'
 import styled from 'styled-components'
 
 const NotificationCurrent = (props) => {
-   const { variant } = props
+   const { variant, Current, textCurrent, open, onClose } = props
    return (
       <div>
-         <DIV variant={variant}>
-            <div>
-               <h3>Current</h3>
-               <p>textCurrent</p>
-            </div>
-            <div>
-               <button>X</button>
-            </div>
-         </DIV>
+         {open && (
+            <DIV variant={variant}>
+               <div>
+                  <h3>{Current}</h3>
+                  <p>{textCurrent}</p>
+               </div>
+               <div>
+                  <button onClick={() => onClose(false)}>X</button>
+               </div>
+            </DIV>
+         )}
       </div>
    )
 }
