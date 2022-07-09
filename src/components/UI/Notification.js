@@ -43,7 +43,8 @@ const DIV = styled.div`
    display: flex;
    width: 600px;
    height: ${(props) => (props.variant === 'error' ? '120px' : '66px')};
-   background: #f0fff1;
+   background: ${(props) =>
+      props.variant === 'error' ? ' #FFF1F0;' : '#f0fff1'};
    padding: 20px;
    margin-top: 50px;
    margin-left: 50%;
