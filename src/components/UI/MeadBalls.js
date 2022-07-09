@@ -1,17 +1,11 @@
 import { useState } from "react";
-import styled from "styled-components";
 import MeadBallsPng from "../assets/images/balls.png"
+import styled from "styled-components";
 
-const arrayMeadBalls = [
-  {
-    edit: "Edit",
-    delete: "Delete",
-    accept: "Accept",
-  },
-];
+const MeadBalls = (props) => {
 
-const MeadBalls = () => {
-  
+  console.log(props.balls);
+
   const [state, setState] = useState(false);
 
   const toggleHandler = () => {
@@ -30,15 +24,13 @@ const MeadBalls = () => {
       />
       {state && (
         <DivContainerMeadBalls>
-          {arrayMeadBalls.map((option) => {
-            return (
-              <>
-                <TextMeadBalls onClick={ActiveCloseHandler} >{option.edit}</TextMeadBalls>
-                <TextMeadBalls onClick={ActiveCloseHandler} >{option.delete}</TextMeadBalls>
-                <TextMeadBalls onClick={ActiveCloseHandler} >{option.accept}</TextMeadBalls>
-              </>
-            );
-          })}
+          {props.balls.map((item) => 
+          <>
+              <TextMeadBalls onClick={ActiveCloseHandler} >{item.edit}</TextMeadBalls>
+              <TextMeadBalls onClick={ActiveCloseHandler} >{item.delete}</TextMeadBalls>
+              <TextMeadBalls onClick={ActiveCloseHandler} >{item.accept}</TextMeadBalls>
+          </>
+          )}
         </DivContainerMeadBalls>
       )}
     </DivBlock>
