@@ -1,7 +1,8 @@
 import { useState } from "react";
 import styled from "styled-components";
+import MeadBallsPng from "../assets/images/balls.png"
 
-const meadBalls = [
+const arrayMeadBalls = [
   {
     edit: "Edit",
     delete: "Delete",
@@ -10,26 +11,31 @@ const meadBalls = [
 ];
 
 const MeadBalls = () => {
+  
   const [state, setState] = useState(false);
 
   const toggleHandler = () => {
     setState((prevstate) => !prevstate);
   };
 
+  const ActiveCloseHandler = () => {
+    setState(false)
+  }
+
   return (
     <DivBlock>
       <Img
         onClick={toggleHandler}
-        src="https://t3.ftcdn.net/jpg/03/08/33/46/360_F_308334660_uHmbiG3XBfIYBJhocWnPIEjnfvWAznLk.jpg"
+        src={MeadBallsPng}
       />
       {state && (
         <DivContainerMeadBalls>
-          {meadBalls.map((item) => {
+          {arrayMeadBalls.map((option) => {
             return (
               <>
-                <TextMeadBalls>{item.edit}</TextMeadBalls>
-                <TextMeadBalls>{item.delete}</TextMeadBalls>
-                <TextMeadBalls>{item.accept}</TextMeadBalls>
+                <TextMeadBalls onClick={ActiveCloseHandler} >{option.edit}</TextMeadBalls>
+                <TextMeadBalls onClick={ActiveCloseHandler} >{option.delete}</TextMeadBalls>
+                <TextMeadBalls onClick={ActiveCloseHandler} >{option.accept}</TextMeadBalls>
               </>
             );
           })}
@@ -47,11 +53,11 @@ const DivBlock = styled.div`
 `;
 
 const Img = styled.img`
-  width: 22px;
-  height: 22px;
+width: 20px;
+height: 5px;
   @media (max-width: 375px) {
-    width: 32px;
-    height: 32px;
+    width: 25px;
+    height: 10px;
   }
 `;
 
