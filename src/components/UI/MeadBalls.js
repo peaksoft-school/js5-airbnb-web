@@ -4,8 +4,6 @@ import styled from "styled-components";
 
 const MeadBalls = (props) => {
 
-  console.log(props.balls);
-
   const [state, setState] = useState(false);
 
   const toggleHandler = () => {
@@ -14,6 +12,7 @@ const MeadBalls = (props) => {
 
   const ActiveCloseHandler = () => {
     setState(false)
+    // props.gettext(text)
   }
 
   return (
@@ -24,11 +23,9 @@ const MeadBalls = (props) => {
       />
       {state && (
         <DivContainerMeadBalls>
-          {props.balls.map((item) => 
+          {props.balls.map((option) =>
           <>
-              <TextMeadBalls onClick={ActiveCloseHandler} >{item.edit}</TextMeadBalls>
-              <TextMeadBalls onClick={ActiveCloseHandler} >{item.delete}</TextMeadBalls>
-              <TextMeadBalls onClick={ActiveCloseHandler} >{item.accept}</TextMeadBalls>
+              <TextMeadBalls key={option.id} onClick={()=> ActiveCloseHandler()} >{option.text}</TextMeadBalls>
           </>
           )}
         </DivContainerMeadBalls>
