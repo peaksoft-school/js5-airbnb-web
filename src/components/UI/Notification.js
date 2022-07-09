@@ -117,7 +117,6 @@ const DIV = styled.div`
       width: 322px;
       height: 120px;
       background: #fff1f0;
-      margin-top: 200px;
       margin-left: 15px;
       & p {
          width: 269px;
@@ -129,9 +128,6 @@ const DIV = styled.div`
          font-weight: 400;
          font-size: 14px;
          line-height: 17px;
-
-         /* Tertiary / dark gray */
-
          color: #646464;
       }
       & h3 {
