@@ -3,7 +3,7 @@ import locationIcon from '../../../assets/icons/locationIcon.png'
 import star from '../../../assets/icons/Star.png'
 import cardPic from '../../../assets/images/cardPic.png'
 
-const UserAnnCard = (props) => {
+const UserCard = (props) => {
    return (
       <StyledCard>
          <img src={cardPic} alt="card" />
@@ -26,7 +26,7 @@ const UserAnnCard = (props) => {
    )
 }
 
-export default UserAnnCard
+export default UserCard
 
 const StyledCard = styled.div`
    width: 260px;
