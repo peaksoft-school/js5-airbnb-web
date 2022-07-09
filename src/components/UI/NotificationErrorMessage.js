@@ -1,25 +1,44 @@
-import React from 'react'
+import ReactDOM from 'react-dom'
 import styled from 'styled-components'
 
-const ModalError = (props) => {
-   const { text, textError } = props
+const NotificationError = (props) => {
+   const { text, textError, open, onClose } = props
 
    return (
       <div>
-         <DIV>
-            <div>
-               <h1>{text}</h1>
-               <p>{textError}</p>
-            </div>
-            <div>
-               <button>X</button>
-            </div>
-         </DIV>
+         {open && (
+            <DIV>
+               <div>
+                  <h1>{text}</h1>
+                  <p>{textError}</p>
+               </div>
+               <div>
+                  <button onClick={() => onClose(false)}>X</button>
+               </div>
+            </DIV>
+         )}
+      </div>
+   )
+}
+const NotificationErrorMessage = (props) => {
+   const { text, textError, open, onClose } = props
+
+   return (
+      <div>
+         {ReactDOM.createPortal(
+            <NotificationError
+               text={text}
+               textError={textError}
+               open={open}
+               onClose={onClose}
+            />,
+            document.getElementById('modal')
+         )}
       </div>
    )
 }
 
-export default ModalError
+export default NotificationErrorMessage
 
 const DIV = styled.div`
    display: flex;
@@ -27,6 +46,23 @@ const DIV = styled.div`
    height: 100px;
    background: #fff1f0;
    padding: 20px;
+   margin: 350px auto;
+   animation: error_slide 1s ease forwards;
+   @keyframes error_slide {
+      0% {
+         transform: translateX(100%);
+      }
+      40% {
+         transform: translateX(-10%);
+      }
+      80% {
+         transform: translateX(0%);
+      }
+      100% {
+         transform: translateX(-10px);
+      }
+   }
+
    & h1 {
       width: 246px;
       height: 19px;
@@ -56,11 +92,9 @@ const DIV = styled.div`
       cursor: pointer;
    }
    @media only screen and (max-width: 375px) {
-      & DIV {
-         height: 134px;
-         padding: 0;
-         background: #fff1f0;
-      }
+      width: 322px;
+      height: 134px;
+      margin-left: 15px;
       & h1 {
          width: 246px;
          height: 19px;
