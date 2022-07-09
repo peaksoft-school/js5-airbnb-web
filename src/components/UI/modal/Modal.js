@@ -24,7 +24,7 @@ const BoxModal = styled(Box)`
    left: 50%;
    top: 50%;
    transform: translate(-50%, -50%);
-   background: #e5e5e5;
+   background: #fff;
    padding: 25px;
    border-radius: 2px;
    box-shadow: rgba(0, 0, 0, 0.5);
