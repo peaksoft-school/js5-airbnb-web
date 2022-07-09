@@ -3,38 +3,30 @@ import locationIcon from '../../../assets/icons/locationIcon.png'
 import star from '../../../assets/icons/Star.png'
 import cardPic from '../../../assets/images/cardPic.png'
 
-const card = {
-   price: '$26/day',
-   ratings: 3.4,
-   description: 'Beautiful and picturesque 2 ...',
-   location: '12 Morris Ave, Toronto, ON, ...',
-   guestsAmount: '2',
-}
-
-const userAnnCard = () => {
+const UserAnnCard = (props) => {
    return (
       <StyledCard>
          <img src={cardPic} alt="card" />
          <Cont>
-            <p>{card.price}</p>
+            <p>{props.price}</p>
             <div>
                <img src={star} alt="star" />
-               <p>{card.ratings}</p>
+               <p>{props.ratings}</p>
             </div>
          </Cont>
-         <Descrip>{card.description}</Descrip>
+         <Descrip>{props.description}</Descrip>
          <Location>
             <img src={locationIcon} alt="locationIcon" />
-            <p>{card.location}</p>
+            <p>{props.location}</p>
          </Location>
          <Amount>
-            <p>{card.guestsAmount} guests</p>
+            <p>{props.guestsAmount} guests</p>
          </Amount>
       </StyledCard>
    )
 }
 
-export default userAnnCard
+export default UserAnnCard
 
 const StyledCard = styled.div`
    width: 260px;
