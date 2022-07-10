@@ -7,19 +7,20 @@ import MediaPhotoIcon from '../../assets/icons/DevicesIconMedia.svg'
 import RepeatPhoto from '../../assets/icons/repeat-svgrepo-com.svg'
 
 const ImagePicker = ({ ...props }) => {
-   const [Allimages, setAllImages] = useState([])
+   const [allimages, setallImages] = useState(props.allPhotos)
    const [showTextAfterInput, setshowTextAfterInput] = useState(true)
    const [closeInputFile, setCloseInputFile] = useState(true)
    const [imageSizeTextError, setImageSizeTextError] = useState(true)
    const maxPhotos = 4
 
+   // you can give initialstate -> array, when you call this component
+   // and give props allPhotos
    // you can get all photos and send, when you call this component
    // and give props function -> getPhoto
 
-   //    const getAllPhotoAndSend = (getphotofile) =>
-   //       props.getPhoto(getphotofile)
+   const getAllPhotoAndSend = (getphotofile) => props.getPhoto(getphotofile)
 
-   const getPhotoFile = (imageList) => {
+   const onChange = (imageList) => {
       // eslint-disable-next-line array-callback-return, consistent-return
       const errorImageText = imageList.find((item) => {
          if (item.file.size > 100000) {
@@ -28,29 +29,29 @@ const ImagePicker = ({ ...props }) => {
          }
       })
       if (errorImageText) return
-      setAllImages(imageList)
-      //   getAllPhotoAndSend(imageList)
+      setallImages(imageList)
+      getAllPhotoAndSend(imageList)
       setImageSizeTextError(true)
       setshowTextAfterInput(false)
    }
    useEffect(() => {
-      if (Allimages.length === 0) {
+      if (allimages.length === 0) {
          setshowTextAfterInput(true)
       }
-      if (Allimages.length === 4) {
+      if (allimages.length === 4) {
          setCloseInputFile(false)
       } else {
          setCloseInputFile(true)
       }
-   }, [Allimages])
+   }, [allimages])
 
    return (
       <DivWrapper>
          <DivPhotosAndText>
             <ImageUploading
                multiple
-               value={Allimages}
-               onChange={getPhotoFile}
+               value={allimages}
+               onChange={onChange}
                maxNumber={maxPhotos}
                dataURLKey="data_url"
             >
