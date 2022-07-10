@@ -7,7 +7,7 @@ import MediaPhotoIcon from '../../assets/icons/DevicesIconMedia.svg'
 import RepeatPhoto from '../../assets/icons/repeat-svgrepo-com.svg'
 
 const ImagePicker = ({ ...props }) => {
-   const [allimages, setallImages] = useState(props.allPhotos)
+   const [photos, setPhotos] = useState(props.allPhotos)
    const [showTextAfterInput, setshowTextAfterInput] = useState(true)
    const [closeInputFile, setCloseInputFile] = useState(true)
    const [imageSizeTextError, setImageSizeTextError] = useState(true)
@@ -29,28 +29,28 @@ const ImagePicker = ({ ...props }) => {
          }
       })
       if (errorImageText) return
-      setallImages(imageList)
+      setPhotos(imageList)
       getAllPhotoAndSend(imageList)
       setImageSizeTextError(true)
       setshowTextAfterInput(false)
    }
    useEffect(() => {
-      if (allimages.length === 0) {
+      if (photos.length === 0) {
          setshowTextAfterInput(true)
       }
-      if (allimages.length === 4) {
+      if (photos.length === 4) {
          setCloseInputFile(false)
       } else {
          setCloseInputFile(true)
       }
-   }, [allimages])
+   }, [photos])
 
    return (
       <DivWrapper>
          <DivPhotosAndText>
             <ImageUploading
                multiple
-               value={allimages}
+               value={photos}
                onChange={onChange}
                maxNumber={maxPhotos}
                dataURLKey="data_url"
