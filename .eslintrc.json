@@ -86,7 +86,7 @@
             }
         ],
         "no-param-reassign": [
-            "warn",
+            "error",
             {
                 "props": true,
                 "ignorePropertyModificationsFor": [
@@ -95,7 +95,7 @@
             }
         ],
         "prettier/prettier": [
-            "warn",
+            "error",
             {
                 "singleQuote": true,
                 "parser": "flow"
