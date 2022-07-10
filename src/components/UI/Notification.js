@@ -1,90 +1,65 @@
-import ReactDOM from 'react-dom'
+import * as React from 'react'
+import Stack from '@mui/material/Stack'
 import styled from 'styled-components'
+import Snackbar from '@mui/material/Snackbar'
+import MuiAlert from '@mui/material/Alert'
 
-const NotificationCurrent = (props) => {
-   const { variant, Current, textCurrent, open, onClose } = props
+const Alert = React.forwardRef(function Alert(props, ref) {
+   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />
+})
+
+export default function CustomizedSnackbars(props) {
+   const { error, open, onClose, message, text } = props
    return (
-      <div>
-         {open && (
-            <DIV variant={variant}>
-               <div>
-                  <h3>{Current}</h3>
-                  <p>{textCurrent}</p>
-               </div>
-               <div>
-                  <button onClick={() => onClose(false)}>X</button>
-               </div>
-            </DIV>
-         )}
-      </div>
+      <Stack spacing={2} sx={{ widt: '10%' }}>
+         <Snackbar
+            open={open}
+            autoHideDuration={6000}
+            onClose={() => onClose(false)}
+         >
+            {error === 'error' ? (
+               <NotificationAlert
+                  error={error}
+                  onClose={() => onClose(false)}
+                  severity="error"
+                  sx={{
+                     background: '#FFF1F0',
+                     color: '#646464',
+                  }}
+               >
+                  <h1>{message}</h1>
+                  <p>{text}</p>
+               </NotificationAlert>
+            ) : (
+               <NotificationAlert
+                  onClose={() => onClose(false)}
+                  severity="success"
+                  sx={{
+                     background: '#F0FFF1',
+                     color: '#646464',
+                  }}
+               >
+                  <h1>{message}</h1>
+                  <p>{text}</p>
+               </NotificationAlert>
+            )}
+         </Snackbar>
+      </Stack>
    )
 }
-
-const Notification = (props) => {
-   const { variant, Current, textCurrent, open, onClose } = props
-
-   return (
-      <>
-         {ReactDOM.createPortal(
-            <NotificationCurrent
-               Current={Current}
-               textCurrent={textCurrent}
-               open={open}
-               onClose={onClose}
-               variant={variant}
-            />,
-            document.getElementById('modal')
-         )}
-      </>
-   )
-}
-
-export default Notification
-
-const DIV = styled.div`
-   position: absolute;
-   left: 50%;
-   top: 12px;
-   display: flex;
-   width: 600px;
-   height: ${(props) => (props.variant === 'error' ? '120px' : '66px')};
-   background: ${(props) =>
-      props.variant === 'error' ? ' #FFF1F0;' : '#f0fff1'};
-   padding: 20px;
-   animation: current_slide 1s ease forwards;
-
-   @keyframes current_slide {
-      0% {
-         transform: translateX(100%);
-      }
-      40% {
-         transform: translateX(-10%);
-      }
-      80% {
-         transform: translateX(0%);
-      }
-      100% {
-         transform: translateX(-10px);
-      }
-   }
-   & div {
-      margin-top: -30px;
-   }
-   & div button {
-      cursor: pointer;
-      padding-top: 30px;
-      background: none;
-      border: none;
-   }
-   & h3 {
-      height: 19px;
-      padding: 30px 0 12px 28px;
+const NotificationAlert = styled(Alert)`
+   width: ${(props) => (props.error === 'error' ? '800px' : '800px')};
+   height: ${(props) => (props.error === 'error' ? '200px' : '100px')};
+   & h1 {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 19px;
    }
    & p {
-      padding-left: 28px;
-      padding-bottom: 15px;
       width: 556px;
-      height: 17px;
+      height: 51px;
       font-family: 'Inter';
       font-style: normal;
       font-weight: 400;
@@ -93,36 +68,19 @@ const DIV = styled.div`
       color: #646464;
    }
    @media (max-width: 375px) {
-      position: absolute;
-      top: 12px;
-      left: 15px;
       width: 322px;
-      height: ${(props) => (props.variant === 'error' ? '120px' : '66px')};
-      background: ${(props) =>
-         props.variant === 'error' ? '#fff1f0' : '#f0fff1'};
-      & p {
-         width: 269px;
-         height: 85px;
-         left: 19px;
-         padding-top: 10px;
-         font-family: 'Inter';
-         font-style: normal;
-         font-weight: 400;
-         font-size: 14px;
-         line-height: 17px;
-         color: #646464;
-      }
-      & h3 {
+      height: 200px;
+      background: #fff1f0;
+      & h1 {
          width: 246px;
          height: 19px;
-         padding-top: 30px;
-
+         left: 19px;
+         top: 12px;
          font-family: 'Inter';
          font-style: normal;
          font-weight: 500;
          font-size: 16px;
          line-height: 19px;
-
          color: #000000;
       }
    }
