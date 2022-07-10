@@ -42,14 +42,15 @@ const Notification = (props) => {
 export default Notification
 
 const DIV = styled.div`
+   position: absolute;
+   left: 50%;
+   top: 12px;
    display: flex;
    width: 600px;
    height: ${(props) => (props.variant === 'error' ? '120px' : '66px')};
    background: ${(props) =>
       props.variant === 'error' ? ' #FFF1F0;' : '#f0fff1'};
    padding: 20px;
-   margin-top: 50px;
-   margin-left: 50%;
    animation: current_slide 1s ease forwards;
 
    @keyframes current_slide {
@@ -92,11 +93,13 @@ const DIV = styled.div`
       color: #646464;
    }
    @media (max-width: 375px) {
+      position: absolute;
+      top: 12px;
+      left: 15px;
       width: 322px;
-      height: ${(props) => (props.variant === 'error' ? '120px' : '100px')};
-      /* height: 120px; */
-      background: #fff1f0;
-      margin-left: 15px;
+      height: ${(props) => (props.variant === 'error' ? '120px' : '66px')};
+      background: ${(props) =>
+         props.variant === 'error' ? '#fff1f0' : '#f0fff1'};
       & p {
          width: 269px;
          height: 85px;
