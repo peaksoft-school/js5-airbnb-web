@@ -2,9 +2,9 @@ import styled from 'styled-components'
 
 function RadioButton(props) {
    return (
-      <Label width={props.width} height={props.height} variant={props.variant}>
+      <Label variant={props.variant}>
          <Input type="radio" name="simple" onClick={props.onClick} />
-         <Span className="chackmark" />
+         <Span />
       </Label>
    )
 }
@@ -12,8 +12,8 @@ function RadioButton(props) {
 export default RadioButton
 
 const Label = styled.label`
-   width: ${(props) => props.width};
-   height: ${(props) => props.height};
+   width: ${(props) => (props.variant ? '20.16px' : '36px')};
+   height: ${(props) => (props.variant ? '20.16px' : '36px')};
    border-radius: 50%;
    background-color: ${(props) => (props.variant ? 'white' : '#d3d3d3')};
    border: ${(props) => (props.variant ? '1px solid #d3d3d3' : 'none')};
