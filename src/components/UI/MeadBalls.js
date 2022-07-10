@@ -10,8 +10,9 @@ const MeadBalls = (props) => {
     setState((prevstate) => !prevstate);
   };
 
-  const ActiveCloseHandler = () => {
+  const ActiveCloseHandler = (id) => {
     setState(false)
+    // console.log(id);
     // props.gettext(text)
   }
 
@@ -25,7 +26,7 @@ const MeadBalls = (props) => {
         <DivContainerMeadBalls>
           {props.balls.map((option) =>
           <>
-              <TextMeadBalls key={option.id} onClick={()=> ActiveCloseHandler()} >{option.text}</TextMeadBalls>
+              <TextMeadBalls key={option.id} onClick={()=> ActiveCloseHandler(option.id)} >{option.text}</TextMeadBalls>
           </>
           )}
         </DivContainerMeadBalls>
