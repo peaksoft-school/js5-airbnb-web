@@ -26,13 +26,9 @@ const StyledInput = styled.input`
     width: 70px;
     height: 19px;
     font-family: "Inter";
-    font-style: normal;
     font-weight: 400;
     font-size: 16px;
-    line-height: 19px;
     color: #c4c4c4;
-    flex: none;
-    order: 0;
-    flex-grow: 0;
+    padding-left: 15px;
   }
 `;
