@@ -9,79 +9,74 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 })
 
 export default function CustomizedSnackbars(props) {
-   const { error, open, onClose, message, text } = props
+   const { severity, open, onClose, message, text } = props
    return (
       <Stack spacing={2} sx={{ widt: '10%' }}>
          <Snackbar
             open={open}
-            autoHideDuration={6000}
+            autoHideDuration={3000}
             onClose={() => onClose(false)}
          >
-            {error === 'error' ? (
-               <NotificationAlert
-                  error={error}
-                  onClose={() => onClose(false)}
-                  severity="error"
-                  sx={{
-                     background: '#FFF1F0',
-                     color: '#646464',
-                  }}
-               >
-                  <h1>{message}</h1>
-                  <p>{text}</p>
-               </NotificationAlert>
-            ) : (
-               <NotificationAlert
-                  onClose={() => onClose(false)}
-                  severity="success"
-                  sx={{
-                     background: '#F0FFF1',
-                     color: '#646464',
-                  }}
-               >
-                  <h1>{message}</h1>
-                  <p>{text}</p>
-               </NotificationAlert>
-            )}
+            <NotificationAlert
+               onClose={() => onClose(false)}
+               severity={severity}
+            >
+               <h1>{message}</h1>
+               <p>{text}</p>
+            </NotificationAlert>
          </Snackbar>
       </Stack>
    )
 }
 const NotificationAlert = styled(Alert)`
-   width: ${(props) => (props.error === 'error' ? '800px' : '800px')};
-   height: ${(props) => (props.error === 'error' ? '200px' : '100px')};
+   width: 800px;
+   padding: 40px;
+   height: ${(props) => (props.severity === 'success' ? '66px' : '100px')};
+   background-color: ${(props) =>
+      props.severity === 'success' ? ' #F0FFF1' : '#FFF1F0'} !important;
+   color: #000000;
    & h1 {
       font-family: 'Inter';
       font-style: normal;
       font-weight: 500;
       font-size: 16px;
       line-height: 19px;
+      margin-bottom: ${(props) =>
+         props.severity === 'success' ? '4px' : '5px'};
+      color: #000000;
    }
    & p {
-      width: 556px;
-      height: 51px;
+      height: 19px;
       font-family: 'Inter';
       font-style: normal;
-      font-weight: 400;
-      font-size: 14px;
-      line-height: 17px;
-      color: #646464;
+      font-weight: 600;
+      font-size: 20px;
+      line-height: 19px;
+      color: #000000;
    }
    @media (max-width: 375px) {
       width: 322px;
-      height: 200px;
+      height: ${(props) => (props.severity === 'success' ? '66px' : '100px')};
       background: #fff1f0;
       & h1 {
          width: 246px;
          height: 19px;
-         left: 19px;
-         top: 12px;
          font-family: 'Inter';
          font-style: normal;
          font-weight: 500;
          font-size: 16px;
          line-height: 19px;
          color: #000000;
+      }
+      & p {
+         width: 269px;
+         height: 85px;
+         font-family: 'Inter';
+         font-style: normal;
+         font-weight: 400;
+         font-size: 14px;
+         line-height: 17px;
+         color: #646464;
       }
    }
 `
