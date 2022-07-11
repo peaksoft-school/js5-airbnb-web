@@ -8,10 +8,10 @@ const Alert = React.forwardRef(function Alert(props, ref) {
    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />
 })
 
-export default function CustomizedSnackbars(props) {
+export default function SnackBar(props) {
    const { severity, open, onClose, message, text } = props
    return (
-      <Stack spacing={2} sx={{ width: '10%' }}>
+      <Stack>
          <Snackbar
             open={open}
             autoHideDuration={3000}
