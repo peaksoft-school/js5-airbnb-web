@@ -4,7 +4,7 @@ import styled from "styled-components";
 const Input = (props) => {
   return (
     <div>
-      <Inputt
+      <InputStyle
         width={props.width}
         height={props.height}
         type={props.type}
@@ -18,7 +18,7 @@ const Input = (props) => {
 
 export default Input;
 
-const Inputt = styled.input`
+const InputStyle = styled.input`
   width: ${(props) => props.width || "414px"};
   height: ${(props) => props.height || "39px"};
   &:hover {
