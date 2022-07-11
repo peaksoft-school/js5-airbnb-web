@@ -2,12 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const Input = React.forwardRef((props, ref) => {
-  return (
-    <StyledInput
-      forwardRef={ref}
-      {...props}
-    />
-  );
+  return <StyledInput forwardRef={ref} {...props} />;
 });
 
 export default Input;
@@ -15,7 +10,7 @@ export default Input;
 const StyledInput = styled.input`
   width: ${(props) => props.width || "100%"};
   height: 39px;
-  padding: 10px 8px 10px 16px;
+  padding: ${(props) => props.padding || "10px 8px 10px 16px"};
   &:hover {
     border: 1px solid #828282;
     border-radius: 2px;
