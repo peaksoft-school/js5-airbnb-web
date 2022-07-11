@@ -1,8 +1,8 @@
 import { useState } from "react";
-import MeadBallsPng from "../assets/images/balls.png"
+import MeatBallsPng from "../assets/images/balls.png"
 import styled from "styled-components";
 
-const MeadBalls = (props) => {
+const MeatBalls = (props) => {
 
   const [state, setState] = useState(false);
 
@@ -10,32 +10,32 @@ const MeadBalls = (props) => {
     setState((prevstate) => !prevstate);
   };
 
-  const ActiveCloseHandler = (id) => {
+  const optionChangeHandler = (option) => {
     setState(false)
-    // console.log(id);
-    // props.gettext(text)
+    option.onClick(option)
   }
 
   return (
     <DivBlock>
       <Img
         onClick={toggleHandler}
-        src={MeadBallsPng}
+        src={MeatBallsPng}
       />
       {state && (
-        <DivContainerMeadBalls>
+        <DivContainerMeatBalls>
           {props.balls.map((option) =>
           <>
-              <TextMeadBalls key={option.id} onClick={()=> ActiveCloseHandler(option.id)} >{option.text}</TextMeadBalls>
+              <TextMeatBalls key={option.id} onClick={()=> optionChangeHandler(option)} >{option.text}</TextMeatBalls>
           </>
           )}
-        </DivContainerMeadBalls>
+        </DivContainerMeatBalls>
       )}
+      
     </DivBlock>
   );
 };
 
-export default MeadBalls;
+export default MeatBalls;
 
 const DivBlock = styled.div`
   display: flex;
@@ -51,7 +51,7 @@ height: 5px;
   }
 `;
 
-const DivContainerMeadBalls = styled.div`
+const DivContainerMeatBalls = styled.div`
   width: 180px;
   height: 117px;
   border: 1px solid #c4c4c4;
@@ -60,7 +60,7 @@ const DivContainerMeadBalls = styled.div`
   justify-content: center;
 `;
 
-const TextMeadBalls = styled.span`
+const TextMeatBalls = styled.span`
   height: 27px;
   display: flex;
   align-items: center;
