@@ -19,14 +19,16 @@ const Input = (props) => {
 export default Input;
 
 const Inputt = styled.input`
-  width: ${(props) => props.width} 414px;
-  height: ${(props) => props.height} 39px ;
+  width: ${(props) => props.width || "414px"};
+  height: ${(props) => props.height || "39px"};
   &:hover {
     border: 1px solid #828282;
     border-radius: 2px;
   }
   &:active{
     border: 1px solid #828282;
+    /* border: 1px solid red; */
+    border-radius: 2px;
   }
   border: 1px solid #c4c4c4;
   border-radius: 2px;
