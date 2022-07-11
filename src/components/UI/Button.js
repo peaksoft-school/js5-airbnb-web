@@ -21,7 +21,7 @@ const CustomButton = styled.button`
    font-size: ${(props) => props.fontSize};
    background: ${(props) =>
       props.variant === 'outlined' ? 'white' : '#dd8a08'};
-   border-radius: 2px;
+   border-radius: ${(props) => (props.variant === 'outlined' ? 'none' : '2px')};
    border: ${(props) =>
       props.variant === 'outlined' ? '1px solid #7D7D7D;' : 'none'};
    font-weight: 500;
