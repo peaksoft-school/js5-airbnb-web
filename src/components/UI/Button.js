@@ -8,6 +8,7 @@ function Button(props) {
          height={props.height}
          fontSize={props.fontSize}
          variant={props.variant}
+         disabled={props.variant === 'disabled'}
       >
          {props.children.toUpperCase()}
       </CustomButton>
