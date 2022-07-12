@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-function RadioButton({ ...props }) {
+function RadioButton(props) {
    return (
       <Label>
          <Input
