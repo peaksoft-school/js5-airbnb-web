@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { Avatar } from '@mui/material'
 import styled from 'styled-components'
-import { ReactComponent as Dropdown } from '../../../../assets/icons/dropdown.svg'
-import { ReactComponent as Logo } from '../../../../assets/icons/Logo.svg'
-import Button from '../../button/Button'
+import { ReactComponent as Dropdown } from '../../../assets/icons/dropdown.svg'
+import { ReactComponent as Logo } from '../../../assets/icons/Logo.svg'
+import Button from '../../../components/UI/Button'
 
 const HeaderHome = () => {
    const [register, setRegister] = useState(false)

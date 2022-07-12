@@ -1,7 +1,7 @@
 import { Link as LinkR } from 'react-router-dom'
 import styled from 'styled-components'
-import { ReactComponent as LogoMobile } from '../../../../../../assets/icons/LogoMobile.svg'
-import { ReactComponent as Times } from '../../../../../../assets/icons/times.svg'
+import { ReactComponent as LogoMobile } from '../../../../../assets/icons/LogoMobile.svg'
+import { ReactComponent as Times } from '../../../../../assets/icons/times.svg'
 
 const UserSidebar = ({ isOpen, mobileToggle }) => {
    return (

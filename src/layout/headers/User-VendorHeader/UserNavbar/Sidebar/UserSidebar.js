@@ -1,11 +1,11 @@
 import { Link as LinkR } from 'react-router-dom'
 import styled from 'styled-components'
-import { ReactComponent as Instagram } from '../../../../../../assets/icons/Instagram.svg'
-import { ReactComponent as LogoMobile } from '../../../../../../assets/icons/LogoMobile.svg'
-import { ReactComponent as Telegram } from '../../../../../../assets/icons/Telegram.svg'
-import { ReactComponent as Times } from '../../../../../../assets/icons/times.svg'
-import { ReactComponent as WhatsApp } from '../../../../../../assets/icons/WhatsApp.svg'
-import Button from '../../../../button/Button'
+import { ReactComponent as Instagram } from '../../../../../assets/icons/Instagram.svg'
+import { ReactComponent as LogoMobile } from '../../../../../assets/icons/LogoMobile.svg'
+import { ReactComponent as Telegram } from '../../../../../assets/icons/Telegram.svg'
+import { ReactComponent as Times } from '../../../../../assets/icons/times.svg'
+import { ReactComponent as WhatsApp } from '../../../../../assets/icons/WhatsApp.svg'
+import Button from '../../../../../components/UI/Button'
 
 const AdminSidebar = ({ isOpen, mobileToggle, register }) => {
    return (

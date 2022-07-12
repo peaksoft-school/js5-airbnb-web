@@ -2,12 +2,12 @@ import { useState } from 'react'
 import { Avatar } from '@mui/material'
 import { Link as LinkR } from 'react-router-dom'
 import styled from 'styled-components'
-import { ReactComponent as BlackBars } from '../../../../../assets/icons/BlackBars.svg'
-import { ReactComponent as DropdownBlack } from '../../../../../assets/icons/dropdownBlack.svg'
-import { ReactComponent as Logo } from '../../../../../assets/icons/LogoBlack.svg'
-import Button from '../../../button/Button'
-import Input from '../../../Input/Input'
-import SearchInput from '../../../searchInput/Searchpanel'
+import { ReactComponent as BlackBars } from '../../../../assets/icons/BlackBars.svg'
+import { ReactComponent as DropdownBlack } from '../../../../assets/icons/dropdownBlack.svg'
+import { ReactComponent as Logo } from '../../../../assets/icons/LogoBlack.svg'
+import Button from '../../../../components/UI/Button'
+import Input from '../../../../components/UI/Input'
+import SearchInput from '../../../../components/UI/SearchInput'
 
 const AdminNavbar = ({ mobileToggle, register }) => {
    const [isOpen, setIsOpen] = useState(false)
