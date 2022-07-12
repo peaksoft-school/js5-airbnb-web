@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 function RadioButton({ ...props }) {
    return (
-      <Label width={props.width} height={props.height}>
+      <Label>
          <Input
             type="radio"
             name="simple"
@@ -18,8 +18,8 @@ function RadioButton({ ...props }) {
 export default RadioButton
 
 const Label = styled.label`
-   width: ${(props) => (props.width ? props.width : '22px')};
-   height: ${(props) => (props.height ? props.height : '22px')};
+   width: '20.16px';
+   height: '20.16px';
    border-radius: 50%;
    background-color: whiet;
    border: 1px solid #c4c4c4;
@@ -28,8 +28,8 @@ const Label = styled.label`
    align-items: center;
 `
 const Span = styled.span`
-   width: calc(100% - 3px);
-   height: calc(100% - 3px);
+   width: calc(97% - 3px);
+   height: calc(97% - 3px);
    border-radius: 50%;
    background-color: #dd8a08;
    opacity: 0;
