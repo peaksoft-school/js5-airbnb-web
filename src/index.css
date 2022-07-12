@@ -5,8 +5,5 @@
 }
 body {
    box-sizing: border-box;
-}
-
-code {
-   font-family: Inter;
+   font-family: "Inter", sans-serif;
 }
