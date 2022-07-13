@@ -8,7 +8,7 @@ function Button(props) {
          height={props.height}
          fontSize={props.fontSize}
          variant={props.variant}
-         disabled={props.variant === 'disabled'}
+         disabled={props.disabled}
       >
          {props.children.toUpperCase()}
       </CustomButton>
@@ -21,18 +21,41 @@ const CustomButton = styled.button`
    height: ${(props) => props.height};
    font-size: ${(props) => props.fontSize};
    background: ${(props) =>
-      props.variant === 'outlined' ? 'white' : '#dd8a08'};
+      // eslint-disable-next-line no-nested-ternary
+      props.variant === 'outlined'
+         ? 'white'
+         : props.variant === 'contained'
+         ? 'white'
+         : '#dd8a08'};
    border-radius: ${(props) => (props.variant === 'outlined' ? 'none' : '2px')};
    border: ${(props) =>
-      props.variant === 'outlined' ? '1px solid #7D7D7D;' : 'none'};
+      // eslint-disable-next-line no-nested-ternary
+      props.variant === 'outlined'
+         ? '1px solid #7D7D7D;'
+         : props.variant === 'contained'
+         ? '1px solid #DD8A08'
+         : 'none'};
    font-weight: 500;
-   color: ${(props) => (props.variant === 'outlined' ? '#828282' : '#f7f7f7')};
+   color: ${(props) =>
+      // eslint-disable-next-line no-nested-ternary
+      props.variant === 'outlined'
+         ? '#828282'
+         : props.variant === 'contained'
+         ? '#DD8A08'
+         : '#f7f7f7'};
    line-height: 17px;
    padding: ${(props) =>
       props.variant === 'outlined' ? '8px 16px' : '10px 16px'};
    gap: 10px;
    cursor: pointer;
    &:hover {
+      color: ${(props) =>
+         // eslint-disable-next-line no-nested-ternary
+         props.variant === 'contained'
+            ? '#f7f7f7'
+            : props.variant === 'outlined'
+            ? '#828282'
+            : '#f7f7f7'};
       background-color: ${(props) =>
          props.variant === 'outlined' ? 'none' : '#BB7200'};
       border: ${(props) =>
@@ -41,8 +64,9 @@ const CustomButton = styled.button`
    &:active {
       background-color: ${(props) =>
          props.variant === 'outlined' ? '#DD8A08' : '#F2B75B'};
-      color: #ffffff;
       border: none;
+      color: ${(props) =>
+         props.variant === 'outlined' ? '#f7f7f7' : '#f7f7f7'};
    }
    &:disabled {
       background-color: #a9a9a9;
