@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import icon from '../../../assets/icons/Vector.png'
-import BasicDatePicker from './BasicDatePicker'
+import BasicDatePicker from './BasikDatePicker'
 
 const DateRangePicker = (props) => {
    const { BookTrip, Information, totalAmount, CardNumber, Totalquantity } =

@@ -1,32 +1,32 @@
 .form-control {
-    position: relative;
-    left: 90px;
-    top: -49px;
-    padding: 0 0 0 0;
-    width: 52.88px;
-    border: none;
-    background: none;
-    text-align: center;
-    cursor: pointer;
-    font-size: 16px;
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 20px;
-    line-height: 19px;
- }
+   position: relative;
+   left: 90px;
+   top: -49px;
+   padding: 0 0 0 0;
+   width: 52.88px;
+   border: none;
+   background: none;
+   text-align: center;
+   cursor: pointer;
+   font-size: 16px;
+   font-family: 'Roboto';
+   font-style: normal;
+   font-weight: 400;
+   font-size: 20px;
+   line-height: 19px;
+}
 
- :root {
-    --weekend: rgba(0, 0, 0, 0);
-    --date-light: #f8f9fa;
-    --date-primary-color: black;
-    --date-primary-border-radius: 10px;
-    --date-success: #37d37d;
-    --date-highlight: orange;
-    --date-disabled: #c2c1cc;
-    --date-width: 260px;
-    --date-height: 280px;
-    --date-rangebg: orange;
-    --date-rangetext: black;
-    --date-rangeDateBg: orange;
- }
+:root {
+   --weekend: rgba(0, 0, 0, 0);
+   --date-light: #f8f9fa;
+   --date-primary-color: black;
+   --date-primary-border-radius: 10px;
+   --date-success: #37d37d;
+   --date-highlight: orange;
+   --date-disabled: #c2c1cc;
+   --date-width: 260px;
+   --date-height: 280px;
+   --date-rangebg: orange;
+   --date-rangetext: black;
+   --date-rangeDateBg: orange;
+}
