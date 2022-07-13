@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { Link as LinkR } from 'react-router-dom'
 import styled from 'styled-components'
-import { ReactComponent as Bars } from '../../../../../assets/icons/bars.svg'
-import { ReactComponent as Dropdown } from '../../../../../assets/icons/dropdown.svg'
-import { ReactComponent as Logo } from '../../../../../assets/icons/Logo.svg'
+import { ReactComponent as Bars } from '../../../../assets/icons/bars.svg'
+import { ReactComponent as Dropdown } from '../../../../assets/icons/dropdown.svg'
+import { ReactComponent as Logo } from '../../../../assets/icons/Logo.svg'
 
 const UserNavbar = ({ mobileToggle }) => {
    const [isOpen, setIsOpen] = useState(false)

@@ -1,14 +1,13 @@
 import styled from 'styled-components'
 
-function RadioButton(props) {
+function RadioButton({ checked, value, onChange, ...props }) {
    return (
-      <Label>
+      <Label style={props}>
          <Input
             type="radio"
             name="simple"
-            onChange={(event) => props.onChange(event.target.value)}
-            value={props.value}
-            checked={props.checked}
+            onChange={(event) => onChange(event.target.value)}
+            value={value}
          />
          <Span />
       </Label>
@@ -18,18 +17,18 @@ function RadioButton(props) {
 export default RadioButton
 
 const Label = styled.label`
-   width: '20.16px';
-   height: '20.16px';
+   width: ${(props) => props.width || '20.16px'};
+   height: 20.16px;
    border-radius: 50%;
-   background-color: whiet;
+   background-color: white;
    border: 1px solid #c4c4c4;
    display: flex;
    justify-content: center;
    align-items: center;
 `
 const Span = styled.span`
-   width: calc(97% - 3px);
-   height: calc(97% - 3px);
+   width: 90%;
+   height: 90%;
    border-radius: 50%;
    background-color: #dd8a08;
    opacity: 0;

@@ -1,15 +1,14 @@
 import * as React from 'react'
+import MuiAlert from '@mui/material/Alert'
+import Snackbar from '@mui/material/Snackbar'
 import Stack from '@mui/material/Stack'
 import styled from 'styled-components'
-import Snackbar from '@mui/material/Snackbar'
-import MuiAlert from '@mui/material/Alert'
 
 const Alert = React.forwardRef(function Alert(props, ref) {
    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />
 })
 
-export default function SnackBar(props) {
-   const { severity, open, onClose, message, text } = props
+export default function SnackBar({ severity, open, onClose, message, text }) {
    return (
       <Stack>
          <Snackbar
