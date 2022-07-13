@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import infIcon from '../../../assets/icons/infIcon.png'
 
-const BlockedCard = (props) => {
+const BlockedInfoMessage = (props) => {
    const { openMessage, onOpenMessage } = props
    return (
       <StyledBlockedCard>
@@ -12,7 +12,7 @@ const BlockedCard = (props) => {
    )
 }
 
-export default BlockedCard
+export default BlockedInfoMessage
 
 const StyledBlockedCard = styled.div`
    position: absolute;

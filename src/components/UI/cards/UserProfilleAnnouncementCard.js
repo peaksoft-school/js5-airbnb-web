@@ -2,10 +2,10 @@ import React, { useState } from 'react'
 import styled, { css } from 'styled-components'
 import locationIcon from '../../../assets/icons/locationIcon.png'
 import star from '../../../assets/icons/Star.png'
-import BlockedCard from './BlockedCard'
+import BlockedInfoMessage from './BlockedInfoMessage'
 
 const UserProfileAnnouncementCard = (props) => {
-   const { open, img } = props
+   const { isBlocked, img } = props
 
    const [showMessage, setShowMessage] = useState(false)
 
@@ -13,15 +13,15 @@ const UserProfileAnnouncementCard = (props) => {
       setShowMessage(!showMessage)
    }
    return (
-      <StyledCard open={open}>
-         {open && (
-            <BlockedCard
+      <StyledCard isBlocked={isBlocked}>
+         {isBlocked && (
+            <BlockedInfoMessage
                onClick={showMessageHandler}
                openMessage={showMessage}
                onOpenMessage={setShowMessage}
             />
          )}
-         <StyledCardImage src={img} open={open} alt="card" />
+         <StyledCardImage src={img} isBlocked={isBlocked} alt="card" />
          <Cont>
             <p>{props.price}</p>
             <div>
