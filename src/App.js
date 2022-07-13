@@ -1,5 +1,4 @@
 import './App.css'
-// import SearchInput from './components/UI/searchInput/SearchInput'
 
 function App() {
    return (

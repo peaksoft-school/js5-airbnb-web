@@ -21,8 +21,6 @@ const SearchInput = (props) => {
 export default SearchInput
 
 const StyledSearchInput = styled.div`
-   & input {
-   }
    & :focus {
       outline: none;
    }
