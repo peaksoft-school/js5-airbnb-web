@@ -1,20 +1,26 @@
 import styled from 'styled-components'
-import SearchIcon from '../../../assets/images/search.png'
+import SearchIcon from '../../assets/icons/search.png'
 
-const SearchInput = (props) => {
+const SearchInput = ({
+   placeholder,
+   isOpen,
+   handleToggle,
+   onChange,
+   value,
+}) => {
    return (
       <InputWrapper>
-         <StyledSearchInput isOpen={props.isOpen}>
+         <StyledSearchInput isOpen={isOpen}>
             <StyledSearchIcon
-               onClick={props.handleToggle}
+               onClick={handleToggle}
                src={SearchIcon}
                alt="searchIcon"
             />
             <input
                type="text"
-               placeholder={props.placeholder}
-               onChange={props.onChange}
-               value={props.value}
+               placeholder={placeholder}
+               onChange={onChange}
+               value={value}
             />
          </StyledSearchInput>
       </InputWrapper>

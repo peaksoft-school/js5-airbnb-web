@@ -6,8 +6,8 @@ import PhotoIcon from '../../assets/icons/DevicesIcon.svg'
 import MediaPhotoIcon from '../../assets/icons/DevicesIconMedia.svg'
 import RepeatPhoto from '../../assets/icons/repeat-svgrepo-com.svg'
 
-const ImagePicker = ({ ...props }) => {
-   const [photos, setPhotos] = useState(props.allPhotos)
+const ImagePicker = ({ allPhotos, getPhoto, ...props }) => {
+   const [photos, setPhotos] = useState(allPhotos)
    const [showTextAfterInput, setshowTextAfterInput] = useState(true)
    const [closeInputFile, setCloseInputFile] = useState(true)
    const [imageSizeTextError, setImageSizeTextError] = useState(true)
@@ -18,7 +18,7 @@ const ImagePicker = ({ ...props }) => {
    // you can get all photos and send, when you call this component
    // and give props function -> getPhoto
 
-   const getAllPhotoAndSend = (getphotofile) => props.getPhoto(getphotofile)
+   const getAllPhotoAndSend = (getphotofile) => getPhoto(getphotofile)
 
    const onChange = (imageList) => {
       // eslint-disable-next-line array-callback-return, consistent-return
@@ -83,7 +83,7 @@ const ImagePicker = ({ ...props }) => {
                      &nbsp;
                      {closeInputFile && (
                         <WrapperErrorText>
-                           <ButtonPhotoWrapper>
+                           <ButtonPhotoWrapper style={props}>
                               <ButtonPhoto
                                  onClick={onImageUpload}
                                  {...dragProps}

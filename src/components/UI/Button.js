@@ -1,25 +1,23 @@
 import styled from 'styled-components'
 
-function Button(props) {
+function Button({ onClick, variant, disabled, children, ...props }) {
    return (
       <CustomButton
-         onClick={props.onClick}
-         width={props.width}
-         height={props.height}
-         fontSize={props.fontSize}
-         variant={props.variant}
-         disabled={props.disabled}
+         onClick={onClick}
+         variant={variant}
+         style={props}
+         disabled={disabled === 'true'}
       >
-         {props.children.toUpperCase()}
+         {children.toUpperCase()}
       </CustomButton>
    )
 }
 export default Button
 
 const CustomButton = styled.button`
-   width: ${(props) => props.width};
-   height: ${(props) => props.height};
-   font-size: ${(props) => props.fontSize};
+   width: ${(props) => props.width || '150px'};
+   height: ${(props) => props.height || '30px'};
+   font-size: ${(props) => props.fontSize || '14px'};
    background: ${(props) =>
       // eslint-disable-next-line no-nested-ternary
       props.variant === 'outlined'
