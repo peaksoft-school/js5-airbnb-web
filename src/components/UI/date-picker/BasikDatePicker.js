@@ -1,17 +1,23 @@
 import React from 'react'
-import SingleCalendar from 'react-single-calendar'
-import classes from './BasicDatePicker.module.css'
+import DatePicker from 'gestalt-datepicker'
+import 'gestalt/dist/gestalt.css'
+import 'gestalt-datepicker/dist/gestalt-datepicker.css'
+import styles from './BasicDatePicker.module.css'
 
-const BasicDatePicker = () => {
-   const range = true
-   const dateInput = true
+export default function BasicDatePicker({ onAddDate }) {
+   const handleChange = (event) => {
+      onAddDate(event)
+   }
+
    return (
-      <SingleCalendar
-         range={range}
-         dateInput={dateInput}
-         format="dd/mm"
-         cssClass={classes['form-control']}
-      />
+      <div className={styles.datepickercontainer}>
+         <DatePicker
+            calendarClassName={styles['react-datepicker']}
+            dayClassName={() => styles['react-datepicker__days']}
+            id="example-page-header"
+            onChange={(event) => handleChange(event)}
+            value={new Date()}
+         />
+      </div>
    )
 }
-export default BasicDatePicker

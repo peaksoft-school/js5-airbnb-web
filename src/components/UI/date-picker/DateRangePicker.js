@@ -1,31 +1,56 @@
-import React from 'react'
+import React, { useRef, useState } from 'react'
 import styled from 'styled-components'
 import icon from '../../../assets/icons/Vector.png'
 import BasicDatePicker from './BasikDatePicker'
 
-const DateRangePicker = (props) => {
-   const { BookTrip, Information, totalAmount, CardNumber, Totalquantity } =
-      props
+const DateRangePicker = ({
+   bookTrip,
+   information,
+   totalAmount,
+   totalQuantity,
+   onAddDateRangePicker,
+}) => {
+   const [data, setData] = useState()
+   const cardNumber = useRef(null)
+   const totalCvc = useRef(null)
+   const addDate = (date) => {
+      setData(date)
+   }
+   const submitHandler = (e) => {
+      e.preventDefault()
+      const cardNumberValue = cardNumber.current.value
+      const totalCvcValue = totalCvc.current.value
+      const dateRangeObject = {
+         data,
+         cardNumberValue,
+         totalCvcValue,
+      }
+      onAddDateRangePicker(dateRangeObject)
+   }
    return (
       <DateRangeTrecker>
-         <form>
-            <DateRangeTrickerTrip>{BookTrip}</DateRangeTrickerTrip>
+         <form onSubmit={submitHandler}>
+            <DateRangeTrickerTrip>{bookTrip}</DateRangeTrickerTrip>
             <DateRangeTreckerTextParagraf>
-               {Information}
+               {information}
             </DateRangeTreckerTextParagraf>
 
             <DateRangeTreckerSummaParagraf>
-               {Totalquantity}
+               {totalQuantity}
             </DateRangeTreckerSummaParagraf>
 
             <DateRangeTreckerTotalAmountParagraf>
                {totalAmount}
             </DateRangeTreckerTotalAmountParagraf>
             <DateRangePickerInputDate>
-               <img src={icon} alt="icon" />
-               <h3>{CardNumber}</h3>
-               <h4>CVC</h4>
-               <BasicDatePicker />
+               <StyledImg src={icon} alt="icon" />
+               <StyledInput
+                  ref={cardNumber}
+                  type="number"
+                  placeholder="Card Number"
+               />
+               <BasicDatePicker onAddDate={addDate} />
+               <StyledInputCVC ref={totalCvc} type="number" placeholder="CVC" />
             </DateRangePickerInputDate>
             <DateRangeTrekerButton>Book</DateRangeTrekerButton>
          </form>
@@ -87,59 +112,44 @@ const DateRangeTreckerTotalAmountParagraf = styled.p`
    color: #363636;
    margin-bottom: 16px;
 `
+
 const DateRangePickerInputDate = styled.div`
+   display: flex;
    width: 423px;
    height: 39px;
    border: 1px solid #c4c4c4;
    border-radius: 2px;
    margin-left: 10px;
    margin-bottom: 22px;
-   & input {
-      position: relative;
-      width: 424px;
-      height: 39px;
-      border-radius: 2px;
-      outline: none;
-   }
-   & img {
-      padding-left: 4.33%;
-      padding-right: 8.33%;
-      padding-top: 12px;
-      padding-bottom: 12px;
-   }
-   & h1 span {
-      color: black;
-   }
-   & p span {
-      color: black;
-   }
-   & span svg {
-      color: black;
-   }
-   & button svg {
-      color: black;
-   }
-   & div {
-      border-radius: 15px;
-   }
-   & h3 {
-      position: absolute;
-      width: 236px;
-      height: 19px;
-      left: 120px;
-      top: 249px;
-      font-family: 'Roboto';
-      font-style: normal;
-      font-weight: 400;
-      font-size: 16px;
-      line-height: 19px;
-      color: #c4c4c4;
-   }
-   & h4 {
-      position: absolute;
-      top: 248px;
-      left: 380px;
-   }
+`
+const StyledImg = styled.img`
+   padding-left: 2%;
+   padding-top: 12px;
+   padding-bottom: 12px;
+`
+
+const StyledInput = styled.input`
+   width: 147px;
+   height: 40px;
+   font-family: 'Roboto';
+   font-style: normal;
+   font-weight: 400;
+   font-size: 16px;
+   line-height: 19px;
+   color: black;
+   background: none !important;
+   border: none;
+   outline: none;
+   border: none;
+   text-align: center;
+`
+const StyledInputCVC = styled.input`
+   width: 100px;
+   padding-top: 10px;
+   padding-bottom: 10px;
+   text-align: center;
+   background: none !important;
+   outline: none;
 `
 const DateRangeTrekerButton = styled.button`
    text-align: center;

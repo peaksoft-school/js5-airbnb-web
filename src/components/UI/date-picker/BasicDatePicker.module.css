@@ -1,32 +1,40 @@
-.form-control {
-   position: relative;
-   left: 90px;
-   top: -49px;
-   padding: 0 0 0 0;
-   width: 52.88px;
-   border: none;
-   background: none;
-   text-align: center;
-   cursor: pointer;
-   font-size: 16px;
-   font-family: 'Roboto';
-   font-style: normal;
-   font-weight: 400;
-   font-size: 20px;
-   line-height: 19px;
+.datepickercontainer {
+   width: 150px;
+   margin-top: -5px;
+}
+div input {
+   box-shadow: none !important;
+}
+
+div {
+   color: black !important;
+   outline: none !important;
+}
+input {
+   border: none !important;
+   text-align: end;
+   background: none !important;
+   color: black !important;
+   outline: none !important;
+   margin-left: 6px;
+}
+
+div svg {
+   display: none !important;
 }
 
 :root {
-   --weekend: rgba(0, 0, 0, 0);
-   --date-light: #f8f9fa;
-   --date-primary-color: black;
-   --date-primary-border-radius: 10px;
-   --date-success: #37d37d;
-   --date-highlight: orange;
-   --date-disabled: #c2c1cc;
-   --date-width: 260px;
-   --date-height: 280px;
-   --date-rangebg: orange;
-   --date-rangetext: black;
-   --date-rangeDateBg: orange;
+   --g-color-focus: none;
+   --g-colorBlack100: green;
+   --g-colorGray0: #fff;
+   --g-colorGray50: #fff;
+   --g-colorBlack100: black;
+   --g-colorGray200: black;
+   --g-colorGray300: orange;
+   --g-color300: black;
+   --g-green: orange;
+   --g-colorTransparentGray60: orange;
+   --g-colorTransparentGray100: rgb(0 0 0/0.3);
+   --g-colorTransparentGray500: rgb(0 0 0/0.1);
+   --g-colorTransparentGray800: rgb(0 0 0/0.8);
 }
