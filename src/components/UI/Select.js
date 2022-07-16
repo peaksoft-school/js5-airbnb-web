@@ -8,11 +8,12 @@ import styled from 'styled-components'
 
 function Select({
    label,
-   valueOptions,
+   value,
    variant,
    onChange,
    options,
    getOptionLabel,
+   getOptionValue,
 }) {
    const handleChange = (event) => {
       onChange(event.target.value)
@@ -20,12 +21,12 @@ function Select({
 
    return (
       <BoxStyled variant={variant}>
-         <InputLabel>{variant === 'sort' ? label : label}</InputLabel>
+         <InputLabel>{label}</InputLabel>
          <FormControl fullWidth>
-            <SelectMui onChange={handleChange} value={valueOptions}>
+            <SelectMui onChange={handleChange} value={value}>
                {options?.map((item) => {
                   return (
-                     <MenuItem value={item.getOptionValue}>
+                     <MenuItem value={getOptionValue(item)}>
                         {getOptionLabel(item)}
                      </MenuItem>
                   )
