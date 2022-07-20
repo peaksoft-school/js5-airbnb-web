@@ -1,165 +1,90 @@
-import React, { useRef, useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
-import icon from '../../../assets/icons/Vector.png'
-import BasicDatePicker from './BasikDatePicker'
+import BasikDatePicker from './BasikDatePicker'
+import 'gestalt-datepicker/dist/gestalt-datepicker.css'
 
-const DateRangePicker = ({
-   bookTrip,
-   information,
-   totalAmount,
-   totalQuantity,
-   onAddDateRangePicker,
-}) => {
-   const [data, setData] = useState()
-   const cardNumber = useRef(null)
-   const totalCvc = useRef(null)
-   const addDate = (date) => {
-      setData(date)
-   }
-   const submitHandler = (e) => {
+const DateRangePicker = (props) => {
+   const { onDateRangeDates, day } = props
+
+   const dateSubmitHandler = (e) => {
       e.preventDefault()
-      const cardNumberValue = cardNumber.current.value
-      const totalCvcValue = totalCvc.current.value
-      const dateRangeObject = {
-         data,
-         cardNumberValue,
-         totalCvcValue,
-      }
-      onAddDateRangePicker(dateRangeObject)
+      onDateRangeDates()
    }
    return (
-      <DateRangeTrecker>
-         <form onSubmit={submitHandler}>
-            <DateRangeTrickerTrip>{bookTrip}</DateRangeTrickerTrip>
-            <DateRangeTreckerTextParagraf>
-               {information}
-            </DateRangeTreckerTextParagraf>
-
-            <DateRangeTreckerSummaParagraf>
-               {totalQuantity}
-            </DateRangeTreckerSummaParagraf>
-
-            <DateRangeTreckerTotalAmountParagraf>
-               {totalAmount}
-            </DateRangeTreckerTotalAmountParagraf>
-            <DateRangePickerInputDate>
-               <StyledImg src={icon} alt="icon" />
-               <StyledInput
-                  ref={cardNumber}
-                  type="number"
-                  placeholder="Card Number"
-               />
-               <BasicDatePicker onAddDate={addDate} />
-               <StyledInputCVC ref={totalCvc} type="number" placeholder="CVC" />
-            </DateRangePickerInputDate>
-            <DateRangeTrekerButton>Book</DateRangeTrekerButton>
+      <StyledContainer>
+         <StyledH4>${day}</StyledH4>
+         <form onSubmit={dateSubmitHandler}>
+            <BasikDatePicker />
+            <StyledButton>REQUEST TO BOOK</StyledButton>
          </form>
-      </DateRangeTrecker>
+      </StyledContainer>
    )
 }
 
-export default DateRangePicker
-
-const DateRangeTrecker = styled.div`
-   width: 424px;
-   height: 66px;
+const StyledContainer = styled.div`
+   width: 494px;
+   height: 269px;
    background: #ffffff;
-   border-radius: 2px;
+   padding: 20px;
+   & div svg {
+      color: #c4c4c4;
+   }
+
+   & div input {
+      box-shadow: none !important;
+   }
+   & ._gestalt .react-datepicker__day--range-start {
+      background-color: orange !important;
+   }
+   & ._gestalt .react-datepicker__day--range-end {
+      background-color: orange !important;
+   }
+   & ._gestalt .react-datepicker__day--highlighted {
+      background-color: orange !important;
+   }
+   @media only screen and (max-width: 375px) {
+      width: 343px;
+      height: 331px;
+      background: #ffffff;
+      border-radius: 2px;
+      text-align: center;
+   }
 `
-const DateRangeTrickerTrip = styled.h1`
-   height: 22px;
+const StyledH4 = styled.h4`
+   width: 48px;
+   height: 24px;
+   padding: 20px 239px 40px 198px;
+   margin-bottom: 20px;
+   border-bottom: 1px solid #c4c4c4;
    font-family: 'Inter';
    font-style: normal;
-   font-weight: 500;
-   font-size: 18px;
-   line-height: 22px;
-   text-align: center;
-   text-transform: uppercase;
+   font-weight: 400;
+   font-size: 20px;
+   line-height: 24px;
    color: #000000;
-   margin-bottom: 24px;
-`
-const DateRangeTreckerTextParagraf = styled.p`
-   width: 424px;
-   height: 57px;
-   font-family: 'Inter';
-   font-style: normal;
-   font-weight: 400;
-   font-size: 16px;
-   line-height: 19px;
-   text-align: center;
-   color: #828282;
-   margin-bottom: 44px;
-`
-const DateRangeTreckerSummaParagraf = styled.p`
-   height: 19px;
-   font-family: 'Inter';
-   font-style: normal;
-   font-weight: 400;
-   font-size: 16px;
-   line-height: 19px;
-   text-align: center;
-   color: #646464;
-   margin-bottom: 14px;
-`
-const DateRangeTreckerTotalAmountParagraf = styled.p`
-   height: 22px;
-   font-family: 'Inter';
-   font-style: normal;
-   font-weight: 500;
-   font-size: 18px;
-   line-height: 22px;
-   text-align: center;
-   color: #363636;
-   margin-bottom: 16px;
+
+   @media only screen and (max-width: 375px) {
+      width: 311px;
+      text-align: center;
+      height: 22px;
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 18px;
+      line-height: 22px;
+      padding: 0px;
+      margin-bottom: 20px;
+      color: #6c6c6c;
+   }
 `
 
-const DateRangePickerInputDate = styled.div`
-   display: flex;
-   width: 423px;
-   height: 39px;
-   border: 1px solid #c4c4c4;
-   border-radius: 2px;
-   margin-left: 10px;
-   margin-bottom: 22px;
-`
-const StyledImg = styled.img`
-   padding-left: 2%;
-   padding-top: 12px;
-   padding-bottom: 12px;
-`
-
-const StyledInput = styled.input`
-   width: 147px;
-   height: 40px;
-   font-family: 'Roboto';
-   font-style: normal;
-   font-weight: 400;
-   font-size: 16px;
-   line-height: 19px;
-   color: black;
-   background: none !important;
-   border: none;
-   outline: none;
-   border: none;
-   text-align: center;
-`
-const StyledInputCVC = styled.input`
-   width: 100px;
-   padding-top: 10px;
-   padding-bottom: 10px;
-   text-align: center;
-   background: none !important;
-   outline: none;
-`
-const DateRangeTrekerButton = styled.button`
-   text-align: center;
+const StyledButton = styled.button`
    padding: 10px 16px;
-   margin-top: 10px;
-   margin-left: 10px;
-   width: 424px;
-   height: 39px;
-   background: #dd8a08;
+   gap: 10px;
+   width: 454px;
+   height: 37px;
    border: none;
+   background: #dd8a08;
    border-radius: 2px;
    font-family: 'Inter';
    font-style: normal;
@@ -167,4 +92,12 @@ const DateRangeTrekerButton = styled.button`
    font-size: 14px;
    line-height: 17px;
    color: #f7f7f7;
+   margin-top: 40px;
+   @media only screen and (max-width: 375px) {
+      width: 311px;
+      height: 37px;
+      background: #dd8a08;
+      border-radius: 2px;
+   }
 `
+export default DateRangePicker

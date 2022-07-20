@@ -1,23 +1,46 @@
 import React from 'react'
-import DatePicker from 'gestalt-datepicker'
+import { Flex } from 'gestalt'
+import DateRangePicker from 'gestalt-datepicker'
 import 'gestalt/dist/gestalt.css'
 import 'gestalt-datepicker/dist/gestalt-datepicker.css'
-import styles from './BasicDatePicker.module.css'
 
-export default function BasicDatePicker({ onAddDate }) {
-   const handleChange = (event) => {
-      onAddDate(event)
+export default function BasicDatePicker({
+   onChangeHandlerIn,
+   onChangeHandlerOut,
+   dates,
+}) {
+   const [startDate, setStartDate] = React.useState(undefined)
+   const [endDate, setEndDate] = React.useState(undefined)
+
+   const handleChangeIn = (value) => {
+      setStartDate(value)
+      onChangeHandlerIn(value)
+   }
+   const handleChangeOut = (value) => {
+      setEndDate(value)
+      onChangeHandlerOut(value)
    }
 
    return (
-      <div className={styles.datepickercontainer}>
-         <DatePicker
-            calendarClassName={styles['react-datepicker']}
-            dayClassName={() => styles['react-datepicker__days']}
-            id="example-page-header"
-            onChange={(event) => handleChange(event)}
-            value={new Date()}
+      <Flex gap={2}>
+         <DateRangePicker
+            rangeStartDate={startDate}
+            rangeEndDate={endDate}
+            label="Check In"
+            onChange={({ value }) => handleChangeIn(value)}
+            value={startDate}
+            placeholder="Select date"
+            excludeDates={dates}
          />
-      </div>
+         <DateRangePicker
+            rangeStartDate={startDate}
+            rangeEndDate={endDate}
+            label="Check Out"
+            onChange={({ value }) => handleChangeOut(value)}
+            value={endDate}
+            placeholder="Select date"
+            excludeDates={dates}
+         />
+      </Flex>
    )
 }
