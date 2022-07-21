@@ -7,7 +7,7 @@ import 'gestalt-datepicker/dist/gestalt-datepicker.css'
 export default function BasicDatePicker({
    onChangeHandlerIn,
    onChangeHandlerOut,
-   dates,
+   excludedDates,
 }) {
    const [startDate, setStartDate] = React.useState(undefined)
    const [endDate, setEndDate] = React.useState(undefined)
@@ -30,7 +30,7 @@ export default function BasicDatePicker({
             onChange={({ value }) => handleChangeIn(value)}
             value={startDate}
             placeholder="Select date"
-            excludeDates={dates}
+            excludeDates={excludedDates}
          />
          <DateRangePicker
             rangeStartDate={startDate}
@@ -39,7 +39,7 @@ export default function BasicDatePicker({
             onChange={({ value }) => handleChangeOut(value)}
             value={endDate}
             placeholder="Select date"
-            excludeDates={dates}
+            excludeDates={excludedDates}
          />
       </Flex>
    )
