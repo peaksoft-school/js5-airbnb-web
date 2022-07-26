@@ -1,51 +1,57 @@
 import { Breadcrumbs, Typography, Link, styled } from '@mui/material'
-import { useNavigate, useLocation } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
-const BreadCrumbs = ({ translate, title, ...props }) => {
+const BreadCrumbs = ({
+   firstpath,
+   location: { pathname },
+   translate,
+   ...props
+}) => {
    const navigate = useNavigate()
-   const { pathname } = useLocation()
-
-   const pathNames = pathname.split('/').filter(Boolean)
-   // eslint-disable-next-line consistent-return, array-callback-return
-   const newPathName = pathNames.filter((item) => {
-      if (!/[0-9]/.test(item)) {
-         return item
+   const pathnames = pathname.split('/').filter((x) => x)
+   const updatedPathnames = pathnames.map((path) => {
+      if (/[0-9]/.test(path)) {
+         return translate[0].name
       }
+      return path
    })
-   if (translate[0]?.name) {
-      newPathName.push(translate[0].name)
+   const toUpperFirstPath = firstpath[0].toUpperCase() + firstpath.slice(1)
+   const showfirstpath = { showfirstpath: false }
+   if (updatedPathnames.length >= 1) {
+      showfirstpath.showfirstpath = true
    }
-   const toUpperTitle = title[0].toUpperCase() + title.slice(1)
    return (
       <LayoutBreadcrumbs aria-label="breadcrumb">
-         {title ? (
-            <LinkStyle onClick={() => navigate('/')}>{toUpperTitle}</LinkStyle>
-         ) : (
-            <Title color={props.color} fontSize={props.fontSize}>
-               {toUpperTitle}
-            </Title>
-         )}
-         {newPathName.map((element, index) => {
-            const toUpperName = element[0].toUpperCase() + element.slice(1)
-            const routeTo = `${newPathName.slice(0, index + 1).join('/')}`
-            const isLast = index === newPathName.length - 1
+         {showfirstpath.showfirstpath ? (
+            <LinkStyle onClick={() => navigate('/')}>
+               {toUpperFirstPath}
+            </LinkStyle>
+         ) : null}
+         {updatedPathnames.map((element, index) => {
+            const toUpperPathName = element[0].toUpperCase() + element.slice(1)
+            const routeTo = `${updatedPathnames.slice(0, index + 1).join('/')}`
+            const isLast = index === updatedPathnames.length - 1
             return isLast ? (
                <Title
-                  key={toUpperName}
+                  key={toUpperPathName}
                   color={props.color}
                   fontSize={props.fontSize}
                >
-                  {toUpperName}
+                  {toUpperPathName}
                </Title>
             ) : (
-               <LinkStyle key={toUpperName} onClick={() => navigate(routeTo)}>
-                  {toUpperName}
+               <LinkStyle
+                  key={toUpperPathName}
+                  onClick={() => navigate(routeTo)}
+               >
+                  {toUpperPathName}
                </LinkStyle>
             )
          })}
       </LayoutBreadcrumbs>
    )
 }
+
 export default BreadCrumbs
 
 const LayoutBreadcrumbs = styled(Breadcrumbs)`
