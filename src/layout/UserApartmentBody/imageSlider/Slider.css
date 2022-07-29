@@ -1,0 +1,66 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Inter", sans-serif;
+}
+.slider-wrapper div {
+    width: 295px;
+    height: 171px;
+}
+.react-slideshow-container > .default-nav {
+    height: 30px;
+    background: #828282;   
+    width: 30px;
+    border: 0;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    display: none;
+}
+div.react-slideshow-wrapper.slide {
+    width: 295px;
+    height: 171px;
+}
+.react-slideshow-container > .default-nav > svg {
+    fill: #F4F4F4;
+    width: 15px;
+    height: 19px;
+}
+.react-slideshow-container > .default-nav {
+    margin: 0 10px;
+}
+.react-slideshow-container > .default-nav:hover {
+    display: block;
+    background: #DD8A08;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border: 0;
+}
+.react-slideshow-container+ul.indicators {
+    display: none;
+    position: absolute;
+}
+.react-slideshow-container+ul.indicators:hover{
+    display: block;
+    align-items: center;
+    position: absolute;   
+}
+.react-slideshow-container+ul.indicators .each-slideshow-indicator {
+    position: absolute;
+    top: -40px;
+    border: 0;
+    opacity: 1;
+    cursor: pointer;
+}
+.react-slideshow-container+ul.indicators .each-slideshow-indicator:before {
+    background: #F7F7F7;
+}
+.react-slideshow-container+ul.indicators .each-slideshow-indicator.active:before{
+    background: #FFBE58;
+}
