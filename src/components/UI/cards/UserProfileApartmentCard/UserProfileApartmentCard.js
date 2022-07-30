@@ -59,6 +59,7 @@ const StyledCard = styled.div`
    }
    @media screen and (max-width: 376px) {
       width: 343px;
+      margin: 0 16px;
    }
 `
 const ApartmentInfoWrapper = styled.div`
