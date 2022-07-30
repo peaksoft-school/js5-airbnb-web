@@ -1,14 +1,12 @@
-import Select from './components/UI/Select'
-import UserHeader from './layout/headers/User-VendorHeader/UserHeader'
-import UserApartmentBody from './layout/UserApartmentBody/UserApartmentBody'
+import React from 'react'
+import UserProfileApartmentCard from './layout/UserApartmentBody/UserProfileApartmentCard'
+import UserProfileData from './layout/UserApartmentBody/UserProfileData'
 import './App.css'
 
 function App() {
    return (
       <div className="App">
-         <UserHeader />
-         <Select />
-         <UserApartmentBody />
+         <UserProfileApartmentCard ApartmentInfo={UserProfileData} />
       </div>
    )
 }

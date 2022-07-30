@@ -8,15 +8,18 @@ import Slider from './imageSlider/Slider'
 const UserProfileApartmentCard = (props) => {
    return (
       <>
-         {props.datas.map((value) => (
+         {props.ApartmentInfo.map((value) => (
             <StyledCard key={value.id}>
                <Slider data={value} />
                <ApartmentInfoWrapper>
                   <Cont>
-                     <p>${value.price} / day</p>
+                     <StyledP>
+                        <p>${value.price} /</p>
+                        <span> day</span>
+                     </StyledP>
                      <div>
                         <img src={star} alt="star" />
-                        <p>{value.ratings}</p>
+                        <p> {value.ratings}</p>
                      </div>
                   </Cont>
                   <Description>{value.description}</Description>
@@ -28,7 +31,9 @@ const UserProfileApartmentCard = (props) => {
                      <Amount>
                         <p>{value.guestsAmount} guests</p>
                      </Amount>
-                     <Button>BOOK</Button>
+                     <Button style={{ fontSize: '12px', height: '27px' }}>
+                        BOOK
+                     </Button>
                   </BottomWrap>
                </ApartmentInfoWrapper>
             </StyledCard>
@@ -53,7 +58,7 @@ const StyledCard = styled.div`
       background: white;
    }
    @media screen and (max-width: 376px) {
-      width: 344px;
+      width: 343px;
    }
 `
 const ApartmentInfoWrapper = styled.div`
@@ -63,7 +68,7 @@ const Cont = styled.div`
    display: flex;
    justify-content: space-between;
    align-items: center;
-   margin-top: 19px;
+   padding-top: 19px;
    & div {
       width: 62px;
       height: 25px;
@@ -81,15 +86,24 @@ const Cont = styled.div`
          font-weight: 500;
          font-size: 14px;
          line-height: 17px;
+         padding-left: 4.34px;
       }
       & img {
          height: 13px;
       }
    }
 `
+const StyledP = styled.p`
+   display: flex;
+   gap: 5px;
+   & span {
+      color: #6c6c6c;
+   }
+`
 const Description = styled.p`
    padding-top: 18px;
    font-size: 16px;
+   line-height: 19.36px;
 `
 const Location = styled.div`
    display: flex;

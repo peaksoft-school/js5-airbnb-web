@@ -6,7 +6,7 @@
 }
 .slider-wrapper div {
     width: 295px;
-    height: 171px;
+    height: 191px;
 }
 .react-slideshow-container > .default-nav {
     height: 30px;
@@ -21,12 +21,14 @@
 }
 div.react-slideshow-wrapper.slide {
     width: 295px;
-    height: 171px;
+    height: 191px;
 }
 .react-slideshow-container > .default-nav > svg {
     fill: #F4F4F4;
     width: 15px;
     height: 19px;
+    position: relative;
+    top: 1px;
 }
 .react-slideshow-container > .default-nav {
     margin: 0 10px;

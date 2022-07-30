@@ -15,12 +15,12 @@ const properties = {
 const Slider = (props) => {
    return (
       <Box className="slider-wrapper">
-         <Slide {...properties} sx={{ color: 'white', background: 'white' }}>
+         <Slide {...properties}>
             {props.data.slideImages.map((each) => (
                <Styledimg
                   src={each}
                   key={Math.random().toString}
-                  alt="sample"
+                  alt="Slider photos"
                />
             ))}
          </Slide>
@@ -33,21 +33,24 @@ export default Slider
 const Box = styled.div`
    width: 295px;
    height: 191px;
+   @media screen and (max-width: 375px) {
+      width: 343px;
+   }
    & > div {
-      @media screen and (max-width: 376px) {
-         width: 345px;
+      @media screen and (max-width: 375px) {
+         width: 343px;
       }
       & > div {
-         @media screen and (max-width: 376px) {
-            width: 345px;
+         @media screen and (max-width: 375px) {
+            width: 343px;
          }
          & > .slide {
-            @media screen and (max-width: 376px) {
-               width: 345px;
+            @media screen and (max-width: 375px) {
+               width: 343px;
             }
             & > div {
                @media screen and (max-width: 376px) {
-                  width: 345px;
+                  width: 343px;
                }
             }
          }
@@ -69,7 +72,7 @@ const Box = styled.div`
          display: block;
          padding-left: 127px;
          position: absolute;
-         @media screen and (max-width: 376px) {
+         @media screen and (max-width: 375px) {
             padding-left: 151px;
             position: absolute;
          }
