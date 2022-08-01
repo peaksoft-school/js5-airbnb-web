@@ -1,20 +1,150 @@
-import { useState } from 'react'
 import './App.css'
-import AdminProfileApplicationCard from './components/UI/cards/AdminProfileApplicationCard'
-import NotViewedCard from './components/UI/cards/NotViewedCard'
+import AdminApplication from './components/AdminApplication'
+import { sliderData } from './sliderData'
 
 function App() {
-   const [isViewed, setIsViewed] = useState(false)
-
-   const openHandler = () => {
-      setIsViewed(!isViewed)
-   }
+   const CardData = [
+      {
+         slides: sliderData,
+         price: 26,
+         description: 'Beautiful and picturesque...',
+         location: '12 Morris Ave, Toronto,...',
+         guestsAmount: 2,
+         ratings: 3.4,
+      },
+      {
+         slides: sliderData,
+         price: 26,
+         description: 'Beautiful and picturesque...',
+         location: '12 Morris Ave, Toronto,...',
+         guestsAmount: 2,
+         ratings: 3.4,
+      },
+      {
+         slides: sliderData,
+         price: 26,
+         description: 'Beautiful and picturesque...',
+         location: '12 Morris Ave, Toronto,...',
+         guestsAmount: 2,
+         ratings: 3.4,
+      },
+      {
+         slides: sliderData,
+         price: 26,
+         description: 'Beautiful and picturesque...',
+         location: '12 Morris Ave, Toronto,...',
+         guestsAmount: 2,
+         ratings: 3.4,
+      },
+      {
+         slides: sliderData,
+         price: 26,
+         description: 'Beautiful and picturesque...',
+         location: '12 Morris Ave, Toronto,...',
+         guestsAmount: 2,
+         ratings: 3.4,
+      },
+      {
+         slides: sliderData,
+         price: 26,
+         description: 'Beautiful and picturesque...',
+         location: '12 Morris Ave, Toronto,...',
+         guestsAmount: 2,
+         ratings: 3.4,
+      },
+      {
+         slides: sliderData,
+         price: 26,
+         description: 'Beautiful and picturesque...',
+         location: '12 Morris Ave, Toronto,...',
+         guestsAmount: 2,
+         ratings: 3.4,
+      },
+      {
+         slides: sliderData,
+         price: 26,
+         description: 'Beautiful and picturesque...',
+         location: '12 Morris Ave, Toronto,...',
+         guestsAmount: 2,
+         ratings: 3.4,
+      },
+      {
+         slides: sliderData,
+         price: 26,
+         description: 'Beautiful and picturesque...',
+         location: '12 Morris Ave, Toronto,...',
+         guestsAmount: 2,
+         ratings: 3.4,
+      },
+      {
+         slides: sliderData,
+         price: 26,
+         description: 'Beautiful and picturesque...',
+         location: '12 Morris Ave, Toronto,...',
+         guestsAmount: 2,
+         ratings: 3.4,
+      },
+      {
+         slides: sliderData,
+         price: 26,
+         description: 'Beautiful and picturesque...',
+         location: '12 Morris Ave, Toronto,...',
+         guestsAmount: 2,
+         ratings: 3.4,
+      },
+      {
+         slides: sliderData,
+         price: 26,
+         description: 'Beautiful and picturesque...',
+         location: '12 Morris Ave, Toronto,...',
+         guestsAmount: 2,
+         ratings: 3.4,
+      },
+      {
+         slides: sliderData,
+         price: 26,
+         description: 'Beautiful and picturesque...',
+         location: '12 Morris Ave, Toronto,...',
+         guestsAmount: 2,
+         ratings: 3.4,
+      },
+      {
+         slides: sliderData,
+         price: 26,
+         description: 'Beautiful and picturesque...',
+         location: '12 Morris Ave, Toronto,...',
+         guestsAmount: 2,
+         ratings: 3.4,
+      },
+      {
+         slides: sliderData,
+         price: 26,
+         description: 'Beautiful and picturesque...',
+         location: '12 Morris Ave, Toronto,...',
+         guestsAmount: 2,
+         ratings: 3.4,
+      },
+      {
+         slides: sliderData,
+         price: 26,
+         description: 'Beautiful and picturesque...',
+         location: '12 Morris Ave, Toronto,...',
+         guestsAmount: 2,
+         ratings: 3.4,
+      },
+      {
+         slides: sliderData,
+         price: 26,
+         description: 'Beautiful and picturesque...',
+         location: '12 Morris Ave, Toronto,...',
+         guestsAmount: 2,
+         ratings: 3.4,
+      },
+   ]
    return (
       <div className="App">
-         <p>development</p>
-         <AdminProfileApplicationCard isViewed={isViewed} />
-         <button onClick={openHandler}>viewed</button>
-         {isViewed && <NotViewedCard />}
+         {/* <p>development</p> */}
+         <AdminApplication CardData={CardData} />
       </div>
    )
 }

@@ -46,7 +46,7 @@ const Img = styled.img`
    height: 5px;
    @media (max-width: 375px) {
       width: 25px;
-      height: 10px;
+      height: 6px;
    }
 `
 
@@ -57,6 +57,14 @@ const DivContainerMeatBalls = styled.div`
    display: flex;
    flex-direction: column;
    justify-content: center;
+   position: absolute;
+   background: white;
+   left: 24px;
+   bottom: 14px;
+   @media screen and (max-width: 375px) {
+      left: 39.8%;
+      bottom: 7px;
+   }
 `
 
 const TextMeatBalls = styled.span`
