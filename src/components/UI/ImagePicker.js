@@ -12,7 +12,6 @@ const ImagePicker = ({ allPhotos, getPhoto, ...props }) => {
    const [closeInputFile, setCloseInputFile] = useState(true)
    const [imageSizeTextError, setImageSizeTextError] = useState(true)
    const maxPhotos = 4
-
    // you can give initialstate -> array, when you call this component
    // and give props allPhotos
    // you can get all photos and send, when you call this component
@@ -20,6 +19,9 @@ const ImagePicker = ({ allPhotos, getPhoto, ...props }) => {
 
    const getAllPhotoAndSend = (getphotofile) => getPhoto(getphotofile)
 
+   useEffect(() => {
+      setPhotos(allPhotos)
+   }, [allPhotos])
    const onChange = (imageList) => {
       // eslint-disable-next-line array-callback-return, consistent-return
       const errorImageText = imageList.find((item) => {
@@ -144,7 +146,8 @@ const DivWrapper = styled.div`
    box-sizing: border-box;
    width: 503px;
    height: 135px;
-   margin: 0;
+   margin-bottom: 28px;
+   margin-top: 14px;
    padding: 0;
    font-family: 'Inter';
    @media screen and (max-width: 375px) {

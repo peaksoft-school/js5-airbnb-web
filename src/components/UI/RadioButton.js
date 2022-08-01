@@ -1,12 +1,12 @@
 import styled from 'styled-components'
 
-function RadioButton({ checked, value, onChange, ...props }) {
+function RadioButton({ name, checked, value, onChange, ...props }) {
    return (
       <Label style={props}>
          <Input
             type="radio"
-            name="simple"
-            onChange={(event) => onChange(event.target.value)}
+            name={name}
+            onChange={(event) => onChange(event)}
             value={value}
          />
          <Span />

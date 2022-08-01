@@ -21,7 +21,7 @@ function Select({
 
    return (
       <BoxStyled variant={variant}>
-         <InputLabel>{label}</InputLabel>
+         <StyledInputLabel>{label}</StyledInputLabel>
          <FormControl fullWidth>
             <SelectMui onChange={handleChange} value={value}>
                {options?.map((item) => {
@@ -40,17 +40,20 @@ export default Select
 
 const BoxStyled = styled(Box)`
    width: ${(props) => (props.variant === 'sort' ? '271px' : '610px')};
-   height: 262px;
+   height: 200px;
    background: #ffffff;
    border-radius: 2px;
    & fieldset {
       border: 1px solid #c4c4c4 !important;
    }
-   @media (max-width: 375px) {
+   @media (max-width: 480px) {
       width: 343px;
       height: 262px;
       background: #ffffff;
       border-radius: 2px;
-      margin: 20px;
+      margin: 16px;
    }
+`
+const StyledInputLabel = styled(InputLabel)`
+   margin-bottom: 18px;
 `
