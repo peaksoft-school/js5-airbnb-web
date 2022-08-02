@@ -16,12 +16,8 @@ const Slider = (props) => {
    return (
       <Box className="slider-wrapper">
          <Slide {...properties}>
-            {props.data.slideImages.map((each) => (
-               <Styledimg
-                  src={each}
-                  key={Math.random().toString}
-                  alt="Slider photos"
-               />
+            {props.images.map((each) => (
+               <Styledimg src={each} key={each.id} alt="Slider photos" />
             ))}
          </Slide>
       </Box>

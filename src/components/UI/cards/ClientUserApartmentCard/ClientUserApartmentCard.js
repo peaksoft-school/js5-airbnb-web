@@ -1,44 +1,43 @@
 import React from 'react'
+import { BrowserRouter as Router, Link } from 'react-router-dom'
 import styled from 'styled-components'
-import locationIcon from '../../assets/icons/locationIcon.png'
-import star from '../../assets/icons/Star.png'
-import Button from '../../components/UI/Button'
+import locationIcon from '../../../../assets/icons/locationIcon.png'
+import star from '../../../../assets/icons/Star.png'
+import Button from '../../Button'
 import Slider from './imageSlider/Slider'
 
 const UserProfileApartmentCard = (props) => {
    return (
-      <>
-         {props.ApartmentInfo.map((value) => (
-            <StyledCard key={value.id}>
-               <Slider data={value} />
-               <ApartmentInfoWrapper>
-                  <Cont>
-                     <StyledP>
-                        <p>${value.price} /</p>
-                        <span> day</span>
-                     </StyledP>
-                     <div>
-                        <img src={star} alt="star" />
-                        <p> {value.ratings}</p>
-                     </div>
-                  </Cont>
-                  <Description>{value.description}</Description>
-                  <Location>
-                     <img src={locationIcon} alt="locationIcon" />
-                     <p>{value.location}</p>
-                  </Location>
-                  <BottomWrap>
-                     <Amount>
-                        <p>{value.guestsAmount} guests</p>
-                     </Amount>
-                     <Button style={{ fontSize: '12px', height: '27px' }}>
-                        BOOK
-                     </Button>
-                  </BottomWrap>
-               </ApartmentInfoWrapper>
-            </StyledCard>
-         ))}
-      </>
+      <Router>
+         <StyledCard key={props.id}>
+            <Slider data={props} />
+            <ApartmentInfoWrapper>
+               <AmountRatingsContainer>
+                  <StyledP>
+                     <p>${props.price} /</p>
+                     <span> day</span>
+                  </StyledP>
+                  <div>
+                     <img src={star} alt="star" />
+                     <p> {props.ratings}</p>
+                  </div>
+               </AmountRatingsContainer>
+               <Description>{props.description}</Description>
+               <Location>
+                  <img src={locationIcon} alt="locationIcon" />
+                  <p>{props.location}</p>
+               </Location>
+               <BottomWrap>
+                  <Amount>
+                     <p>{props.guestsAmount} guests</p>
+                  </Amount>
+                  <Link to="/InnerPageOfHotel">
+                     <Button>BOOK</Button>
+                  </Link>
+               </BottomWrap>
+            </ApartmentInfoWrapper>
+         </StyledCard>
+      </Router>
    )
 }
 
@@ -60,12 +59,13 @@ const StyledCard = styled.div`
    @media screen and (max-width: 376px) {
       width: 343px;
       margin: 0 16px;
+      overflow: hidden;
    }
 `
 const ApartmentInfoWrapper = styled.div`
    padding: 0 20px;
 `
-const Cont = styled.div`
+const AmountRatingsContainer = styled.div`
    display: flex;
    justify-content: space-between;
    align-items: center;
