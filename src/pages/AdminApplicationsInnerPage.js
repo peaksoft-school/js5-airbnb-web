@@ -1,20 +1,19 @@
 import { useState } from 'react'
 import styled from 'styled-components'
 import SkeletonUser from '../assets/icons/SkeletonUser.png'
+import ImageSlider from '../components/ImageSlider'
+import Button from '../components/UI/Button'
+import Modal from '../components/UI/Modal'
+import SnackBar from '../components/UI/SnackBar'
 import UserNavbar from '../layout/headers/AdminHeader/AdminNavbar/AdminNavbar'
-import Button from './UI/Button'
-import Modal from './UI/Modal'
-import SnackBar from './UI/SnackBar'
 
 const AdminApplicationsInnerPage = ({ arrayInnerPageDates }) => {
    const [isAccepted, setIsAccepted] = useState(false)
    const [isRejectModal, setIsRejectModal] = useState(false)
    const [isSent, setIsSent] = useState(false)
-   const [selectImg, setSelectImage] = useState(arrayInnerPageDates.images[0])
    const togleHandlerAccept = () => {
       setIsAccepted(true)
    }
-   const arrayImages = arrayInnerPageDates.images.filter((i) => i !== selectImg)
    const togleHandlerReject = () => {
       setIsRejectModal((prevState) => !prevState)
    }
@@ -29,21 +28,7 @@ const AdminApplicationsInnerPage = ({ arrayInnerPageDates }) => {
          <UserNavbar />
          <NameApartment>{arrayInnerPageDates.titleName}</NameApartment>
          <GlobalContainer>
-            <ContainerPhotos>
-               <DateImg src={selectImg} alt="#" />
-               <LittleContainerImage>
-                  {arrayImages.map((i, index) => (
-                     <Dateimg2
-                        onClick={() => {
-                           setSelectImage(i)
-                        }}
-                        // eslint-disable-next-line react/no-array-index-key
-                        key={index}
-                        src={i}
-                     />
-                  ))}
-               </LittleContainerImage>
-            </ContainerPhotos>
+            <ImageSlider arrayInnerPageDates={arrayInnerPageDates} />
             <ContainerDates>
                <DivClikc>
                   <TextInDivClick1>Apartment</TextInDivClick1>
@@ -170,46 +155,6 @@ const ContainerDates = styled.div`
       transition: 0.8s all ease;
       width: 343px;
       margin-top: -152px;
-   }
-`
-
-const ContainerPhotos = styled.div`
-   @media (max-width: 375px) {
-      transition: 0.8s all ease;
-      width: 375px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-   }
-`
-
-const DateImg = styled.img`
-   width: 630px;
-   height: 507px;
-   @media (max-width: 375px) {
-      transition: 0.8s all ease;
-      width: 343px;
-      height: 276px;
-   }
-`
-
-const LittleContainerImage = styled.div`
-   display: flex;
-   justify-content: space-between;
-   margin-top: 10px;
-   @media (max-width: 375px) {
-      transition: 0.8s all ease;
-      width: 343px;
-   }
-`
-
-const Dateimg2 = styled.img`
-   width: 196px;
-   height: 137px;
-   @media (max-width: 375px) {
-      width: 105px;
-      height: 57px;
    }
 `
 const UserContainer = styled.div`
