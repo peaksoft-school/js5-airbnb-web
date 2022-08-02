@@ -1,42 +1,33 @@
-import React, { useState } from 'react'
 import styled from 'styled-components'
 import AdminHeader from '../layout/headers/AdminHeader/AdminHeader'
 import AdminProfileApplicationCard from './UI/cards/AdminProfileApplicationCard'
-import NotViewedCard from './UI/cards/NotViewedCard'
+import Paginations from './UI/Pagination'
 
 const AdminApplication = (props) => {
-   const [isViewed, setIsViewed] = useState(false)
-
-   const openHandler = () => {
-      setIsViewed(!isViewed)
-   }
-   // eslint-disable-next-line consistent-return, array-callback-return
-   const newdata = props.CardData.filter((i, index) => {
-      if (index <= 14) {
-         return i
-      }
-   })
    return (
       <div>
          <AdminHeader />
          <StyledAdminApplication>
             <StyledH3>APPLICATION</StyledH3>
             <StyledCards>
-               {newdata.map((item) => (
-                  <AdminProfileApplicationCard
-                     isViewed={isViewed}
-                     slides={item.slides}
-                     price={item.price}
-                     location={item.location}
-                     description={item.description}
-                     guestsAmount={item.guestsAmount}
-                     ratings={item.ratings}
-                  />
-               ))}
+               {props.CardData?.length && (
+                  <>
+                     {props.CardData.map((item) => (
+                        <AdminProfileApplicationCard
+                           slides={item.slides}
+                           price={item.price}
+                           location={item.location}
+                           description={item.description}
+                           guestsAmount={item.guestsAmount}
+                           ratings={item.ratings}
+                        />
+                     ))}
+                  </>
+               )}
             </StyledCards>
-
-            <button onClick={openHandler}>viewed</button>
-            {isViewed && <NotViewedCard />}
+            <StyledPagination>
+               <Paginations />
+            </StyledPagination>
          </StyledAdminApplication>
       </div>
    )
@@ -63,9 +54,16 @@ const StyledCards = styled.div`
    grid-template-columns: repeat(5, 1fr);
    grid-template-rows: repeat(3, 1fr);
    width: 100%;
-   height: 858px;
    gap: 20px;
    @media screen and (max-width: 375px) {
       grid-template-columns: repeat(1, 1fr);
+   }
+`
+const StyledPagination = styled.div`
+   margin: 60px 0;
+   display: flex;
+   justify-content: center;
+   @media screen and (max-width: 375px) {
+      display: none;
    }
 `

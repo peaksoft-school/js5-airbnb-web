@@ -2,27 +2,26 @@ import { useState } from 'react'
 import styled from 'styled-components'
 import MeatBallsPng from '../../assets/icons/balls.png'
 
-const MeatBalls = ({ balls, onClick }) => {
+const MeatBalls = (props) => {
    const [state, setState] = useState(false)
 
    const toggleHandler = () => {
       setState((prevstate) => !prevstate)
    }
-
    const optionChangeHandler = (option) => {
-      setState(false)
-      onClick(option)
+      props.onClick(option)
    }
-
    return (
       <DivBlock>
          <Img onClick={toggleHandler} src={MeatBallsPng} />
          {state && (
             <DivContainerMeatBalls>
-               {balls.map((option) => (
+               {props.balls.map((option) => (
                   <TextMeatBalls
                      key={option.id}
-                     onClick={() => optionChangeHandler(option)}
+                     onClick={() => {
+                        optionChangeHandler(option)
+                     }}
                   >
                      {option.text}
                   </TextMeatBalls>

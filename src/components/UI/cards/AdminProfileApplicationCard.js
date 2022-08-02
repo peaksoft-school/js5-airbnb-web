@@ -6,21 +6,6 @@ import { ReactComponent as RightArrow } from '../../../assets/icons/right-arr.sv
 import star from '../../../assets/icons/Star.png'
 import MeatBalls from '../MeatBalls'
 
-const balls = [
-   {
-      text: 'Accept',
-      id: 1,
-   },
-   {
-      text: 'Delete',
-      id: 2,
-   },
-   {
-      text: 'Reject',
-      id: 3,
-   },
-]
-
 const AdminProfileApplicationCard = (props) => {
    const [currentSlide, setCurrentSlide] = useState(0)
    const { isViewed, slides } = props
@@ -81,7 +66,7 @@ const AdminProfileApplicationCard = (props) => {
          </Location>
          <Amount>
             <p>{props.guestsAmount} guests</p>
-            <MeatBalls balls={balls} />
+            <MeatBalls />
          </Amount>
       </StyledCard>
    )
@@ -110,8 +95,6 @@ const StyledSpan = styled.span`
 `
 const StyledImagesAndArrows = styled.div`
    display: block;
-   /* width: 210px;
-   height: 136px; */
    position: relative;
    & > :nth-child(2) {
       display: none;
