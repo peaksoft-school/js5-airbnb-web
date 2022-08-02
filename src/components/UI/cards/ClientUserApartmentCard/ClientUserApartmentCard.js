@@ -6,7 +6,7 @@ import star from '../../../../assets/icons/Star.png'
 import Button from '../../Button'
 import Slider from './imageSlider/Slider'
 
-const UserProfileApartmentCard = (props) => {
+const ClientApartmentCard = (props) => {
    return (
       <StyledCard key={props.data.id}>
          <Slider images={props.data.images} />
@@ -39,7 +39,7 @@ const UserProfileApartmentCard = (props) => {
    )
 }
 
-export default UserProfileApartmentCard
+export default ClientApartmentCard
 
 const StyledCard = styled.div`
    width: 295px;
