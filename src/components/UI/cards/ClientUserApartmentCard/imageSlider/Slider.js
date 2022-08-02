@@ -17,7 +17,7 @@ const Slider = (props) => {
       <Box className="slider-wrapper">
          <Slide {...properties}>
             {props.images.map((each) => (
-               <Styledimg src={each} key={each.id} alt="Slider photos" />
+               <Styledimg src={each.url} key={each.id} alt={each.id} />
             ))}
          </Slide>
       </Box>
