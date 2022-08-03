@@ -32,9 +32,9 @@ const Slider = (props) => {
                               <RightArrow onClick={nextSlideHandler} />
                            </StyledArrows>
                            <Indicators>
-                              {slides.map((slides, index) => (
+                              {slides.map((slideItem, index) => (
                                  <StyledIndicator
-                                    key={slides.id}
+                                    key={slideItem.id}
                                     slideIndex={currentSlide}
                                     index={index}
                                  />
