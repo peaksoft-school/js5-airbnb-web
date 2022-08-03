@@ -4,6 +4,21 @@ import star from '../../../assets/icons/Star.png'
 import Slider from '../../Slider'
 import MeatBalls from '../MeatBalls'
 
+const meatBallsOptions = [
+   {
+      text: 'Accept',
+      id: 1,
+   },
+   {
+      text: 'Delete',
+      id: 2,
+   },
+   {
+      text: 'Reject',
+      id: 3,
+   },
+]
+
 const AdminProfileApplicationCard = (props) => {
    const { isViewed, slides } = props
 

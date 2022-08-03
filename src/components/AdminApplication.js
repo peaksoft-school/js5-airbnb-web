@@ -13,6 +13,7 @@ const AdminApplication = (props) => {
                <>
                   {props.CardData.map((item) => (
                      <AdminProfileApplicationCard
+                        key={item.id}
                         slides={item.slides}
                         price={item.price}
                         location={item.location}

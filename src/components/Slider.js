@@ -23,6 +23,7 @@ const Slider = (props) => {
                      {index === currentSlide && (
                         <StyledImagesAndArrows>
                            <StyledCardImage
+                              key={slide.id}
                               src={slide.image}
                               alt="house images"
                            />
@@ -33,6 +34,7 @@ const Slider = (props) => {
                            <Indicators>
                               {slides.map((slides, index) => (
                                  <StyledIndicator
+                                    key={slides.id}
                                     slideIndex={currentSlide}
                                     index={index}
                                  />
