@@ -10,20 +10,18 @@ const AdminApplication = (props) => {
          <StyledAdminApplication>
             <StyledH3>APPLICATION</StyledH3>
             <StyledCards>
-               {props.CardData?.length && (
-                  <>
-                     {props.CardData.map((item) => (
-                        <AdminProfileApplicationCard
-                           slides={item.slides}
-                           price={item.price}
-                           location={item.location}
-                           description={item.description}
-                           guestsAmount={item.guestsAmount}
-                           ratings={item.ratings}
-                        />
-                     ))}
-                  </>
-               )}
+               <>
+                  {props.CardData.map((item) => (
+                     <AdminProfileApplicationCard
+                        slides={item.slides}
+                        price={item.price}
+                        location={item.location}
+                        description={item.description}
+                        guestsAmount={item.guestsAmount}
+                        ratings={item.ratings}
+                     />
+                  ))}
+               </>
             </StyledCards>
             <StyledPagination>
                <Paginations />

@@ -9,7 +9,7 @@ const MeatBalls = (props) => {
       setState((prevstate) => !prevstate)
    }
    const optionChangeHandler = (option) => {
-      props.onClick(option)
+      option.onClick(option)
    }
    return (
       <DivBlock>
