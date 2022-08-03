@@ -1,8 +1,9 @@
+/* eslint-disable import/no-unresolved */
 import React from 'react'
 import { Flex } from 'gestalt'
-import DateRangePicker from 'gestalt-datepicker'
 import 'gestalt/dist/gestalt.css'
 import 'gestalt-datepicker/dist/gestalt-datepicker.css'
+import DateRangePicker from 'gestalt-datepicker'
 
 export default function BasicDatePicker({
    onChangeHandlerIn,
