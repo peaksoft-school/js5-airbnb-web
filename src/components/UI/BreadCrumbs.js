@@ -23,7 +23,7 @@ const BreadCrumbs = ({
    return (
       <LayoutBreadcrumbs aria-label="breadcrumb">
          {showfirstpath.showfirstpath ? (
-            <LinkStyle onClick={() => navigate('/')}>
+            <LinkStyle onClick={() => navigate('/')} fontSize={props.fontSize}>
                {toUpperFirstPath}
             </LinkStyle>
          ) : null}

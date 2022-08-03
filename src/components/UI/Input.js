@@ -9,7 +9,7 @@ export default Input
 
 const StyledInput = styled.input`
    width: ${(props) => props.width || '100%'};
-   height: 39px;
+   height: '39px';
    padding: ${(props) => props.padding || '10px 8px 10px 16px'};
    &:hover {
       border: 1px solid #828282;
@@ -23,7 +23,7 @@ const StyledInput = styled.input`
    border-radius: 2px;
    outline: none;
    &::placeholder {
-      width: 70px;
+      /* width: 70px; */
       height: 19px;
       font-family: 'Inter';
       font-weight: 400;
