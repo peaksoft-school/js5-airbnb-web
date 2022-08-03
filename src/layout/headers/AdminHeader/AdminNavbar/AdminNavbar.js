@@ -22,28 +22,30 @@ const UserNavbar = ({ mobileToggle }) => {
                <MobileIcon onClick={mobileToggle}>
                   <Bars />
                </MobileIcon>
-               <NavMenu>
-                  <NavItem>
-                     <NavLinks to="about">Application</NavLinks>
-                  </NavItem>
-                  <NavItem>
-                     <NavLinks to="discover">Users</NavLinks>
-                  </NavItem>
-                  <NavItem>
-                     <NavLinks to="services">All housing</NavLinks>
-                  </NavItem>
-               </NavMenu>
-               <NavBtn>
-                  <NavBtnLink onClick={handleToggle}>
-                     Administrator
-                     <StyledDropdown />
-                  </NavBtnLink>
-                  {isOpen && (
-                     <NavDropdownLog>
-                        <DropdownOptions>Log out</DropdownOptions>
-                     </NavDropdownLog>
-                  )}
-               </NavBtn>
+               <StyledNavMenu>
+                  <NavMenu>
+                     <NavItem>
+                        <NavLinks to="about">Application</NavLinks>
+                     </NavItem>
+                     <NavItem>
+                        <NavLinks to="discover">Users</NavLinks>
+                     </NavItem>
+                     <NavItem>
+                        <NavLinks to="services">All housing</NavLinks>
+                     </NavItem>
+                  </NavMenu>
+                  <NavBtn>
+                     <NavBtnLink onClick={handleToggle}>
+                        Administrator
+                        <StyledDropdown />
+                     </NavBtnLink>
+                     {isOpen && (
+                        <NavDropdownLog>
+                           <DropdownOptions>Log out</DropdownOptions>
+                        </NavDropdownLog>
+                     )}
+                  </NavBtn>
+               </StyledNavMenu>
             </NavbarContainer>
          </Nav>
       </div>
@@ -51,6 +53,12 @@ const UserNavbar = ({ mobileToggle }) => {
 }
 
 export default UserNavbar
+
+const StyledNavMenu = styled.div`
+   display: flex;
+   justify-content: space-between;
+   width: 1050px;
+`
 
 const Nav = styled.nav`
    background: #0b0b0b;
@@ -124,9 +132,10 @@ const MobileIcon = styled.div`
 const NavMenu = styled.ul`
    display: flex;
    align-items: center;
+   /* justify-content: space-between; */
    list-style: none;
    text-align: center;
-   margin-right: 750px;
+   /* margin-right: 530px; */
 
    @media screen and (max-width: 768px) {
       display: none;
@@ -180,22 +189,28 @@ const NavBtnLink = styled.div`
 `
 
 const NavDropdownLog = styled.div`
-   width: 160px;
-   height: 57px;
+   width: 180px;
+   height: 59px;
+   box-sizing: border-box;
    border: 1px solid #c4c4c4;
    display: flex;
    flex-direction: column;
-   align-items: center;
-   justify-content: flex-start;
+   /* align-items: center; */
+   justify-content: center;
    background: #fff;
+   position: absolute;
+   top: 60px;
 `
 
 const DropdownOptions = styled.span`
-   height: 40px;
+   height: 27px;
    font-weight: 400;
    font-size: 16px;
+   display: flex;
+   align-items: center;
    color: #5d5d5d;
-   padding: 8px 20px;
+   padding-left: 20px;
+   /* padding: 8px 50px; */
    cursor: pointer;
    &:hover {
       background: #f3f3f3;
