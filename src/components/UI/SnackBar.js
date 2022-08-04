@@ -38,7 +38,7 @@ const NotificationAlert = styled(Alert)`
       font-family: 'Inter';
       font-style: normal;
       font-weight: 500;
-      font-size: 16px;
+      font-size: 20px;
       line-height: 19px;
       margin-bottom: ${(props) =>
          props.severity === 'success' ? '4px' : '5px'};
@@ -49,9 +49,9 @@ const NotificationAlert = styled(Alert)`
       font-family: 'Inter';
       font-style: normal;
       font-weight: 600;
-      font-size: 20px;
+      font-size: 16px;
       line-height: 19px;
-      color: #000000;
+      color: #646464;
    }
    @media (max-width: 375px) {
       width: 322px;
