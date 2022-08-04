@@ -9,20 +9,33 @@ const AdminProfileApplicationCard = (props) => {
       {
          text: 'Accept',
          id: 1,
-         onClick: () => {},
+         onClick: (option, id) => {
+            props.onClick(option, id)
+         },
       },
       {
          text: 'Delete',
          id: 2,
-         onClick: () => {},
+         onClick: (option, id) => {
+            props.onClick(option, id)
+         },
       },
       {
          text: 'Reject',
          id: 3,
-         onClick: () => {},
+         onClick: (option, id) => {
+            props.onClick(option, id)
+         },
       },
    ]
    const { isViewed, slides } = props
+   // const [isAccepted, setIsAccepted] = useState(false)
+
+   // const optionHandler = (option) => {
+   //    if (option?.text === 'Accepted') {
+   //       setIsAccepted(true)
+   //    }
+   // }
 
    return (
       <StyledCard isViewed={isViewed}>
@@ -43,7 +56,10 @@ const AdminProfileApplicationCard = (props) => {
          </Location>
          <Amount>
             <p>{props.guestsAmount} guests</p>
-            <MeatBalls balls={meatBallsOptions} />
+            <MeatBalls balls={meatBallsOptions} id={props.data.id} />
+            {/* {isAccepted && (
+               <Snackbar />
+            )} */}
          </Amount>
       </StyledCard>
    )
