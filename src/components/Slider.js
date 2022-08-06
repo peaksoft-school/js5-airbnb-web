@@ -18,7 +18,7 @@ const Slider = (props) => {
       <ImageSlider>
          {slides.map((slide, index) => {
             return (
-               <div>
+               <div key={slide.id}>
                   <StyledSlider>
                      {index === currentSlide && (
                         <StyledImagesAndArrows>

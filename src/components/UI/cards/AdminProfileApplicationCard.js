@@ -9,24 +9,30 @@ const AdminProfileApplicationCard = (props) => {
       {
          text: 'Accept',
          id: 1,
-         onClick: () => {},
+         onClick: (option, id) => {
+            props.onClick(option, id)
+         },
       },
       {
          text: 'Delete',
          id: 2,
-         onClick: () => {},
+         onClick: (option, id) => {
+            props.onClick(option, id)
+         },
       },
       {
          text: 'Reject',
          id: 3,
-         onClick: () => {},
+         onClick: (option, id) => {
+            props.onClick(option, id)
+         },
       },
    ]
    const { isViewed, slides } = props
 
    return (
       <StyledCard isViewed={isViewed}>
-         <Slider slides={slides} />
+         <Slider slides={slides} key={props.data.id} />
          <Cont>
             <p>
                ${props.price} / <StyledSpan>day</StyledSpan>
@@ -43,7 +49,7 @@ const AdminProfileApplicationCard = (props) => {
          </Location>
          <Amount>
             <p>{props.guestsAmount} guests</p>
-            <MeatBalls balls={meatBallsOptions} />
+            <MeatBalls balls={meatBallsOptions} id={props.data.id} />
          </Amount>
       </StyledCard>
    )

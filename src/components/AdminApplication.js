@@ -1,9 +1,59 @@
+import { useState, useEffect } from 'react'
+import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
 import AdminHeader from '../layout/headers/AdminHeader/AdminHeader'
+import { sentMessageActions } from '../store/slices/sentMessageSlice'
+import Button from './UI/Button'
 import AdminProfileApplicationCard from './UI/cards/AdminProfileApplicationCard'
+import Modal from './UI/Modal'
 import Paginations from './UI/Pagination'
+import SnackBar from './UI/SnackBar'
 
 const AdminApplication = (props) => {
+   const [array, setArray] = useState(props.CardData)
+   const [id, setId] = useState('')
+   const [getId, setGetId] = useState('')
+   const [isAccepted, setIsAccepted] = useState(false)
+   const [isRejected, setIsRejected] = useState(false)
+   const [isMessageSent, setIsMessageSent] = useState(false)
+   const [messageValue, setMessageValue] = useState('')
+   const dispatch = useDispatch()
+
+   const optionsHandler = (text, id) => {
+      if (text === 'Delete') {
+         setId(id)
+      }
+      if (text === 'Accept') {
+         setIsAccepted(true)
+      }
+      if (text === 'Reject') {
+         setIsRejected(true)
+         setGetId(id)
+      }
+   }
+   const messageSentHandler = () => {
+      setIsMessageSent(true)
+      setIsRejected(false)
+      dispatch(
+         sentMessageActions.saveMessage({
+            getId,
+            message: messageValue,
+         })
+      )
+      setMessageValue('')
+   }
+   const messageValueHandler = (e) => {
+      setMessageValue(e.target.value)
+   }
+   const rejectHandler = () => {
+      setIsRejected((prev) => !prev)
+   }
+   useEffect(() => {
+      const deleteArray = array.filter((el) => el.id !== +id)
+      setArray(deleteArray)
+      setGetId(id)
+   }, [id])
+
    return (
       <div>
          <AdminHeader />
@@ -11,8 +61,10 @@ const AdminApplication = (props) => {
             <StyledH3>APPLICATION</StyledH3>
             <StyledCards>
                <>
-                  {props.CardData.map((item) => (
+                  {array.map((item) => (
                      <AdminProfileApplicationCard
+                        data={item}
+                        onClick={optionsHandler}
                         key={item.id}
                         slides={item.slides}
                         price={item.price}
@@ -22,6 +74,57 @@ const AdminApplication = (props) => {
                         ratings={item.ratings}
                      />
                   ))}
+                  {isAccepted && (
+                     <SnackBar
+                        open="open"
+                        text="Moderation successfully passed"
+                        severity="success"
+                        message="Accepted"
+                        onClose={() => {
+                           setIsAccepted()
+                        }}
+                     />
+                  )}
+                  {isRejected && (
+                     <RejectModal open="open">
+                        <StyledText>REJECT</StyledText>
+                        <StyledTextArea
+                           value={messageValue}
+                           onChange={messageValueHandler}
+                           type="text"
+                           placeholder="Write the reason for your rejection "
+                        />
+                        <StyledButtons>
+                           <Button
+                              variant="outlined"
+                              border="none"
+                              width="196px"
+                              height="37px"
+                              hover="none"
+                              onClick={rejectHandler}
+                           >
+                              CANCEL
+                           </Button>
+                           <Button
+                              width="196px"
+                              height="37px"
+                              onClick={messageSentHandler}
+                           >
+                              SEND
+                           </Button>
+                        </StyledButtons>
+                     </RejectModal>
+                  )}
+                  {isMessageSent && (
+                     <SnackBar
+                        open="open"
+                        severity="success"
+                        message="Successfully sent"
+                        onClose={() => {
+                           setIsMessageSent()
+                        }}
+                     />
+                  )}
                </>
             </StyledCards>
             <StyledPagination>
@@ -33,6 +136,11 @@ const AdminApplication = (props) => {
 }
 
 export default AdminApplication
+
+const RejectModal = styled(Modal)`
+   width: 474px;
+   height: 260px;
+`
 
 const StyledAdminApplication = styled.div`
    margin: 0 40px;
@@ -65,4 +173,37 @@ const StyledPagination = styled.div`
    @media screen and (max-width: 375px) {
       display: none;
    }
+`
+const StyledTextArea = styled.textarea`
+   resize: none;
+   width: 414px;
+   height: 104px;
+   border: 1px solid #c4c4c4;
+   border-radius: 2px;
+   outline: none;
+   padding: 10px 16px;
+   &::placeholder {
+      /* padding: 10px 16px; */
+      color: #c4c4c4;
+      font-style: normal;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 19px;
+   }
+`
+const StyledButtons = styled.div`
+   margin-top: 22px;
+   display: flex;
+   justify-content: space-between;
+`
+
+const StyledText = styled.p`
+   font-family: 'Inter';
+   font-style: normal;
+   font-weight: 500;
+   font-size: 18px;
+   line-height: 22px;
+   color: #000;
+   margin-bottom: 25px;
+   text-align: center;
 `
