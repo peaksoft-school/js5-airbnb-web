@@ -12,7 +12,7 @@ import SnackBar from './UI/SnackBar'
 const AdminApplication = (props) => {
    const [cardData, setCardData] = useState(props.CardData)
    const [cardId, setCardId] = useState('')
-   const [getId, setGetId] = useState('')
+   const [getCardId, setGetCardId] = useState('')
    const [isAccepted, setIsAccepted] = useState(false)
    const [isRejected, setIsRejected] = useState(false)
    const [isMessageSent, setIsMessageSent] = useState(false)
@@ -28,7 +28,7 @@ const AdminApplication = (props) => {
       }
       if (text === 'Reject') {
          setIsRejected(true)
-         setGetId(id)
+         setGetCardId(id)
       }
    }
    const messageSentHandler = () => {
@@ -36,7 +36,7 @@ const AdminApplication = (props) => {
       setIsRejected(false)
       dispatch(
          sentMessageActions.saveMessage({
-            getId,
+            getCardId,
             message: messageValue,
          })
       )
@@ -51,7 +51,7 @@ const AdminApplication = (props) => {
    useEffect(() => {
       const deleteArray = cardData.filter((el) => el.id !== +cardId)
       setCardData(deleteArray)
-      setGetId(cardId)
+      setGetCardId(cardId)
    }, [cardId])
 
    return (
