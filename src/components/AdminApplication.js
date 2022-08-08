@@ -10,8 +10,8 @@ import Paginations from './UI/Pagination'
 import SnackBar from './UI/SnackBar'
 
 const AdminApplication = (props) => {
-   const [array, setArray] = useState(props.CardData)
-   const [id, setId] = useState('')
+   const [cardData, setCardData] = useState(props.CardData)
+   const [cardId, setCardId] = useState('')
    const [getId, setGetId] = useState('')
    const [isAccepted, setIsAccepted] = useState(false)
    const [isRejected, setIsRejected] = useState(false)
@@ -21,7 +21,7 @@ const AdminApplication = (props) => {
 
    const optionsHandler = (text, id) => {
       if (text === 'Delete') {
-         setId(id)
+         setCardId(id)
       }
       if (text === 'Accept') {
          setIsAccepted(true)
@@ -49,10 +49,10 @@ const AdminApplication = (props) => {
       setIsRejected((prev) => !prev)
    }
    useEffect(() => {
-      const deleteArray = array.filter((el) => el.id !== +id)
-      setArray(deleteArray)
-      setGetId(id)
-   }, [id])
+      const deleteArray = cardData.filter((el) => el.id !== +cardId)
+      setCardData(deleteArray)
+      setGetId(cardId)
+   }, [cardId])
 
    return (
       <div>
@@ -61,7 +61,7 @@ const AdminApplication = (props) => {
             <StyledH3>APPLICATION</StyledH3>
             <StyledCards>
                <>
-                  {array.map((item) => (
+                  {cardData.map((item) => (
                      <AdminProfileApplicationCard
                         data={item}
                         onClick={optionsHandler}
