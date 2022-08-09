@@ -16,7 +16,10 @@ const MainPage = () => {
             <H1>FIND A PLACE YOU`LL LOVE TO STAY AT</H1>
             <Div2>
                <Container>
-                  <SearchInput placeholder="Region, city, apartment, house..." />
+                  <SearchInput
+                     width="700px"
+                     placeholder="Region, city, apartment, house..."
+                  />
                </Container>
                <Checkbox label="search nearby" color="#EDEDED" />
             </Div2>

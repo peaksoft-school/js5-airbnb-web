@@ -7,10 +7,11 @@ const SearchInput = ({
    handleToggle,
    onChange,
    value,
+   width,
 }) => {
    return (
       <InputWrapper>
-         <StyledSearchInput isOpen={isOpen}>
+         <StyledSearchInput isOpen={isOpen} width={width}>
             <StyledSearchIcon
                onClick={handleToggle}
                src={SearchIcon}
@@ -51,7 +52,7 @@ const StyledSearchInput = styled.div`
       outline: none;
       font-size: 16px;
       color: #5a5757;
-      width: 400px;
+      width: ${({ width }) => width || '400px'};
       ::placeholder {
          color: #c4c4c4;
       }
