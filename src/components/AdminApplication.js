@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
 import AdminHeader from '../layout/headers/AdminHeader/AdminHeader'
+import { slides } from '../slides'
 import { sentMessageActions } from '../store/slices/sentMessageSlice'
 import Button from './UI/Button'
 import AdminProfileApplicationCard from './UI/cards/AdminProfileApplicationCard'
@@ -9,8 +10,20 @@ import Modal from './UI/Modal'
 import Paginations from './UI/Pagination'
 import SnackBar from './UI/SnackBar'
 
-const AdminApplication = (props) => {
-   const [cardData, setCardData] = useState(props.CardData)
+const CardData = [
+   {
+      id: 1,
+      slides,
+      price: 22,
+      location: 'vhvhhb',
+      description: 'bjbkbk',
+      guestsAmount: 5,
+      ratings: 3,
+   },
+]
+
+const AdminApplication = () => {
+   const [cardData, setCardData] = useState(CardData)
    const [cardId, setCardId] = useState('')
    const [getCardId, setGetCardId] = useState('')
    const [isAccepted, setIsAccepted] = useState(false)

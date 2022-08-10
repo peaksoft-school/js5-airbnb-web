@@ -24,7 +24,7 @@ const Slider = (props) => {
                         <StyledImagesAndArrows>
                            <StyledCardImage
                               key={slide.id}
-                              src={slide.image}
+                              src={slide.images}
                               alt="house images"
                            />
                            <StyledArrows>
