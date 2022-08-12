@@ -1,9 +1,22 @@
 import styled from 'styled-components'
 import AdminHeader from '../layout/headers/AdminHeader/AdminHeader'
+import { sliderData } from '../sliderData'
 import AdminProfileApplicationCard from './UI/cards/AdminProfileApplicationCard'
 import Paginations from './UI/Pagination'
 
-const AdminApplication = (props) => {
+const cardData = [
+   {
+      slides: sliderData,
+      id: 1,
+      price: 22.4,
+      location: 'dfsf',
+      description: 'ddddd',
+      ratings: 3.4,
+      guestsAmount: 2,
+   },
+]
+
+const AdminApplication = () => {
    return (
       <div>
          <AdminHeader />
@@ -11,8 +24,9 @@ const AdminApplication = (props) => {
             <StyledH3>APPLICATION</StyledH3>
             <StyledCards>
                <>
-                  {props.CardData.map((item) => (
+                  {cardData.map((item) => (
                      <AdminProfileApplicationCard
+                        data={item}
                         slides={item.slides}
                         price={item.price}
                         location={item.location}

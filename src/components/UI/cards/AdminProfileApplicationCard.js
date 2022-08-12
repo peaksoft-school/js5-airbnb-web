@@ -29,13 +29,6 @@ const AdminProfileApplicationCard = (props) => {
       },
    ]
    const { isViewed, slides } = props
-   // const [isAccepted, setIsAccepted] = useState(false)
-
-   // const optionHandler = (option) => {
-   //    if (option?.text === 'Accepted') {
-   //       setIsAccepted(true)
-   //    }
-   // }
 
    return (
       <StyledCard isViewed={isViewed}>
@@ -57,9 +50,6 @@ const AdminProfileApplicationCard = (props) => {
          <Amount>
             <p>{props.guestsAmount} guests</p>
             <MeatBalls balls={meatBallsOptions} id={props.data.id} />
-            {/* {isAccepted && (
-               <Snackbar />
-            )} */}
          </Amount>
       </StyledCard>
    )
