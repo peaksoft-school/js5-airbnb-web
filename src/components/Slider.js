@@ -13,6 +13,9 @@ const Slider = (props) => {
    const prevSlideHandler = () => {
       setCurrentSlide(currentSlide === 0 ? slides.length - 1 : currentSlide - 1)
    }
+   const moveIndicatorHandler = (index) => {
+      setCurrentSlide(index)
+   }
 
    return (
       <ImageSlider>
@@ -37,6 +40,7 @@ const Slider = (props) => {
                                     key={slideItem.id}
                                     slideIndex={currentSlide}
                                     index={index}
+                                    onClick={() => moveIndicatorHandler(index)}
                                  />
                               ))}
                            </Indicators>
