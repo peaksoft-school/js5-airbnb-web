@@ -5,7 +5,7 @@ import AdminApplication from './components/AdminApplication'
 function App() {
    return (
       <div className="App">
-         <p>Development</p>
+         {/* <p>Development</p> */}
          <AdminApplication />
       </div>
    )

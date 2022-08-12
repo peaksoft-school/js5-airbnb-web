@@ -140,9 +140,13 @@ const AdminApplication = () => {
                   )}
                </>
             </StyledCards>
-            <StyledPagination>
-               <Paginations />
-            </StyledPagination>
+            {cardData.length > 0 ? (
+               <StyledPagination>
+                  <Paginations />
+               </StyledPagination>
+            ) : (
+               ''
+            )}
          </StyledAdminApplication>
       </div>
    )
@@ -196,18 +200,27 @@ const StyledTextArea = styled.textarea`
    outline: none;
    padding: 10px 16px;
    &::placeholder {
-      /* padding: 10px 16px; */
       color: #c4c4c4;
       font-style: normal;
       font-weight: 400;
       font-size: 16px;
       line-height: 19px;
+      @media (max-width: 375px) {
+         font-size: 14.5px;
+      }
+   }
+   @media (max-width: 375px) {
+      width: 272px;
+      height: 104px;
    }
 `
 const StyledButtons = styled.div`
    margin-top: 22px;
    display: flex;
    justify-content: space-between;
+   @media (max-width: 375px) {
+      justify-content: space-around;
+   }
 `
 
 const StyledText = styled.p`
