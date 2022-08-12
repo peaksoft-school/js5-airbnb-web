@@ -13,18 +13,21 @@ const Slider = (props) => {
    const prevSlideHandler = () => {
       setCurrentSlide(currentSlide === 0 ? slides.length - 1 : currentSlide - 1)
    }
+   const moveIndicatorHandler = (index) => {
+      setCurrentSlide(index)
+   }
 
    return (
       <ImageSlider>
          {slides.map((slide, index) => {
             return (
-               <div>
+               <div key={slide.id}>
                   <StyledSlider>
                      {index === currentSlide && (
                         <StyledImagesAndArrows>
                            <StyledCardImage
                               key={slide.id}
-                              src={slide.image}
+                              src={slide.images}
                               alt="house images"
                            />
                            <StyledArrows>
@@ -37,6 +40,7 @@ const Slider = (props) => {
                                     key={slideItem.id}
                                     slideIndex={currentSlide}
                                     index={index}
+                                    onClick={() => moveIndicatorHandler(index)}
                                  />
                               ))}
                            </Indicators>
