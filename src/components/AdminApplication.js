@@ -14,11 +14,11 @@ const CardData = [
    {
       id: 1,
       slides,
-      price: 22,
-      location: 'vhvhhb',
-      description: 'bjbkbk',
+      price: 220,
+      location: '12 Morris Ave, Toronto,...',
+      description: 'Beautiful and picturesque...',
       guestsAmount: 5,
-      ratings: 3,
+      ratings: 3.5,
    },
 ]
 
@@ -122,6 +122,7 @@ const AdminApplication = () => {
                               width="196px"
                               height="37px"
                               onClick={messageSentHandler}
+                              disabled={!messageValue}
                            >
                               SEND
                            </Button>
@@ -198,7 +199,7 @@ const StyledTextArea = styled.textarea`
    border: 1px solid #c4c4c4;
    border-radius: 2px;
    outline: none;
-   padding: 10px 16px;
+   padding: 10px;
    &::placeholder {
       color: #c4c4c4;
       font-style: normal;
