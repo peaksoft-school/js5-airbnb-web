@@ -2,43 +2,43 @@ import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { HeaderImages1, HeaderImages2 } from '../utils/constants/ImageConstants'
 
-const HeaderPhoto = () => {
+const RegionRenderImages = () => {
    return (
       <>
-         <DivPhotos>
+         <ContainerRenderPhotos1>
             {HeaderImages1.map((i) => {
                return (
                   <Link to={i.text} key={i.id}>
-                     <DivImg>
+                     <BoxWrapperImage>
                         <img src={i.img} alt={i.text} />
                         <p>{i.text}</p>
-                     </DivImg>
+                     </BoxWrapperImage>
                   </Link>
                )
             })}
-         </DivPhotos>
-         <DivPhotos2>
+         </ContainerRenderPhotos1>
+         <ContainerRenderPhotos2>
             {HeaderImages2.map((i) => {
                return (
                   <Link key={i.id} to={i.text}>
-                     <Div5>
+                     <BoxWrapperImage2>
                         <img src={i.img} alt={i.text} />
                         <p>{i.text}</p>
-                     </Div5>
+                     </BoxWrapperImage2>
                   </Link>
                )
             })}
-         </DivPhotos2>
+         </ContainerRenderPhotos2>
       </>
    )
 }
-export default HeaderPhoto
+export default RegionRenderImages
 
-const DivPhotos2 = styled.div`
+const ContainerRenderPhotos2 = styled.div`
    margin-top: 60px;
    margin-bottom: 154px;
 `
-const DivPhotos = styled.div`
+const ContainerRenderPhotos1 = styled.div`
    box-sizing: border-box;
    display: grid;
    grid-template-columns: repeat(3, 1fr);
@@ -138,7 +138,7 @@ const DivPhotos = styled.div`
       }
    }
 `
-const DivImg = styled.div`
+const BoxWrapperImage = styled.div`
    cursor: pointer;
    position: relative;
    & img:hover {
@@ -152,7 +152,7 @@ const DivImg = styled.div`
       color: #ffffff;
    }
 `
-const Div5 = styled.div`
+const BoxWrapperImage2 = styled.div`
    position: relative;
    margin-bottom: 16px;
    overflow: hidden;

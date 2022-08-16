@@ -1,20 +1,20 @@
 import styled from 'styled-components'
 import windowBackgroundMedia from '../assets/images/Rectangle 111.png'
 import windowBackground from '../assets/images/windowback.png'
-import HeaderPhoto from '../components/HeaderPhoto'
+import RegionRenderImages from '../components/RegionRenderImages'
 import Checkbox from '../components/UI/Checkbox'
 import SearchInput from '../components/UI/SearchInput'
 
 const MainPage = () => {
    return (
       <>
-         <Div1>
+         <BoxWrapper>
             <MediaBackImg>
                <Image src={windowBackground} alt="#" />
                <Image src={windowBackgroundMedia} alt="#" />
             </MediaBackImg>
-            <H1>FIND A PLACE YOU`LL LOVE TO STAY AT</H1>
-            <Div2>
+            <Title>FIND A PLACE YOU`LL LOVE TO STAY AT</Title>
+            <SearchWrapper>
                <Container>
                   <SearchInput
                      width="700px"
@@ -22,28 +22,28 @@ const MainPage = () => {
                   />
                </Container>
                <Checkbox label="search nearby" color="#EDEDED" />
-            </Div2>
-         </Div1>
-         <Div3>
-            <Div4>
+            </SearchWrapper>
+         </BoxWrapper>
+         <BoxWrapperRegion>
+            <ContainerRegionTitle>
                <h2>Regions in kyrgystan</h2>
                <p>
                   You can visit the site any day and be sure that you will find
                   everything for a great vacation.
                </p>
-            </Div4>
-            <HeaderPhoto />
-         </Div3>
+            </ContainerRegionTitle>
+            <RegionRenderImages />
+         </BoxWrapperRegion>
       </>
    )
 }
 export default MainPage
 
-const Div1 = styled.div`
+const BoxWrapper = styled.div`
    text-align: center;
    margin-top: 277px;
 `
-const Div2 = styled.div`
+const SearchWrapper = styled.div`
    display: flex;
    width: 725px;
    margin: 0 auto;
@@ -54,7 +54,7 @@ const Div2 = styled.div`
       width: 343px;
    }
 `
-const Div3 = styled.div`
+const BoxWrapperRegion = styled.div`
    width: 1240px;
    margin: 0 auto;
    & > :nth-child(3) {
@@ -75,7 +75,7 @@ const Div3 = styled.div`
       }
    }
 `
-const Div4 = styled.div`
+const ContainerRegionTitle = styled.div`
    margin-top: 451px;
    & > :nth-child(1) {
       font-weight: 500;
@@ -126,7 +126,7 @@ const Container = styled.div`
       overflow: hidden;
    }
 `
-const H1 = styled.h1`
+const Title = styled.h1`
    font-family: 'Jenriv Titling';
    font-style: normal;
    font-weight: 400;
