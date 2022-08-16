@@ -19,46 +19,52 @@ export const getUserOrAdmin = createAsyncThunk(
             url: `${LoginUserUrl}?token=${user.accessToken}`,
             method: 'POST',
          })
+         response.name = user.displayName
          LocalStorageFunction({
             type: 'setItem',
             key: 'login',
-            body: { data: response, username: user.displayName },
+            body: response,
          })
-         return { data: response, username: user.displayName }
+         return response
       }
       if (props.fetchrole === 'ADMIN') {
+         console.log(props)
          const response = await ApiFetch({
-            url: LoginAdminUrl,
+            url: `${LoginAdminUrl}`,
             method: 'POST',
             body: props.body,
          })
          LocalStorageFunction({
             type: 'setItem',
             key: 'login',
-            token: response.jwt,
+            body: response,
          })
          return response
       }
    }
 )
 const initialState = {
-   role: 'admin',
-   data: {},
-   token: '',
-   status: '',
+   status: null,
    error: null,
+   modal: false,
+   login: LocalStorageFunction({
+      type: 'getItem',
+      key: 'login',
+   }) || {
+      userId: null,
+      email: null,
+      jwt: null,
+      role: null,
+      name: null,
+      status: null,
+   },
 }
 const LoginSlice = createSlice({
    name: 'login',
    initialState,
    reducers: {
-      getloginfromLocal: (state) => {
-         const getlogin = LocalStorageFunction({
-            type: 'getItem',
-            key: 'login',
-         })
-         state.token = getlogin.data.jwt
-         state.data = getlogin
+      closemodal: (state) => {
+         state.modal = false
       },
    },
    extraReducers: {
@@ -67,16 +73,20 @@ const LoginSlice = createSlice({
       },
       [getUserOrAdmin.fulfilled]: (state, action) => {
          state.status = 'success'
-         state.role = action.payload.role
-         state.data = action.payload
-         state.token = action.payload.jwt
+         state.login.role = action.payload.role
+         state.login.email = action.payload.email
+         state.login.jwt = action.payload.jwt
+         state.login.userId = action.payload.userId
+         state.login.name = action.payload?.name
+         state.modal = false
       },
       [getUserOrAdmin.rejected]: (state, action) => {
          state.status = 'error'
          state.error = action.error.message
+         state.modal = true
       },
    },
 })
 
-export const LoginSliceActions = LoginSlice.actions
+export const LoginSliceAction = LoginSlice.actions
 export default LoginSlice

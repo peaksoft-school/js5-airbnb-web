@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
-import { getUserOrAdmin } from '../store/slices/LoginSlice'
+import { getUserOrAdmin, LoginSliceAction } from '../store/slices/LoginSlice'
+import { ErrorAdminLogin } from './ErrorAdminLogin'
 import Button from './UI/Button'
 import Input from './UI/Input'
+import Modal from './UI/Modal'
 
-const SignupAdmin = (props) => {
-   const dispatch = useDispatch()
+const SignupAdmin = () => {
    const [adminlogin, setadminlogin] = useState('')
    const getadminlogin = (event) => {
       setadminlogin(event.target.value)
@@ -15,23 +16,39 @@ const SignupAdmin = (props) => {
    const getpasswordadmin = (event) => {
       setadminpassword(event.target.value)
    }
+   const dispatch = useDispatch()
+   const [errormessage, seterror] = useState({
+      login: false,
+      password: false,
+   })
+   const { modal } = useSelector((store) => store.login)
    const fetchlogin = () => {
-      if ((adminlogin === '', adminpassowrd === '')) return
+      if (adminlogin === '') {
+         seterror({ login: true })
+         return
+      }
+      if (adminpassowrd === '') {
+         seterror({ password: true })
+         return
+      }
+      seterror({
+         login: false,
+         password: false,
+      })
       dispatch(
          getUserOrAdmin({
-            fetchrole: 'admin',
+            fetchrole: 'ADMIN',
             body: {
                email: adminlogin,
                password: adminpassowrd,
             },
          })
       )
-      props.closemodal()
    }
    return (
-      <Div1>
-         <P1>SIGN IN</P1>
-         <DivInput>
+      <Container>
+         <Title>SIGN IN</Title>
+         <InputWrapper>
             <Input
                placeholder="Login"
                padding="10px 0px 10px 14px"
@@ -41,8 +58,9 @@ const SignupAdmin = (props) => {
                name="adminlogin"
                type="text"
             />
-         </DivInput>
-         <DivInput>
+            {errormessage.login && <span>Login must not be empty</span>}
+         </InputWrapper>
+         <InputWrapper>
             <Input
                type="password"
                name="adminpassword"
@@ -52,8 +70,9 @@ const SignupAdmin = (props) => {
                }}
                padding="10px 0px 10px 14px"
             />
-         </DivInput>
-         <DivBtn>
+            {errormessage.password && <span>Password must not be empty</span>}
+         </InputWrapper>
+         <ButtonWrapper>
             <Button
                onClick={() => {
                   fetchlogin()
@@ -65,19 +84,26 @@ const SignupAdmin = (props) => {
             >
                SIGN IN
             </Button>
-         </DivBtn>
-      </Div1>
+         </ButtonWrapper>
+         <Modal open={modal}>
+            <ErrorAdminLogin
+               tryagain={() => {
+                  dispatch(LoginSliceAction.closemodal())
+               }}
+            />
+         </Modal>
+      </Container>
    )
 }
 export default SignupAdmin
 
-const DivInput = styled.div`
+const InputWrapper = styled.div`
    width: 414px;
    @media screen and (max-width: 375px) {
       width: 272px;
    }
 `
-const DivBtn = styled.div`
+const ButtonWrapper = styled.div`
    width: 414px;
    height: 37px;
    @media screen and (max-width: 375px) {
@@ -85,7 +111,7 @@ const DivBtn = styled.div`
       height: 37px;
    }
 `
-const P1 = styled.p`
+const Title = styled.p`
    font-weight: 500;
    font-size: 18px;
    line-height: 22px;
@@ -94,7 +120,7 @@ const P1 = styled.p`
    margin-top: 25px;
    margin-bottom: 24px;
 `
-const Div1 = styled.div`
+const Container = styled.div`
    width: 474px;
    height: 263px;
    display: flex;

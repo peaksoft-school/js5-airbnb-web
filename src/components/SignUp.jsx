@@ -8,12 +8,15 @@ export const SignUp = (props) => {
    const dispatch = useDispatch()
    const signupfirebase = () => {
       dispatch(getUserOrAdmin({ fetchrole: 'user' }))
+      props.close()
    }
    return (
-      <Div1>
-         <P1>Join us</P1>
-         <P2>Sign in with Google to start booking available listings!</P2>
-         <Div3>
+      <Container>
+         <Title1>Join us</Title1>
+         <Title2>
+            Sign in with Google to start booking available listings!
+         </Title2>
+         <WrapperGoogleBox>
             <Button
                variant="outlined"
                width="100%"
@@ -22,25 +25,25 @@ export const SignUp = (props) => {
                borderRadius="5px"
                onClick={signupfirebase}
             >
-               <Div2>
+               <WrapperGoogle>
                   <Google />
                   <p>Google</p>
-               </Div2>
+               </WrapperGoogle>
             </Button>
-         </Div3>
-         <Btnstyle
+         </WrapperGoogleBox>
+         <ButtonAdmin
             onClick={() => {
                props.adminsignup()
             }}
          >
             log in as admin
-         </Btnstyle>
-      </Div1>
+         </ButtonAdmin>
+      </Container>
    )
 }
 export default SignUp
 
-const Btnstyle = styled.button`
+const ButtonAdmin = styled.button`
    font-weight: 400;
    font-size: 14px;
    line-height: 17px;
@@ -59,7 +62,7 @@ const Btnstyle = styled.button`
       color: #dd8a08;
    }
 `
-const Div1 = styled.div`
+const Container = styled.div`
    width: 474px;
    height: 238px;
    display: flex;
@@ -71,14 +74,14 @@ const Div1 = styled.div`
       height: 262px;
    }
 `
-const P1 = styled.p`
+const Title1 = styled.p`
    font-weight: 500;
    font-size: 18px;
    line-height: 22px;
    text-transform: uppercase;
    color: #000000;
 `
-const P2 = styled.p`
+const Title2 = styled.p`
    color: #828282;
    margin-top: 24px;
    margin-bottom: 20px;
@@ -87,7 +90,7 @@ const P2 = styled.p`
       width: 250px;
    }
 `
-const Div2 = styled.div`
+const WrapperGoogle = styled.div`
    display: flex;
    align-items: center;
    justify-content: center;
@@ -99,7 +102,7 @@ const Div2 = styled.div`
       margin-left: 8px;
    }
 `
-const Div3 = styled.div`
+const WrapperGoogleBox = styled.div`
    width: 450px;
    height: 60px;
    @media screen and (max-width: 375px) {
