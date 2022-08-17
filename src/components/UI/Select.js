@@ -46,6 +46,7 @@ const BoxStyled = styled(Box)`
    & fieldset {
       border: 1px solid #c4c4c4 !important;
    }
+
    @media (max-width: 480px) {
       width: 343px;
       height: 262px;

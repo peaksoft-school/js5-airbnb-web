@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 import React from 'react'
 import { Flex } from 'gestalt'
 import DateRangePicker from 'gestalt-datepicker'

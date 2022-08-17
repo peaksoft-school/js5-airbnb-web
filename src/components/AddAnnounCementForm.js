@@ -1,24 +1,68 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
+// import apiFetch from '../api/apiFetch'
+import { getPosts } from '../store/slices/addAnnouncementSlice'
 import Button from './UI/Button'
 import ImagePicker from './UI/ImagePicker'
 import Input from './UI/Input'
 import RadioButton from './UI/RadioButton'
 import Select from './UI/Select'
 
-const AddAnnouncement = ({ onAdd, selectOptions }) => {
-   const [selectValue, setSelectValue] = React.useState('')
-   const [getPhoto, setGetPhoto] = React.useState([])
-   const [formValue, setFormValue] = React.useState({
-      radioButton: '',
-      inputMax: '',
-      inputPrice: '',
-      inputTitle: '',
-      description: '',
-      inputTown: '',
-      inputAddres: '',
-   })
+const options = [
+   {
+      id: 1,
+      regionName: 'Batken',
+   },
+   {
+      id: 2,
+      regionName: 'Jalalabat',
+   },
+   {
+      id: 3,
+      regionName: 'Naryn',
+   },
+   {
+      id: 4,
+      regionName: 'Issyk-Kul',
+   },
+   {
+      id: 5,
+      regionName: 'Talas',
+   },
+   {
+      id: 6,
+      regionName: 'Osh',
+   },
+   {
+      id: 7,
+      regionName: 'Chui',
+   },
+   {
+      id: 8,
+      regionName: 'Bishkek',
+   },
+]
 
+const AddAnnouncementForm = () => {
+   const dispatch = useDispatch()
+   const state = useSelector((state) => state.addAnnoutcement.status)
+
+   const [regionId, setRegionId] = React.useState('2')
+   // const [photo, setPhoto] = React.useState('')
+   // console.log(photo)
+   const [images, setImages] = useState([])
+   const [formValue, setFormValue] = React.useState({
+      images,
+      houseType: '',
+      maxGuests: Number(''),
+      price: Number(''),
+      title: '',
+      description: '',
+      townProvince: '',
+      address: '',
+      regionId: '2',
+   })
    const handleChange = (event) => {
       setFormValue({
          ...formValue,
@@ -26,28 +70,68 @@ const AddAnnouncement = ({ onAdd, selectOptions }) => {
       })
    }
    const selectHandlerChange = (e) => {
-      setSelectValue(e)
+      setRegionId(e)
    }
+   const isValidForm = () => {
+      const valueIsValid =
+         formValue.price.length >= 1 &&
+         formValue.address.length >= 1 &&
+         formValue.description.length >= 1 &&
+         formValue.maxGuests.length >= 1 &&
+         formValue.townProvince.length >= 1
 
+      return valueIsValid
+   }
+   const formHandlerPost = async (formValuePost) => {
+      dispatch(
+         getPosts({
+            url: 'http://airbnb-env.eba-bxmudt83.eu-central-1.elasticbeanstalk.com/api/announcements/save',
+            method: 'POST',
+            jwt: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIGRldGFpbHMiLCJpc3MiOiJwZWFrc29mdCIsImV4cCI6MTY2MDc0NDYzMSwiaWF0IjoxNjYwNzQxMDMxLCJ1c2VybmFtZSI6Inp1a29rYWxpbG92In0.qreqjTrwdSOgxB89bDCKB9y74K7aqc56FEB48HEDJ7E',
+            role: 'USER',
+            body: formValuePost,
+         })
+      )
+   }
+   const ImagePickerHandler = async (i) => {
+      console.log(i)
+      const formData = new FormData()
+      formData.append('file', i)
+      try {
+         const res = await fetch(
+            'http://airbnb-env.eba-bxmudt83.eu-central-1.elasticbeanstalk.com/api/file/upload',
+            {
+               method: 'POST',
+               headers: {
+                  Authorization: `Bearer ${''}`,
+               },
+               body: formData,
+            }
+         )
+         const date = await res.json()
+         // if (!res.ok) {
+         //    throw new Error('img Photos')
+         // }
+         // setImages(date)
+         console.log(date)
+      } catch (error) {
+         console.log(error)
+      }
+   }
    const submitHandlerForm = (e) => {
       e.preventDefault()
-      const objectForm = {
-         formValue,
-         selectValue,
-         getPhoto,
-      }
-      onAdd(objectForm)
+      formHandlerPost(formValue)
       setFormValue({
-         radioButton: '',
-         inputMax: '',
-         inputPrice: '',
-         inputTitle: '',
+         houseType: '',
+         maxGuests: '',
+         price: '',
+         title: '',
          description: '',
-         inputTown: '',
-         inputAddres: '',
+         townProvince: '',
+         address: '',
       })
-      setGetPhoto([])
-      setSelectValue('')
+      setImages([])
+      setRegionId('')
    }
 
    return (
@@ -60,21 +144,25 @@ const AddAnnouncement = ({ onAdd, selectOptions }) => {
                   information about your listing.
                </StyledParagraf>
                <StyledSpan>Image Max 4 photo</StyledSpan>
-               <ImagePicker allPhotos={getPhoto} getPhoto={setGetPhoto} />
-               <StyledSpanHome>Сome type</StyledSpanHome>
+               <ImagePicker
+                  setPhotos={ImagePickerHandler}
+                  allPhotos={images}
+                  getPhoto={setImages}
+               />
+               <StyledSpanHome>Home type</StyledSpanHome>
             </StyledDivImagePicker>
 
             <StyledDivRadioButton>
                <RadioButton
                   onChange={handleChange}
-                  name="radioButton"
-                  value="apartament"
+                  name="houseType"
+                  value="APARTMENT"
                />
                <label htmlFor="apartament">Apartament</label>
                <RadioButton
                   onChange={handleChange}
-                  name="radioButton"
-                  value="House"
+                  name="houseType"
+                  value="HOUSE"
                />
                <label htmlFor="House">House</label>
             </StyledDivRadioButton>
@@ -89,17 +177,17 @@ const AddAnnouncement = ({ onAdd, selectOptions }) => {
                      onChange={handleChange}
                      placeholder="0"
                      width="245px"
-                     name="inputMax"
+                     name="maxGuests"
                      type="number"
-                     value={formValue.inputMax}
+                     value={formValue.maxGuests}
                   />
                   <Input
                      onChange={handleChange}
                      placeholder="$0"
                      width="245px"
-                     name="inputPrice"
+                     name="price"
                      type="number"
-                     value={formValue.inputPrice}
+                     value={formValue.price}
                   />
                </StyledInput>
             </StyedDivInput>
@@ -109,8 +197,8 @@ const AddAnnouncement = ({ onAdd, selectOptions }) => {
                   onChange={handleChange}
                   width="610px"
                   media="343px"
-                  name="inputTitle"
-                  value={formValue.inputTitle}
+                  name="title"
+                  value={formValue.title}
                />
             </div>
             <div>
@@ -125,11 +213,11 @@ const AddAnnouncement = ({ onAdd, selectOptions }) => {
             </div>
             <StyledSelect>
                <Select
-                  options={selectOptions?.options}
-                  getOptionLabel={(option) => option?.name}
-                  getOptionValue={(option) => option?.name}
+                  options={options}
+                  getOptionLabel={(option) => option?.regionName}
+                  getOptionValue={(option) => option?.id}
                   onChange={selectHandlerChange}
-                  value={selectValue}
+                  value={regionId}
                   label="Region"
                />
             </StyledSelect>
@@ -139,8 +227,8 @@ const AddAnnouncement = ({ onAdd, selectOptions }) => {
                   onChange={handleChange}
                   width="610px"
                   media="343px"
-                  name="inputTown"
-                  value={formValue.inputTown}
+                  name="townProvince"
+                  value={formValue.townProvince}
                />
             </StyledTown>
             <StyledAddres>
@@ -149,12 +237,15 @@ const AddAnnouncement = ({ onAdd, selectOptions }) => {
                   onChange={handleChange}
                   width="610px"
                   media="343px"
-                  name="inputAddres"
-                  value={formValue.inputAddres}
+                  name="address"
+                  value={formValue.address}
                />
             </StyledAddres>
             <StyledButton>
-               <Button height="37px">Submit</Button>
+               <Button disabled={isValidForm() || 'true'} height="37px">
+                  Submit
+               </Button>
+               {state === 'loading' && <h1>loading..</h1>}
             </StyledButton>
          </StyledForm>
       </div>
@@ -162,8 +253,10 @@ const AddAnnouncement = ({ onAdd, selectOptions }) => {
 }
 const StyledForm = styled.form`
    margin-left: 415px;
-   @media screen and (max-width: 480px) {
-      margin: 10px;
+   padding: 0;
+   @media screen and (max-width: 375px) {
+      margin: 0;
+      padding: 0;
    }
 `
 const StyledH1 = styled.h1`
@@ -177,10 +270,9 @@ const StyledH1 = styled.h1`
    font-size: 16px;
    line-height: 19px;
    text-transform: uppercase;
-   @media screen and (max-width: 480px) {
+   @media screen and (max-width: 375px) {
       width: 343px;
       height: 38px;
-      margin-left: 16px;
    }
 `
 const StyledParagraf = styled.p`
@@ -192,10 +284,9 @@ const StyledParagraf = styled.p`
    font-weight: 400;
    font-size: 16px;
    line-height: 19px;
-   @media screen and (max-width: 480px) {
+   @media screen and (max-width: 375px) {
       width: 343px;
       height: 38px;
-      margin-left: 16px;
    }
 `
 const StyledSpan = styled.span`
@@ -207,20 +298,28 @@ const StyledSpan = styled.span`
    font-size: 16px;
    line-height: 19px;
    color: #363636;
-   @media screen and (max-width: 480px) {
+   @media screen and (max-width: 375px) {
       width: 47px;
-      height: 19px;
-      margin-left: 16px;
+      margin-left: 6px;
    }
 `
 const StyledDivImagePicker = styled.div`
-   @media screen and (max-width: 480px) {
+   & .fhthZJ {
+      height: 148px !important;
+      margin-top: 14px;
+   }
+   @media screen and (max-width: 375px) {
       margin-left: 16px;
+      & .fhthZJ {
+         height: 100px !important;
+         margin-top: 14px;
+      }
    }
 `
 const StyledSpanHome = styled.span`
-   @media screen and (max-width: 480px) {
-      margin-left: 16px;
+   margin-top: 28px;
+   @media screen and (max-width: 375px) {
+      margin-left: 3px;
    }
 `
 const StyledDivRadioButton = styled.div`
@@ -228,13 +327,16 @@ const StyledDivRadioButton = styled.div`
    display: flex;
    justify-content: space-around;
    margin-top: 21px;
-   @media screen and (max-width: 480px) {
-      margin-left: 8%;
+   @media screen and (max-width: 375px) {
+      margin-left: 16px;
    }
 `
 const StyedDivInput = styled.div`
    width: 510px;
    margin-top: 30px;
+   @media screen and (max-width: 375px) {
+      margin-left: 10px;
+   }
 `
 const StyledDivText = styled.div`
    display: flex;
@@ -247,11 +349,12 @@ const StyledDivText = styled.div`
    font-size: 16px;
    line-height: 19px;
    color: #363636;
-   @media screen and (max-width: 480px) {
+   @media screen and (max-width: 375px) {
       position: absolute;
-      left: 37px;
-      top: 510px;
+      left: 19px;
+      top: 410px;
       display: flex;
+      justify-content: space-between;
       flex-direction: row;
       flex-direction: column;
       gap: 60px;
@@ -260,12 +363,11 @@ const StyledDivText = styled.div`
 const StyledInput = styled.div`
    display: flex;
    justify-content: space-between;
-   @media screen and (max-width: 480px) {
+   @media screen and (max-width: 375px) {
       width: 245px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      margin-left: 16px;
       margin-top: 45px;
       gap: 40px;
    }
@@ -273,7 +375,7 @@ const StyledInput = styled.div`
 const StyledTitle = styled.h4`
    margin-top: 28px;
    margin-bottom: 18px;
-   @media screen and (max-width: 480px) {
+   @media screen and (max-width: 375px) {
       margin-left: 16px;
    }
 `
@@ -286,7 +388,7 @@ const StyledParagrafDescription = styled.p`
    font-size: 16px;
    line-height: 19px;
    color: #363636;
-   @media screen and (max-width: 480px) {
+   @media screen and (max-width: 375px) {
       margin-left: 16px;
    }
 `
@@ -296,7 +398,7 @@ const StyledTextarea = styled.textarea`
    resize: none;
    outline: none;
    padding: 10px 8px 10px 16px;
-   @media screen and (max-width: 480px) {
+   @media screen and (max-width: 375px) {
       display: flex;
       flex-direction: row;
       align-items: flex-start;
@@ -320,7 +422,7 @@ const StyledTown = styled.div`
 
 const StyledParagrafTown = styled.p`
    margin-bottom: 28px;
-   @media screen and (max-width: 480px) {
+   @media screen and (max-width: 375px) {
       margin-left: 16px;
    }
 `
@@ -330,14 +432,14 @@ const StyledAddres = styled.div`
 const StyledButton = styled.div`
    margin-bottom: 170px;
    margin-left: 459px;
-   @media screen and (max-width: 480px) {
-      margin-left: 253px;
+   @media screen and (max-width: 375px) {
+      margin-left: 251px;
    }
 `
 const StyledParagrafAddres = styled.p`
    margin-bottom: 18px;
-   @media screen and (max-width: 480px) {
+   @media screen and (max-width: 375px) {
       margin-left: 16px;
    }
 `
-export default AddAnnouncement
+export default AddAnnouncementForm

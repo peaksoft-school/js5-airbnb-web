@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import BasikDatePicker from './BasikDatePicker'
+// eslint-disable-next-line import/no-unresolved
 import 'gestalt-datepicker/dist/gestalt-datepicker.css'
 
 const DateRangePicker = (props) => {
