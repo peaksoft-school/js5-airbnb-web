@@ -1,11 +1,9 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
-import ApiFetch from '../../api/ApiFetch'
+// eslint-disable-next-line import/no-cycle
+import appFetch from '../../api/appFetch'
 import { Auth } from '../../components/SignupFirebase'
-import {
-   LoginUserUrl,
-   LoginAdminUrl,
-} from '../../utils/constants/fetchConstants'
+import { LoginUserUrl, LoginAdminUrl } from '../../utils/constants/constants'
 import { LocalStorageFunction } from '../../utils/helpers/LocalStorageFunction'
 
 export const getUserOrAdmin = createAsyncThunk(
@@ -15,7 +13,7 @@ export const getUserOrAdmin = createAsyncThunk(
       if (props.fetchrole === 'USER') {
          const provider = new GoogleAuthProvider()
          const { user } = await signInWithPopup(Auth, provider)
-         const response = await ApiFetch({
+         const response = await appFetch({
             url: `${LoginUserUrl}?token=${user.accessToken}`,
             method: 'POST',
          })
@@ -28,8 +26,7 @@ export const getUserOrAdmin = createAsyncThunk(
          return response
       }
       if (props.fetchrole === 'ADMIN') {
-         console.log(props)
-         const response = await ApiFetch({
+         const response = await appFetch({
             url: `${LoginAdminUrl}`,
             method: 'POST',
             body: props.body,

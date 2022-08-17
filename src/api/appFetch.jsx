@@ -1,20 +1,21 @@
-import { InitialUrl } from '../utils/constants/fetchConstants'
+// eslint-disable-next-line import/no-cycle
+import Store from '../store/index'
+import { InitialUrl } from '../utils/constants/constants'
 
-function ApiFetch(props) {
+function appFetch(props) {
+   const token = Store.getState()
    const requestOptions = {
       method: props.method || 'GET',
-      headers:
-         props.token && props.role
-            ? {
-                 'Content-Type': 'application/json',
-                 Authorization: `Bearer ${props.token}`,
-                 Role: props.role,
-              }
-            : {
-                 'Content-Type': 'application/json; charset=utf-8',
-              },
+      headers: token.login.login?.jwt
+         ? {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${token.login.login.jwt}`,
+           }
+         : {
+              'Content-Type': 'application/json; charset=utf-8',
+           },
    }
-   if (props.method && props.body) {
+   if (props.method !== 'GET' && props.body) {
       requestOptions.body = JSON.stringify(props.body)
    }
    const promise = new Promise((resolve, reject) => {
@@ -35,4 +36,4 @@ function ApiFetch(props) {
    return promise
 }
 
-export default ApiFetch
+export default appFetch
