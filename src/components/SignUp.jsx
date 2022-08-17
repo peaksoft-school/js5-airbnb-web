@@ -7,7 +7,7 @@ import Button from './UI/Button'
 export const SignUp = (props) => {
    const dispatch = useDispatch()
    const signupfirebase = () => {
-      dispatch(getUserOrAdmin({ fetchrole: 'user' }))
+      dispatch(getUserOrAdmin({ fetchrole: 'USER' }))
       props.close()
    }
    return (

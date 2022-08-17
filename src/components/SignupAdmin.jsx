@@ -8,33 +8,26 @@ import Input from './UI/Input'
 import Modal from './UI/Modal'
 
 const SignupAdmin = () => {
-   const [adminlogin, setadminlogin] = useState('')
+   const [adminlogin, setadminlogin] = useState(' ')
    const getadminlogin = (event) => {
       setadminlogin(event.target.value)
    }
-   const [adminpassowrd, setadminpassword] = useState('')
+   const [adminpassowrd, setadminpassword] = useState(' ')
    const getpasswordadmin = (event) => {
       setadminpassword(event.target.value)
    }
    const dispatch = useDispatch()
-   const [errormessage, seterror] = useState({
-      login: false,
-      password: false,
-   })
    const { modal } = useSelector((store) => store.login)
+
    const fetchlogin = () => {
-      if (adminlogin === '') {
-         seterror({ login: true })
+      if (adminlogin.length <= 1) {
+         setadminlogin('')
          return
       }
-      if (adminpassowrd === '') {
-         seterror({ password: true })
+      if (adminpassowrd.length <= 1) {
+         setadminpassword('')
          return
       }
-      seterror({
-         login: false,
-         password: false,
-      })
       dispatch(
          getUserOrAdmin({
             fetchrole: 'ADMIN',
@@ -46,9 +39,9 @@ const SignupAdmin = () => {
       )
    }
    return (
-      <Container>
-         <Title>SIGN IN</Title>
-         <InputWrapper>
+      <Div1>
+         <P1>SIGN IN</P1>
+         <DivInput>
             <Input
                placeholder="Login"
                padding="10px 0px 10px 14px"
@@ -58,9 +51,9 @@ const SignupAdmin = () => {
                name="adminlogin"
                type="text"
             />
-            {errormessage.login && <span>Login must not be empty</span>}
-         </InputWrapper>
-         <InputWrapper>
+            {!adminlogin && <span>Login must not be empty</span>}
+         </DivInput>
+         <DivInput>
             <Input
                type="password"
                name="adminpassword"
@@ -70,9 +63,9 @@ const SignupAdmin = () => {
                }}
                padding="10px 0px 10px 14px"
             />
-            {errormessage.password && <span>Password must not be empty</span>}
-         </InputWrapper>
-         <ButtonWrapper>
+            {!adminpassowrd && <span>Password must not be empty</span>}
+         </DivInput>
+         <DivBtn>
             <Button
                onClick={() => {
                   fetchlogin()
@@ -84,7 +77,7 @@ const SignupAdmin = () => {
             >
                SIGN IN
             </Button>
-         </ButtonWrapper>
+         </DivBtn>
          <Modal open={modal}>
             <ErrorAdminLogin
                tryagain={() => {
@@ -92,18 +85,18 @@ const SignupAdmin = () => {
                }}
             />
          </Modal>
-      </Container>
+      </Div1>
    )
 }
 export default SignupAdmin
 
-const InputWrapper = styled.div`
+const DivInput = styled.div`
    width: 414px;
    @media screen and (max-width: 375px) {
       width: 272px;
    }
 `
-const ButtonWrapper = styled.div`
+const DivBtn = styled.div`
    width: 414px;
    height: 37px;
    @media screen and (max-width: 375px) {
@@ -111,7 +104,7 @@ const ButtonWrapper = styled.div`
       height: 37px;
    }
 `
-const Title = styled.p`
+const P1 = styled.p`
    font-weight: 500;
    font-size: 18px;
    line-height: 22px;
@@ -120,7 +113,7 @@ const Title = styled.p`
    margin-top: 25px;
    margin-bottom: 24px;
 `
-const Container = styled.div`
+const Div1 = styled.div`
    width: 474px;
    height: 263px;
    display: flex;

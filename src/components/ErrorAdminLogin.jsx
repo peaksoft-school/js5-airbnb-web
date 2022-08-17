@@ -4,7 +4,7 @@ import Button from './UI/Button'
 export const ErrorAdminLogin = (props) => {
    return (
       <Container>
-         <p>Password or login write wrong</p>
+         <p>Incorrect email or password</p>
          <Button onClick={props.tryagain} height="35px">
             Try again
          </Button>
