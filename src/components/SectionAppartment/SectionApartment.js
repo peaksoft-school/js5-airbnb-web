@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import PopularHouse from './PopularHouse'
 import Section from './Section'
 
-const MainPage = (props) => {
+const SectionApartment = (props) => {
    return (
       <>
          <ContainerApartments>
@@ -30,7 +30,7 @@ const MainPage = (props) => {
       </>
    )
 }
-export default MainPage
+export default SectionApartment
 const ContainerApartments = styled.div`
    width: 100%;
    background: #4f7755;
