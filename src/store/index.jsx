@@ -1,10 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
+import LoginSlice from './slices/LoginSlice'
 import sentMessageSlice from './slices/sentMessageSlice'
 
-const store = configureStore({
+const Store = configureStore({
    reducer: {
+      login: LoginSlice.reducer,
       message: sentMessageSlice.reducer,
    },
 })
-
-export default store
+export default Store
