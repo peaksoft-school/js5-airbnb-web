@@ -20,6 +20,15 @@ const CardData = [
       guestsAmount: 5,
       ratings: 3.5,
    },
+   {
+      id: 2,
+      slides,
+      price: 220,
+      location: '12 Morris Ave, Toronto,...',
+      description: 'Beautiful and picturesque...',
+      guestsAmount: 5,
+      ratings: 3.5,
+   },
 ]
 
 const AdminApplication = () => {
@@ -38,6 +47,7 @@ const AdminApplication = () => {
       }
       if (text === 'Accept') {
          setIsAccepted(true)
+         setCardId(id)
       }
       if (text === 'Reject') {
          setIsRejected(true)
@@ -177,7 +187,7 @@ const StyledH3 = styled.h3`
 const StyledCards = styled.div`
    display: grid;
    grid-template-columns: repeat(5, 1fr);
-   grid-template-rows: repeat(3, 1fr);
+   /* grid-template-rows: repeat(3, 1fr); */
    width: 100%;
    gap: 20px;
    @media screen and (max-width: 375px) {
