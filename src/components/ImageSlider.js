@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import styled from 'styled-components'
 
-const ImageSlider = ({ arrayInnerPageDates }) => {
-   const [selectImg, setSelectImage] = useState(arrayInnerPageDates.images[0])
-   const arrayImages = arrayInnerPageDates.images.filter((i) => i !== selectImg)
+const ImageSlider = (props) => {
+   const [selectImg, setSelectImage] = useState(props.images[0])
+   const arrayImages = props.images.filter((i) => i !== selectImg)
 
    return (
       <div>
