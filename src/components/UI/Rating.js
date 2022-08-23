@@ -25,7 +25,7 @@ function Rating({ defaultValue, onChange, disabled, ...props }) {
                         setRating(ratingValue)
                         props.getRating(ratingValue)
                      }}
-                     disabled={disabled}
+                     disabled={defaultValue}
                   />
                   <Star
                      width={props.width}
