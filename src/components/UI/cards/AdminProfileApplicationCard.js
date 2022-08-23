@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components'
-import locationIcon from '../../../assets/icons/locationIcon.png'
+import locationIcon from '../../../assets/icons/locationIcon.svg'
 import star from '../../../assets/icons/Star.png'
 import Slider from '../../Slider'
 import MeatBalls from '../MeatBalls'
@@ -28,28 +28,28 @@ const AdminProfileApplicationCard = (props) => {
          },
       },
    ]
-   const { isViewed, slides } = props
+   const { isViewed } = props
 
    return (
       <StyledCard isViewed={isViewed}>
-         <Slider slides={slides} />
+         <Slider images={props.images} />
          <Cont>
             <p>
                ${props.price} / <StyledSpan>day</StyledSpan>
             </p>
             <div>
                <img src={star} alt="star" />
-               <p>{props.ratings}</p>
+               <p>{props.rating}</p>
             </div>
          </Cont>
-         <Description>{props.description}</Description>
+         <Description>{props.title}</Description>
          <Location>
             <img src={locationIcon} alt="locationIcon" />
             <p>{props.location}</p>
          </Location>
          <Amount>
-            <p>{props.guestsAmount} guests</p>
-            <MeatBalls balls={meatBallsOptions} id={props.data.id} />
+            <p>{props.maxGuests} guests</p>
+            <MeatBalls balls={meatBallsOptions} id={props.id} />
          </Amount>
       </StyledCard>
    )
@@ -134,6 +134,11 @@ const Location = styled.div`
    font-size: 14px;
    line-height: 17px;
    & p {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
       font-size: 14px;
       color: #828282;
       margin-left: 7px;

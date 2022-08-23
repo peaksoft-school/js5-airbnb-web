@@ -1,45 +1,60 @@
+import { useEffect, useState } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { useSearchParams } from 'react-router-dom'
 import styled from 'styled-components'
-import AdminHeader from '../layout/headers/AdminHeader/AdminHeader'
-import { sliderData } from '../sliderData'
+import { getAllHouses } from '../store/slices/adminApplicationActions'
 import AdminProfileApplicationCard from './UI/cards/AdminProfileApplicationCard'
 import Paginations from './UI/Pagination'
 
-const cardData = [
-   {
-      slides: sliderData,
-      id: 1,
-      price: 22.4,
-      location: 'dfsf',
-      description: 'ddddd',
-      ratings: 3.4,
-      guestsAmount: 2,
-   },
-]
-
 const AdminApplication = () => {
+   const { houseData } = useSelector((state) => state.houses)
+   const [params, setParams] = useSearchParams()
+   const page = params.get('page')
+   const [pagination, setPagination] = useState(+page || 1)
+
+   const dispatch = useDispatch()
+   useEffect(() => {
+      dispatch(getAllHouses({ pagination }))
+      setParams({ page: pagination })
+   }, [pagination])
+
+   const numberedData = {
+      numbered: Number(houseData?.size?.announcementsSize),
+   }
+   const paginationHandler = (event, value) => setPagination(value)
+   const numberOfPages = Math.ceil(numberedData.numbered / 15)
+
    return (
       <div>
-         <AdminHeader />
          <StyledAdminApplication>
             <StyledH3>APPLICATION</StyledH3>
             <StyledCards>
-               <>
-                  {cardData.map((item) => (
+               {houseData?.card?.map((item) => {
+                  return (
                      <AdminProfileApplicationCard
-                        data={item}
-                        slides={item.slides}
+                        id={item.id}
+                        key={item.id}
+                        images={item.images}
                         price={item.price}
                         location={item.location}
-                        description={item.description}
-                        guestsAmount={item.guestsAmount}
-                        ratings={item.ratings}
+                        title={item.title}
+                        maxGuests={item.maxGuests}
+                        rating={item.rating}
                      />
-                  ))}
-               </>
+                  )
+               })}
             </StyledCards>
-            <StyledPagination>
-               <Paginations />
-            </StyledPagination>
+            {houseData?.card?.length > 1 ? (
+               <StyledPagination>
+                  <Paginations
+                     count={numberOfPages}
+                     page={pagination}
+                     onChange={paginationHandler}
+                  />
+               </StyledPagination>
+            ) : (
+               ''
+            )}
          </StyledAdminApplication>
       </div>
    )

@@ -8,7 +8,7 @@ function Button({ onClick, variant, disabled, children, ...props }) {
          style={props}
          disabled={disabled === true}
       >
-         {children.toUpperCase()}
+         {children}
       </CustomButton>
    )
 }
