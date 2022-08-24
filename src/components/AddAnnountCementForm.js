@@ -2,7 +2,7 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
-import { addAnnouncementPost } from '../store/slices/addAnnountcementSlice'
+import { addAnnountcementPost } from '../store/slices/addAnnountcementSlice'
 import { options } from '../utils/constants/constants'
 import Button from './UI/Button'
 import ImagePicker from './UI/ImagePicker'
@@ -49,15 +49,15 @@ const AddAnnouncementForm = () => {
       setOpen((prev) => !prev)
       const formObject = {
          houseType: formValue.houseType,
-         maxGuests: formValue.maxGuests,
-         price: formValue.price,
+         maxGuests: +formValue.maxGuests,
+         price: +formValue.price,
          title: formValue.title,
          description: formValue.description,
          regionId,
          townProvince: formValue.townProvince,
          address: formValue.address,
       }
-      dispatch(addAnnouncementPost({ photos, formObject }))
+      dispatch(addAnnountcementPost({ photos, formObject }))
       setFormValue({
          houseType: '',
          maxGuests: '',
@@ -74,7 +74,7 @@ const AddAnnouncementForm = () => {
       <div>
          {error?.message === 'Rejected' ? (
             <SnackBar
-               message="что пошло то не так"
+               message="что то пошло не так"
                text="повторите еще раз"
                open={open}
                onClose={setOpen}

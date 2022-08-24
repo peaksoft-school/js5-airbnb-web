@@ -4,7 +4,7 @@ export const InitialUrl =
 export const LoginUserUrl = 'api/login/google'
 export const LoginAdminUrl = 'api/login'
 export const addAnnoutnCementUrl = 'api/announcements/save'
-export const addAnnontCementFileUrl = 'api/file/upload'
+export const addAnnountFileUrl = 'api/file/upload'
 export const options = [
    {
       id: 1,

@@ -2,33 +2,29 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import appFetch, { appFile } from '../../api/appFetch'
 import {
    addAnnoutnCementUrl,
-   addAnnontCementFileUrl,
-   // InitialUrl,
+   addAnnountFileUrl,
 } from '../../utils/constants/constants'
 
-// let store
-// export const fileStore = (_store) => {
-//    store = _store
-// }
-
-export const addAnnouncementPost = createAsyncThunk(
-   'addAnnoutcement/addAnnouncementPost',
+export const addAnnountcementPost = createAsyncThunk(
+   'addAnnoutcement/addAnnountcementPost',
    async ({ formObject, photos }, { rejectWithValue }) => {
       try {
          const dataWith = {
             ...formObject,
             images: [],
          }
-         const res = await Promise.all(
-            photos.map(async (i) => {
-               const resFile = await appFile({
-                  url: addAnnontCementFileUrl,
-                  body: i.file,
-               })
-               return resFile?.link
+         // eslint-disable-next-line no-plusplus
+         for (let index = 0; index < photos.length; index++) {
+            const image = photos[index]
+            const formData = new FormData()
+            formData.append('file', image.file)
+            // eslint-disable-next-line no-await-in-loop
+            const response = await appFile({
+               url: addAnnountFileUrl,
+               body: formData,
             })
-         )
-         dataWith.images = res
+            dataWith.images.push(response?.link)
+         }
          const response = await appFetch({
             url: addAnnoutnCementUrl,
             method: 'POST',
@@ -50,14 +46,14 @@ const addAnnouncementSlice = createSlice({
    initialState,
    reducers: {},
    extraReducers: {
-      [addAnnouncementPost.pending]: (state) => {
+      [addAnnountcementPost.pending]: (state) => {
          state.status = 'pending'
       },
-      [addAnnouncementPost.fulfilled]: (state) => {
+      [addAnnountcementPost.fulfilled]: (state) => {
          state.status = 'succes'
          state.error = null
       },
-      [addAnnouncementPost.rejected]: (state, action) => {
+      [addAnnountcementPost.rejected]: (state, action) => {
          state.error = action.error
       },
    },

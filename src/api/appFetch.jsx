@@ -40,17 +40,15 @@ function appFetch(props) {
 
 export default appFetch
 
-export async function appFile(props) {
-   const formData = new FormData()
-   formData.append('file', props.body)
+export async function appFile(parameter) {
    const token = store.getState()
    const promise = new Promise((resolve, reject) => {
-      fetch(InitialUrl + props.url, {
+      fetch(InitialUrl + parameter.url, {
          method: 'POST',
          headers: {
             Authorization: `Bearer ${token.login.login?.jwt}`,
          },
-         body: formData,
+         body: parameter.body,
       })
          .then((response) => {
             if (response.ok) {
