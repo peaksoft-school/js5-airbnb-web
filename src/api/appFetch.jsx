@@ -1,15 +1,15 @@
 // eslint-disable-next-line import/no-cycle
-import Store from '../store/index'
+// import Store from '../store/index'
 import { InitialUrl } from '../utils/constants/constants'
 
 function appFetch(props) {
-   const token = Store.getState()
+   // const token = Store.getState()
    const requestOptions = {
       method: props.method || 'GET',
-      headers: token.login.login?.jwt
+      headers: props.token
          ? {
               'Content-Type': 'application/json',
-              Authorization: `Bearer ${token.login.login.jwt}`,
+              Authorization: `Bearer ${props.token}`,
            }
          : {
               'Content-Type': 'application/json; charset=utf-8',

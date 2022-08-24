@@ -4,7 +4,7 @@ export const LocalStorageFunction = (props) => {
       return localStorage.setItem(props.key, JSON.stringify(props.body))
    }
    if (props.type === 'getItem') {
-      const logininfo = JSON.parse(localStorage.getItem(props.key) || {})
+      const logininfo = JSON.parse(localStorage.getItem(props.key))
       return logininfo
    }
    if (props.type === 'removeItem') {
