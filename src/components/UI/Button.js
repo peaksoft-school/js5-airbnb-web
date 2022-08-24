@@ -16,7 +16,7 @@ function Button({
          disabled={disabled === 'true'}
          widthMedia={widthMedia}
       >
-         {children.toUpperCase()}
+         {children}
       </CustomButton>
    )
 }

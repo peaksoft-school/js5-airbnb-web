@@ -23,12 +23,15 @@ const StyledInput = styled.input`
    border-radius: 2px;
    outline: none;
    &::placeholder {
-      /* width: 70px; */
+      width: 70px;
       height: 19px;
       font-family: 'Inter';
       font-weight: 400;
       font-size: 16px;
       color: #c4c4c4;
-      padding-left: 15px;
+   }
+   @media screen and (max-width: 480px) {
+      width: ${(props) => props.media || '100%'};
+      margin-left: 16px;
    }
 `

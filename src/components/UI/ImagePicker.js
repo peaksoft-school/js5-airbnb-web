@@ -22,8 +22,8 @@ const ImagePicker = ({ allPhotos, getPhoto, ...props }) => {
 
    const onChange = (imageList) => {
       // eslint-disable-next-line array-callback-return, consistent-return
-      const errorImageText = imageList.find((item) => {
-         if (item.file.size > 100000) {
+      const errorImageText = imageList?.find((item) => {
+         if (item.file.size > 1000000) {
             setImageSizeTextError(false)
             return item
          }
@@ -34,6 +34,9 @@ const ImagePicker = ({ allPhotos, getPhoto, ...props }) => {
       setImageSizeTextError(true)
       setshowTextAfterInput(false)
    }
+   useEffect(() => {
+      setPhotos(allPhotos)
+   }, [allPhotos])
    useEffect(() => {
       if (photos.length === 0) {
          setshowTextAfterInput(true)
