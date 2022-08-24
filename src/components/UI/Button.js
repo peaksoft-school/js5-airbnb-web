@@ -1,7 +1,6 @@
 import styled from 'styled-components'
 
 function Button({ onClick, variant, disabled, children, ...props }) {
-   console.log(disabled)
    return (
       <CustomButton
          onClick={onClick}

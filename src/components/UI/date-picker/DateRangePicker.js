@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 import React from 'react'
 import styled from 'styled-components'
 import BasikDatePicker from './BasikDatePicker'
@@ -13,7 +14,7 @@ const DateRangePicker = (props) => {
    }
    return (
       <StyledContainer>
-         <StyledH4>${day}</StyledH4>
+         <StyledH4>{day}$/</StyledH4>
          <form onSubmit={dateSubmitHandler}>
             <BasikDatePicker />
             <StyledButton>REQUEST TO BOOK</StyledButton>

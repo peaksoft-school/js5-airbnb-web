@@ -1,76 +1,39 @@
+/* eslint-disable import/no-unresolved */
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
-// import apiFetch from '../api/apiFetch'
-import { getPosts } from '../store/slices/addAnnouncementSlice'
+import { addAnnouncementPost } from '../store/slices/addAnnountcementSlice'
+import { options } from '../utils/constants/constants'
 import Button from './UI/Button'
 import ImagePicker from './UI/ImagePicker'
 import Input from './UI/Input'
 import RadioButton from './UI/RadioButton'
 import Select from './UI/Select'
-
-const options = [
-   {
-      id: 1,
-      regionName: 'Batken',
-   },
-   {
-      id: 2,
-      regionName: 'Jalalabat',
-   },
-   {
-      id: 3,
-      regionName: 'Naryn',
-   },
-   {
-      id: 4,
-      regionName: 'Issyk-Kul',
-   },
-   {
-      id: 5,
-      regionName: 'Talas',
-   },
-   {
-      id: 6,
-      regionName: 'Osh',
-   },
-   {
-      id: 7,
-      regionName: 'Chui',
-   },
-   {
-      id: 8,
-      regionName: 'Bishkek',
-   },
-]
+import SnackBar from './UI/SnackBar'
 
 const AddAnnouncementForm = () => {
+   const { status, error } = useSelector((state) => state.addAnnountcement)
    const dispatch = useDispatch()
-   const state = useSelector((state) => state.addAnnoutcement.status)
-
-   const [regionId, setRegionId] = React.useState('2')
-   // const [photo, setPhoto] = React.useState('')
-   // console.log(photo)
-   const [images, setImages] = useState([])
+   const [photos, setPhotos] = useState([])
+   const [regionId, setRegionId] = useState('')
+   const [open, setOpen] = useState(false)
    const [formValue, setFormValue] = React.useState({
-      images,
       houseType: '',
-      maxGuests: Number(''),
-      price: Number(''),
+      maxGuests: '',
+      price: '',
       title: '',
       description: '',
       townProvince: '',
       address: '',
-      regionId: '2',
    })
-   const handleChange = (event) => {
+   const handleChangeSelectId = (id) => {
+      setRegionId(id)
+   }
+   const handleChange = (Event) => {
       setFormValue({
          ...formValue,
-         [event.target.name]: event.target.value,
+         [Event.target.name]: Event.target.value,
       })
-   }
-   const selectHandlerChange = (e) => {
-      setRegionId(e)
    }
    const isValidForm = () => {
       const valueIsValid =
@@ -79,48 +42,22 @@ const AddAnnouncementForm = () => {
          formValue.description.length >= 1 &&
          formValue.maxGuests.length >= 1 &&
          formValue.townProvince.length >= 1
-
       return valueIsValid
-   }
-   const formHandlerPost = async (formValuePost) => {
-      dispatch(
-         getPosts({
-            url: 'http://airbnb-env.eba-bxmudt83.eu-central-1.elasticbeanstalk.com/api/announcements/save',
-            method: 'POST',
-            jwt: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIGRldGFpbHMiLCJpc3MiOiJwZWFrc29mdCIsImV4cCI6MTY2MDc0NDYzMSwiaWF0IjoxNjYwNzQxMDMxLCJ1c2VybmFtZSI6Inp1a29rYWxpbG92In0.qreqjTrwdSOgxB89bDCKB9y74K7aqc56FEB48HEDJ7E',
-            role: 'USER',
-            body: formValuePost,
-         })
-      )
-   }
-   const ImagePickerHandler = async (i) => {
-      console.log(i)
-      const formData = new FormData()
-      formData.append('file', i)
-      try {
-         const res = await fetch(
-            'http://airbnb-env.eba-bxmudt83.eu-central-1.elasticbeanstalk.com/api/file/upload',
-            {
-               method: 'POST',
-               headers: {
-                  Authorization: `Bearer ${''}`,
-               },
-               body: formData,
-            }
-         )
-         const date = await res.json()
-         // if (!res.ok) {
-         //    throw new Error('img Photos')
-         // }
-         // setImages(date)
-         console.log(date)
-      } catch (error) {
-         console.log(error)
-      }
    }
    const submitHandlerForm = (e) => {
       e.preventDefault()
-      formHandlerPost(formValue)
+      setOpen((prev) => !prev)
+      const formObject = {
+         houseType: formValue.houseType,
+         maxGuests: formValue.maxGuests,
+         price: formValue.price,
+         title: formValue.title,
+         description: formValue.description,
+         regionId,
+         townProvince: formValue.townProvince,
+         address: formValue.address,
+      }
+      dispatch(addAnnouncementPost({ photos, formObject }))
       setFormValue({
          houseType: '',
          maxGuests: '',
@@ -130,12 +67,31 @@ const AddAnnouncementForm = () => {
          townProvince: '',
          address: '',
       })
-      setImages([])
       setRegionId('')
+      setPhotos([])
    }
-
    return (
       <div>
+         {error?.message === 'Rejected' ? (
+            <SnackBar
+               message="что пошло то не так"
+               text="повторите еще раз"
+               open={open}
+               onClose={setOpen}
+            />
+         ) : (
+            ''
+         )}
+         {status === 'succes' ? (
+            <SnackBar
+               severity="success"
+               message="Все успешно"
+               open={open}
+               onClose={setOpen}
+            />
+         ) : (
+            ''
+         )}
          <StyledForm onSubmit={submitHandlerForm}>
             <StyledDivImagePicker>
                <StyledH1>Hi! Lets get started listing your place.</StyledH1>
@@ -144,11 +100,7 @@ const AddAnnouncementForm = () => {
                   information about your listing.
                </StyledParagraf>
                <StyledSpan>Image Max 4 photo</StyledSpan>
-               <ImagePicker
-                  setPhotos={ImagePickerHandler}
-                  allPhotos={images}
-                  getPhoto={setImages}
-               />
+               <ImagePicker allPhotos={photos} getPhoto={setPhotos} />
                <StyledSpanHome>Home type</StyledSpanHome>
             </StyledDivImagePicker>
 
@@ -216,7 +168,7 @@ const AddAnnouncementForm = () => {
                   options={options}
                   getOptionLabel={(option) => option?.regionName}
                   getOptionValue={(option) => option?.id}
-                  onChange={selectHandlerChange}
+                  onChange={handleChangeSelectId}
                   value={regionId}
                   label="Region"
                />
@@ -245,7 +197,6 @@ const AddAnnouncementForm = () => {
                <Button disabled={isValidForm() || 'true'} height="37px">
                   Submit
                </Button>
-               {state === 'loading' && <h1>loading..</h1>}
             </StyledButton>
          </StyledForm>
       </div>

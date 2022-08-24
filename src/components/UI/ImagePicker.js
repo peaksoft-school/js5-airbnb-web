@@ -67,7 +67,7 @@ const ImagePicker = ({ allPhotos, getPhoto, ...props }) => {
                }) => (
                   // write your building UI
                   <DivContainerPhotos>
-                     {imageList?.map((image, index) => (
+                     {imageList.map((image, index) => (
                         // eslint-disable-next-line react/no-array-index-key
                         <DivImgButton key={index}>
                            <ImgPhoto src={image.data_url} alt="#" />

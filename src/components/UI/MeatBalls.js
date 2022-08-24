@@ -2,27 +2,26 @@ import { useState } from 'react'
 import styled from 'styled-components'
 import MeatBallsPng from '../../assets/icons/balls.png'
 
-const MeatBalls = ({ balls, onClick }) => {
+const MeatBalls = (props) => {
    const [state, setState] = useState(false)
 
    const toggleHandler = () => {
       setState((prevstate) => !prevstate)
    }
-
    const optionChangeHandler = (option) => {
-      setState(false)
-      onClick(option)
+      option.onClick(option)
    }
-
    return (
       <DivBlock>
          <Img onClick={toggleHandler} src={MeatBallsPng} />
          {state && (
             <DivContainerMeatBalls>
-               {balls.map((option) => (
+               {props.balls.map((option) => (
                   <TextMeatBalls
                      key={option.id}
-                     onClick={() => optionChangeHandler(option)}
+                     onClick={() => {
+                        optionChangeHandler(option)
+                     }}
                   >
                      {option.text}
                   </TextMeatBalls>
@@ -46,7 +45,7 @@ const Img = styled.img`
    height: 5px;
    @media (max-width: 375px) {
       width: 25px;
-      height: 10px;
+      height: 6px;
    }
 `
 
@@ -57,6 +56,14 @@ const DivContainerMeatBalls = styled.div`
    display: flex;
    flex-direction: column;
    justify-content: center;
+   position: absolute;
+   background: white;
+   left: 24px;
+   bottom: 14px;
+   @media screen and (max-width: 375px) {
+      left: 39.8%;
+      bottom: 7px;
+   }
 `
 
 const TextMeatBalls = styled.span`
