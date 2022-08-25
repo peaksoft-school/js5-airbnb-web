@@ -1,7 +1,6 @@
 import { InitialUrl } from '../utils/constants/constants'
 
 let store
-
 export const injectStore = (_store) => {
    store = _store
 }
@@ -40,3 +39,29 @@ function appFetch(props) {
 }
 
 export default appFetch
+
+export async function appFile(parameter) {
+   const token = store.getState()
+   const promise = new Promise((resolve, reject) => {
+      fetch(InitialUrl + parameter.url, {
+         method: 'POST',
+         headers: {
+            Authorization: `Bearer ${token.login.login?.jwt}`,
+         },
+         body: parameter.body,
+      })
+         .then((response) => {
+            if (response.ok) {
+               return response.json()
+            }
+            throw new Error(response.message)
+         })
+         .then((data) => {
+            resolve(data)
+         })
+         .catch((error) => {
+            reject(error)
+         })
+   })
+   return promise
+}
