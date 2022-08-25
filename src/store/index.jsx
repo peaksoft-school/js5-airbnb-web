@@ -6,7 +6,7 @@ import LoginSlice from './slices/LoginSlice'
 const store = configureStore({
    reducer: {
       login: LoginSlice.reducer,
-      houses: adminApplicationSlice.reducer,
+      applications: adminApplicationSlice.reducer,
    },
 })
 export default store

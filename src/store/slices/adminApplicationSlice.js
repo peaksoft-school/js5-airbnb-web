@@ -1,26 +1,26 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { getAllHouses } from './adminApplicationActions'
+import { getAllApplications } from './adminApplicationActions'
 
 const initialState = {
-   houseData: [],
+   applications: [],
    error: null,
    status: null,
 }
 
 const adminApplicationSlice = createSlice({
-   name: 'houses',
+   name: 'applications',
    initialState,
    extraReducers: {
-      [getAllHouses.pending]: (state) => {
+      [getAllApplications.pending]: (state) => {
          state.status = 'pending'
       },
-      [getAllHouses.rejected]: (state, action) => {
+      [getAllApplications.rejected]: (state, action) => {
          state.status = 'rejected'
          state.error = action.error
       },
-      [getAllHouses.fulfilled]: (state, action) => {
+      [getAllApplications.fulfilled]: (state, action) => {
          state.status = 'success'
-         state.houseData = action.payload
+         state.applications = action.payload
       },
    },
 })

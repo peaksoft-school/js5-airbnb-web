@@ -2,34 +2,33 @@ import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useSearchParams } from 'react-router-dom'
 import styled from 'styled-components'
-import { getAllHouses } from '../store/slices/adminApplicationActions'
+import { getAllApplications } from '../store/slices/adminApplicationActions'
 import AdminProfileApplicationCard from './UI/cards/AdminProfileApplicationCard'
 import Paginations from './UI/Pagination'
 
 const AdminApplication = () => {
-   const { houseData } = useSelector((state) => state.houses)
+   const { applications } = useSelector((state) => state.applications)
    const [params, setParams] = useSearchParams()
    const page = params.get('page')
    const [pagination, setPagination] = useState(+page || 1)
 
    const dispatch = useDispatch()
    useEffect(() => {
-      dispatch(getAllHouses({ pagination }))
+      dispatch(getAllApplications({ pagination }))
       setParams({ page: pagination })
    }, [pagination])
+   useEffect(() => {
+      dispatch(getAllApplications({ pagination }))
+   }, [])
 
-   const numberedData = {
-      numbered: Number(houseData?.size?.announcementsSize),
-   }
-   const paginationHandler = (event, value) => setPagination(value)
-   const numberOfPages = Math.ceil(numberedData.numbered / 15)
-
+   const paginationHandler = (_, value) => setPagination(value)
+   const numberOfPages = Math.ceil(applications.allAnnouncementsSize / 15)
    return (
       <div>
          <StyledAdminApplication>
             <StyledH3>APPLICATION</StyledH3>
             <StyledCards>
-               {houseData?.card?.map((item) => {
+               {applications.pageAnnouncementResponseList?.map((item) => {
                   return (
                      <AdminProfileApplicationCard
                         id={item.id}
@@ -44,7 +43,7 @@ const AdminApplication = () => {
                   )
                })}
             </StyledCards>
-            {houseData?.card?.length > 1 ? (
+            {applications.pageAnnouncementResponseList?.length > 1 ? (
                <StyledPagination>
                   <Paginations
                      count={numberOfPages}

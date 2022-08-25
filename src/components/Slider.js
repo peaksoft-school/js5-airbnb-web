@@ -33,26 +33,24 @@ const Slider = (props) => {
                            {images.length === 1 || images.length === 0 ? (
                               ''
                            ) : (
-                              <StyledArrows>
-                                 <LeftArrow onClick={prevSlideHandler} />
-                                 <RightArrow onClick={nextSlideHandler} />
-                              </StyledArrows>
-                           )}
-                           {images.length === 1 || images.length === 0 ? (
-                              ''
-                           ) : (
-                              <Indicators>
-                                 {images.map((slideItem, index) => (
-                                    <StyledIndicator
-                                       key={slideItem.id}
-                                       slideIndex={currentSlide}
-                                       index={index}
-                                       onClick={() =>
-                                          moveIndicatorHandler(index)
-                                       }
-                                    />
-                                 ))}
-                              </Indicators>
+                              <>
+                                 <StyledArrows>
+                                    <LeftArrow onClick={prevSlideHandler} />
+                                    <RightArrow onClick={nextSlideHandler} />
+                                 </StyledArrows>
+                                 <Indicators>
+                                    {images.map((slideItem, index) => (
+                                       <StyledIndicator
+                                          key={slideItem.id}
+                                          slideIndex={currentSlide}
+                                          index={index}
+                                          onClick={() =>
+                                             moveIndicatorHandler(index)
+                                          }
+                                       />
+                                    ))}
+                                 </Indicators>
+                              </>
                            )}
                         </StyledImagesAndArrows>
                      )}
@@ -67,7 +65,7 @@ const Slider = (props) => {
 export default Slider
 const Indicators = styled.div`
    display: flex;
-   margin: 0 auto;
+   /* margin: 0 auto; */
    z-index: 10;
 `
 
