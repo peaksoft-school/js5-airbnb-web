@@ -8,7 +8,7 @@ function appFetch(props) {
    const token = store.getState()
    const requestOptions = {
       method: props.method || 'GET',
-      headers: token.login.login?.jwt
+      headers: token.login.login.jwt
          ? {
               'Content-Type': 'application/json',
               Authorization: `Bearer ${token.login.login.jwt}`,
