@@ -9,7 +9,7 @@ function appFetch(props) {
    const token = store.getState()
    const requestOptions = {
       method: props.method || 'GET',
-      headers: token.login.login?.jwt
+      headers: token.login.login.jwt
          ? {
               'Content-Type': 'application/json',
               Authorization: `Bearer ${token.login.login.jwt}`,
@@ -40,3 +40,29 @@ function appFetch(props) {
 }
 
 export default appFetch
+
+export async function appFile(parameter) {
+   const token = store.getState()
+   const promise = new Promise((resolve, reject) => {
+      fetch(InitialUrl + parameter.url, {
+         method: 'POST',
+         headers: {
+            Authorization: `Bearer ${token.login.login?.jwt}`,
+         },
+         body: parameter.body,
+      })
+         .then((response) => {
+            if (response.ok) {
+               return response.json()
+            }
+            throw new Error(response.message)
+         })
+         .then((data) => {
+            resolve(data)
+         })
+         .catch((error) => {
+            reject(error)
+         })
+   })
+   return promise
+}

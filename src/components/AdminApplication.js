@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
@@ -5,6 +6,13 @@ import AdminHeader from '../layout/headers/AdminHeader/AdminHeader'
 import { slides } from '../slides'
 import { sentMessageActions } from '../store/slices/sentMessageSlice'
 import Button from './UI/Button'
+=======
+import { useEffect, useState } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { useSearchParams } from 'react-router-dom'
+import styled from 'styled-components'
+import { getAllApplications } from '../store/slices/adminApplicationActions'
+>>>>>>> e1461c516e3a50db6be8ef79e5c5cc295f520d28
 import AdminProfileApplicationCard from './UI/cards/AdminProfileApplicationCard'
 import Modal from './UI/Modal'
 import Paginations from './UI/Pagination'
@@ -77,25 +85,52 @@ const AdminApplication = () => {
       setGetCardId(cardId)
    }, [cardId])
 
+<<<<<<< HEAD
+=======
+const AdminApplication = () => {
+   const { applications } = useSelector((state) => state.applications)
+   const [params, setParams] = useSearchParams()
+   const page = params.get('page')
+   const [pagination, setPagination] = useState(+page || 1)
+
+   const dispatch = useDispatch()
+   useEffect(() => {
+      dispatch(getAllApplications({ pagination }))
+      setParams({ page: pagination })
+   }, [pagination])
+   useEffect(() => {
+      dispatch(getAllApplications({ pagination }))
+   }, [])
+
+   const paginationHandler = (_, value) => setPagination(value)
+   const numberOfPages = Math.ceil(applications.allAnnouncementsSize / 15)
+>>>>>>> e1461c516e3a50db6be8ef79e5c5cc295f520d28
    return (
       <div>
-         <AdminHeader />
          <StyledAdminApplication>
             <StyledH3>APPLICATION</StyledH3>
             <StyledCards>
+<<<<<<< HEAD
                <>
                   {cardData.map((item) => (
                      <AdminProfileApplicationCard
                         data={item}
                         onClick={optionsHandler}
+=======
+               {applications.pageAnnouncementResponseList?.map((item) => {
+                  return (
+                     <AdminProfileApplicationCard
+                        id={item.id}
+>>>>>>> e1461c516e3a50db6be8ef79e5c5cc295f520d28
                         key={item.id}
-                        slides={item.slides}
+                        images={item.images}
                         price={item.price}
                         location={item.location}
-                        description={item.description}
-                        guestsAmount={item.guestsAmount}
-                        ratings={item.ratings}
+                        title={item.title}
+                        maxGuests={item.maxGuests}
+                        rating={item.rating}
                      />
+<<<<<<< HEAD
                   ))}
                   {isAccepted && (
                      <SnackBar
@@ -154,6 +189,18 @@ const AdminApplication = () => {
             {cardData.length > 0 ? (
                <StyledPagination>
                   <Paginations />
+=======
+                  )
+               })}
+            </StyledCards>
+            {applications.pageAnnouncementResponseList?.length > 1 ? (
+               <StyledPagination>
+                  <Paginations
+                     count={numberOfPages}
+                     page={pagination}
+                     onChange={paginationHandler}
+                  />
+>>>>>>> e1461c516e3a50db6be8ef79e5c5cc295f520d28
                </StyledPagination>
             ) : (
                ''

@@ -4,14 +4,17 @@ import { ReactComponent as LeftArrow } from '../assets/icons/left-arr.svg'
 import { ReactComponent as RightArrow } from '../assets/icons/right-arr.svg'
 
 const Slider = (props) => {
-   const { slides } = props
+   const { images } = props
    const [currentSlide, setCurrentSlide] = useState(0)
 
    const nextSlideHandler = () => {
-      setCurrentSlide(currentSlide === slides.length - 1 ? 0 : currentSlide + 1)
+      setCurrentSlide(currentSlide === images.length - 1 ? 0 : currentSlide + 1)
    }
    const prevSlideHandler = () => {
-      setCurrentSlide(currentSlide === 0 ? slides.length - 1 : currentSlide - 1)
+      setCurrentSlide(currentSlide === 0 ? images.length - 1 : currentSlide - 1)
+   }
+   const moveIndicatorHandler = (index) => {
+      setCurrentSlide(index)
    }
    const moveIndicatorHandler = (index) => {
       setCurrentSlide(index)
@@ -19,7 +22,7 @@ const Slider = (props) => {
 
    return (
       <ImageSlider>
-         {slides.map((slide, index) => {
+         {images.map((slide, index) => {
             return (
                <div key={slide.id}>
                   <StyledSlider>
@@ -27,6 +30,7 @@ const Slider = (props) => {
                         <StyledImagesAndArrows>
                            <StyledCardImage
                               key={slide.id}
+<<<<<<< HEAD
                               src={slide.images}
                               alt="house images"
                            />
@@ -44,6 +48,33 @@ const Slider = (props) => {
                                  />
                               ))}
                            </Indicators>
+=======
+                              src={slide}
+                              alt="house images"
+                           />
+                           {images.length === 1 || images.length === 0 ? (
+                              ''
+                           ) : (
+                              <>
+                                 <StyledArrows>
+                                    <LeftArrow onClick={prevSlideHandler} />
+                                    <RightArrow onClick={nextSlideHandler} />
+                                 </StyledArrows>
+                                 <Indicators>
+                                    {images.map((slideItem, index) => (
+                                       <StyledIndicator
+                                          key={slideItem.id}
+                                          slideIndex={currentSlide}
+                                          index={index}
+                                          onClick={() =>
+                                             moveIndicatorHandler(index)
+                                          }
+                                       />
+                                    ))}
+                                 </Indicators>
+                              </>
+                           )}
+>>>>>>> e1461c516e3a50db6be8ef79e5c5cc295f520d28
                         </StyledImagesAndArrows>
                      )}
                   </StyledSlider>
@@ -57,6 +88,7 @@ const Slider = (props) => {
 export default Slider
 const Indicators = styled.div`
    display: flex;
+   /* margin: 0 auto; */
    z-index: 10;
 `
 
@@ -137,7 +169,6 @@ const ImageSlider = styled.div`
 const StyledCardImage = styled.img`
    width: 210px;
    height: 136px;
-   background-color: black;
    opacity: ${(props) => (props.open === true ? '0.5' : '1')};
    border-radius: 4px 4px 0 0;
    ${(props) =>

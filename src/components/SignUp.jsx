@@ -41,7 +41,7 @@ export const SignUp = (props) => {
       </Container>
    )
 }
-export default SignUp
+// export default SignUp
 
 const ButtonAdmin = styled.button`
    font-weight: 400;

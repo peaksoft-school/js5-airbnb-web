@@ -1,6 +1,13 @@
 import styled from 'styled-components'
 
-function Button({ onClick, variant, disabled, children, ...props }) {
+function Button({
+   onClick,
+   widthMedia,
+   variant,
+   disabled,
+   children,
+   ...props
+}) {
    return (
       <CustomButton
          onClick={onClick}
@@ -8,7 +15,7 @@ function Button({ onClick, variant, disabled, children, ...props }) {
          style={props}
          disabled={disabled === true}
       >
-         {children.toUpperCase()}
+         {children}
       </CustomButton>
    )
 }
@@ -71,6 +78,6 @@ const CustomButton = styled.button`
    }
 
    @media screen and (max-width: 414px) {
-      width: 106px !important;
+      width: ${(props) => props.widthMedia};
    }
 `
