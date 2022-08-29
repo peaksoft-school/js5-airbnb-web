@@ -148,7 +148,7 @@ const ApartmentHouseInnerPageFeedback = (props) => {
                            height="37px"
                            widthMedia="147px"
                            onClick={toogleOpenModalForFeedback}
-                           disabled={isfeedbackModal}
+                           // disabled={isfeedbackModal}
                         >
                            Publick
                         </Button>
