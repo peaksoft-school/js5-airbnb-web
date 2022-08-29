@@ -7,7 +7,7 @@ import Modal from '../components/UI/Modal'
 import SnackBar from '../components/UI/SnackBar'
 import UserNavbar from '../layout/headers/AdminHeader/AdminNavbar/AdminNavbar'
 
-const AdminApplicationsInnerPage = ({ arrayInnerPageDates }) => {
+const AdminApplicationsInnerPage = (props) => {
    const [isAccepted, setIsAccepted] = useState(false)
    const [isRejectModal, setIsRejectModal] = useState(false)
    const [isSent, setIsSent] = useState(false)
@@ -26,22 +26,22 @@ const AdminApplicationsInnerPage = ({ arrayInnerPageDates }) => {
    return (
       <div>
          <UserNavbar />
-         <NameApartment>{arrayInnerPageDates.titleName}</NameApartment>
+         <NameApartment>{props.data.titleName}</NameApartment>
          <GlobalContainer>
-            <ImageSlider arrayInnerPageDates={arrayInnerPageDates} />
+            <ImageSlider images={props.data.images} />
             <ContainerDates>
                <DivClikc>
                   <TextInDivClick1>Apartment</TextInDivClick1>
                   <TextInDivClick2>2 Guests</TextInDivClick2>
                </DivClikc>
-               <TitleHome>{arrayInnerPageDates.title}</TitleHome>
-               <AdressHome>{arrayInnerPageDates.adress}</AdressHome>
-               <TextHome>{arrayInnerPageDates.text}</TextHome>
+               <TitleHome>{props.data.title}</TitleHome>
+               <AdressHome>{props.data.adress}</AdressHome>
+               <TextHome>{props.data.text}</TextHome>
                <UserContainer>
                   <Img src={SkeletonUser} />
                   <UserInformationContainer>
-                     <UserEmail>{arrayInnerPageDates.name}</UserEmail>
-                     <UserName>{arrayInnerPageDates.gmail}</UserName>
+                     <UserEmail>{props.data.name}</UserEmail>
+                     <UserName>{props.data.gmail}</UserName>
                   </UserInformationContainer>
                </UserContainer>
                <ContainerButton>
