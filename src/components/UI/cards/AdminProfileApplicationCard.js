@@ -5,29 +5,6 @@ import Slider from '../../Slider'
 import MeatBalls from '../MeatBalls'
 
 const AdminProfileApplicationCard = (props) => {
-   const meatBallsOptions = [
-      {
-         text: 'Accept',
-         id: 1,
-         onClick: (option, id) => {
-            props.onClick(option, id)
-         },
-      },
-      {
-         text: 'Delete',
-         id: 2,
-         onClick: (option, id) => {
-            props.onClick(option, id)
-         },
-      },
-      {
-         text: 'Reject',
-         id: 3,
-         onClick: (option, id) => {
-            props.onClick(option, id)
-         },
-      },
-   ]
    const { isViewed } = props
 
    return (
