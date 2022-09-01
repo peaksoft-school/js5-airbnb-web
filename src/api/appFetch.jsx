@@ -1,9 +1,13 @@
-// eslint-disable-next-line import/no-cycle
-import Store from '../store/index'
 import { InitialUrl } from '../utils/constants/constants'
 
+let store
+
+export const injectStore = (_store) => {
+   store = _store
+}
+
 function appFetch(props) {
-   const token = Store.getState()
+   const token = store.getState()
    const requestOptions = {
       method: props.method || 'GET',
       headers: token.login.login?.jwt
