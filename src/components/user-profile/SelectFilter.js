@@ -40,105 +40,107 @@ export default function UserSelect(props) {
    const [text, setText] = useState('')
    return (
       <Block>
-         <Cosntainer>
-            <BoxWrapper>
-               <Box sx={{ minWidth: 120 }}>
-                  <FormControl fullWidth>
-                     <InputLabel
-                        sx={{
-                           '&.Mui-focused': {
-                              color: '#615f5f',
-                           },
-                        }}
-                        id="demo-multiple-checkbox-label"
-                     >
-                        Sort
-                     </InputLabel>
-                     <Select
-                        labelId="demo-multiple-checkbox-label"
-                        id="demo-multiple-checkbox"
-                        value={clear.checkBox ? text : null}
-                        onChange={(e) => {
-                           setClear({ ...clear, checkBox: true })
-                           setText(e.target.value)
-                        }}
-                        renderValue={(selected) => selected}
-                     >
-                        <MenuItem style={{ color: 'grey' }}>All</MenuItem>
+         <Container>
+            <div>
+               <BoxWrapper>
+                  <Box sx={{ minWidth: 120 }}>
+                     <FormControl fullWidth>
+                        <InputLabel
+                           sx={{
+                              '&.Mui-focused': {
+                                 color: '#615f5f',
+                              },
+                           }}
+                           id="demo-multiple-checkbox-label"
+                        >
+                           Sort
+                        </InputLabel>
+                        <Select
+                           labelId="demo-multiple-checkbox-label"
+                           id="demo-multiple-checkbox"
+                           value={clear.checkBox ? text : null}
+                           onChange={(e) => {
+                              setClear({ ...clear, checkBox: true })
+                              setText(e.target.value)
+                           }}
+                           renderValue={(selected) => selected}
+                        >
+                           <MenuItem style={{ color: 'grey' }}>All</MenuItem>
 
-                        {names.map((name) => (
-                           <MenuItem
-                              style={{ height: '30px' }}
-                              key={name}
-                              value={name}
-                              onClick={() => {
-                                 setDele({ ...dele, checkBox: true })
-                                 setData({ ...data, text: name })
-                              }}
-                           >
-                              <CheckBox
-                                 width="20px"
-                                 height="20px"
-                                 border="1px solid #C4C4C4"
-                              />
-                              <SelectItemText>{name}</SelectItemText>
-                           </MenuItem>
-                        ))}
-                        <MenuItem style={{ color: 'grey' }}>prise</MenuItem>
-                        {prise.map((element) => (
-                           <MenuItem
-                              key={element}
-                              value={element}
-                              onClick={() => {
-                                 setDele({ ...dele, radioBtn: true })
-                                 setData({ ...data, textRadio: element })
-                              }}
-                           >
-                              <RadioButton />
-                              <SelectItemText className="radio">
-                                 {element}
-                              </SelectItemText>
-                           </MenuItem>
-                        ))}
-                     </Select>
-                  </FormControl>
-               </Box>
-            </BoxWrapper>
-            <BoxWrapper className="select-left" btn={btn}>
-               <Box sx={{ minWidth: 120 }}>
-                  <FormControl fullWidth>
-                     <InputLabel
-                        sx={{
-                           '&.Mui-focused': {
-                              color: '#615f5f',
-                           },
-                        }}
-                        id="demo-simple-select-label"
-                     >
-                        Sort by ratings
-                     </InputLabel>
-                     <Select
-                        labelId="demo-simple-select-label"
-                        value={clear.images ? rating : null}
-                        onChange={(e) => {
-                           setClear({ ...clear, images: true })
-                           setDele({
-                              ...dele,
-                              img: 'true',
-                           })
-                           setbtn(true)
-                           setrating(e.target.value)
-                        }}
-                     >
-                        {images.map((icons) => (
-                           <MenuItem value={icons} key={icons}>
-                              <img src={icons} />
-                           </MenuItem>
-                        ))}
-                     </Select>
-                  </FormControl>
-               </Box>
-            </BoxWrapper>
+                           {names.map((name) => (
+                              <MenuItem
+                                 style={{ height: '30px' }}
+                                 key={name}
+                                 value={name}
+                                 onClick={() => {
+                                    setDele({ ...dele, checkBox: true })
+                                    setData({ ...data, text: name })
+                                 }}
+                              >
+                                 <CheckBox
+                                    width="20px"
+                                    height="20px"
+                                    border="1px solid #C4C4C4"
+                                 />
+                                 <SelectItemText>{name}</SelectItemText>
+                              </MenuItem>
+                           ))}
+                           <MenuItem style={{ color: 'grey' }}>prise</MenuItem>
+                           {prise.map((element) => (
+                              <MenuItem
+                                 key={element}
+                                 value={element}
+                                 onClick={() => {
+                                    setDele({ ...dele, radioBtn: true })
+                                    setData({ ...data, textRadio: element })
+                                 }}
+                              >
+                                 <RadioButton />
+                                 <SelectItemText className="radio">
+                                    {element}
+                                 </SelectItemText>
+                              </MenuItem>
+                           ))}
+                        </Select>
+                     </FormControl>
+                  </Box>
+               </BoxWrapper>
+               <BoxWrapper className="select-left">
+                  <Box sx={{ minWidth: 120 }}>
+                     <FormControl fullWidth>
+                        <InputLabel
+                           sx={{
+                              '&.Mui-focused': {
+                                 color: '#615f5f',
+                              },
+                           }}
+                           id="demo-simple-select-label"
+                        >
+                           Sort by ratings
+                        </InputLabel>
+                        <Select
+                           labelId="demo-simple-select-label"
+                           value={clear.images ? rating : null}
+                           onChange={(e) => {
+                              setClear({ ...clear, images: true })
+                              setDele({
+                                 ...dele,
+                                 img: 'true',
+                              })
+                              setbtn(true)
+                              setrating(e.target.value)
+                           }}
+                        >
+                           {images.map((icons) => (
+                              <MenuItem value={icons} key={icons}>
+                                 <img src={icons} />
+                              </MenuItem>
+                           ))}
+                        </Select>
+                     </FormControl>
+                  </Box>
+               </BoxWrapper>
+            </div>
             <StyledText>
                {dele.checkBox ? (
                   <Text
@@ -190,18 +192,17 @@ export default function UserSelect(props) {
                   </StyledClear>
                ) : null}
             </StyledText>
-         </Cosntainer>
+         </Container>
       </Block>
    )
 }
 const Block = styled.div`
-   display: flex;
-   flex-direction: column;
+   display: block;
 `
 const BoxWrapper = styled.div`
    border: 1px solid #adabab;
    border-radius: 2px;
-   width: 390px;
+   width: 271px;
    height: 42px;
    &.select-left {
       margin-left: 10px;
@@ -227,28 +228,6 @@ const BoxWrapper = styled.div`
          border: none;
       }
    }
-   & > div > div {
-      border: none;
-
-      ${(props) =>
-         props.btn
-            ? null
-            : css`
-                 & > label::after {
-                    content: 'All';
-                    color: black;
-                    margin-left: 175px;
-                 }
-              `}
-      ${(props) =>
-         props.btn2
-            ? css`
-                 & > label {
-                    display: none;
-                 }
-              `
-            : ''}
-   }
 `
 const Text = styled.p`
    width: 126px;
@@ -268,9 +247,14 @@ const Text = styled.p`
       margin-right: 15px;
    }
 `
-const Cosntainer = styled.div`
+const Container = styled.div`
    width: 900px;
    display: flex;
+   flex-direction: column;
+   & > div {
+      display: flex;
+      padding-bottom: 16px;
+   }
 `
 const StyledVector = styled.img`
    width: 7px;
@@ -294,10 +278,6 @@ const StyledText = styled.div`
    width: 500px;
    display: flex;
    align-items: center;
-   right: 270px;
-   position: relative;
-   top: 50px;
-   right: 415px;
    @media (max-width: 375px) {
       display: grid;
       grid-template-columns: auto auto;

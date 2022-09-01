@@ -85,8 +85,9 @@ const Logout = styled.a`
    font-size: 16px;
    line-height: 19px;
    color: #ff4b4b;
-   margin-top: 35px;
-   margin-left: 38px;
+   position: relative;
+   top: 15px;
+   left: 38px;
    @media (max-width: 375px) {
       display: none;
    }

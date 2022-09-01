@@ -172,10 +172,9 @@ function MyAnnouncment() {
 export default MyAnnouncment
 
 const Announcement = styled.div`
-   padding-top: 31px;
+   padding-top: 30px;
    display: flex;
-   justify-content: flex-start;
-   gap: 20px;
+   justify-content: space-between;
    flex-wrap: wrap;
    align-content: flex-start;
    flex-direction: row;
@@ -221,7 +220,6 @@ const StyledBlock = styled.div`
 const PosisionSelect = styled.div`
    display: flex;
    justify-content: space-between;
-   padding-bottom: 40px;
    @media (max-width: 375px) {
       display: flex;
       flex-direction: column;
