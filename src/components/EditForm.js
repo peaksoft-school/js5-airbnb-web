@@ -76,7 +76,6 @@ const EditForm = (props) => {
          townProvince: formValue.townProvince,
          address: formValue.address,
       }
-      props.onSave({ formObject })
       dispatch(editAnnountcementPost({ photos, formObject }))
       setFormValue({
          houseType: '',
