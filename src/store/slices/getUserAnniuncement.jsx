@@ -1,3 +1,5 @@
+/* eslint-disable import/no-named-as-default-member */
+/* eslint-disable import/no-named-as-default */
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import appFetch from '../../api/appFetch'
 
