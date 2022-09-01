@@ -1,10 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit'
-// eslint-disable-next-line import/no-cycle
+import addAnnountcementSlice from './slices/addAnnountcementSlice'
+import adminApplicationSlice from './slices/adminApplicationSlice'
 import LoginSlice from './slices/LoginSlice'
 
-const Store = configureStore({
+const store = configureStore({
    reducer: {
       login: LoginSlice.reducer,
+      applications: adminApplicationSlice.reducer,
+      addAnnountcement: addAnnountcementSlice.reducer,
    },
 })
-export default Store
+export default store

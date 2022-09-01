@@ -1,32 +1,59 @@
+import { useEffect, useState } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { useSearchParams } from 'react-router-dom'
 import styled from 'styled-components'
-import AdminHeader from '../layout/headers/AdminHeader/AdminHeader'
+import { getAllApplications } from '../store/slices/adminApplicationActions'
 import AdminProfileApplicationCard from './UI/cards/AdminProfileApplicationCard'
 import Paginations from './UI/Pagination'
 
-const AdminApplication = (props) => {
+const AdminApplication = () => {
+   const { applications } = useSelector((state) => state.applications)
+   const [params, setParams] = useSearchParams()
+   const page = params.get('page')
+   const [pagination, setPagination] = useState(+page || 1)
+
+   const dispatch = useDispatch()
+   useEffect(() => {
+      dispatch(getAllApplications({ pagination }))
+      setParams({ page: pagination })
+   }, [pagination])
+   useEffect(() => {
+      dispatch(getAllApplications({ pagination }))
+   }, [])
+
+   const paginationHandler = (_, value) => setPagination(value)
+   const numberOfPages = Math.ceil(applications.allAnnouncementsSize / 15)
    return (
       <div>
-         <AdminHeader />
          <StyledAdminApplication>
             <StyledH3>APPLICATION</StyledH3>
             <StyledCards>
-               <>
-                  {props.CardData.map((item) => (
+               {applications.pageAnnouncementResponseList?.map((item) => {
+                  return (
                      <AdminProfileApplicationCard
+                        id={item.id}
                         key={item.id}
-                        slides={item.slides}
+                        images={item.images}
                         price={item.price}
                         location={item.location}
-                        description={item.description}
-                        guestsAmount={item.guestsAmount}
-                        ratings={item.ratings}
+                        title={item.title}
+                        maxGuests={item.maxGuests}
+                        rating={item.rating}
                      />
-                  ))}
-               </>
+                  )
+               })}
             </StyledCards>
-            <StyledPagination>
-               <Paginations />
-            </StyledPagination>
+            {applications.pageAnnouncementResponseList?.length > 1 ? (
+               <StyledPagination>
+                  <Paginations
+                     count={numberOfPages}
+                     page={pagination}
+                     onChange={paginationHandler}
+                  />
+               </StyledPagination>
+            ) : (
+               ''
+            )}
          </StyledAdminApplication>
       </div>
    )

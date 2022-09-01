@@ -13,8 +13,7 @@ function Button({
          onClick={onClick}
          variant={variant}
          style={props}
-         disabled={disabled === 'true'}
-         widthMedia={widthMedia}
+         disabled={disabled === true}
       >
          {children}
       </CustomButton>

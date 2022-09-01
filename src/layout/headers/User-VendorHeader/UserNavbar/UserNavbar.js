@@ -9,7 +9,7 @@ import Button from '../../../../components/UI/Button'
 import Input from '../../../../components/UI/Input'
 import SearchInput from '../../../../components/UI/SearchInput'
 
-const AdminNavbar = ({ mobileToggle, register }) => {
+const AdminNavbar = ({ mobileToggle, register, onChangeOpen }) => {
    const [isOpen, setIsOpen] = useState(false)
 
    const handleToggle = () => {
@@ -66,7 +66,11 @@ const AdminNavbar = ({ mobileToggle, register }) => {
                   {register ? (
                      <>
                         <NavBtnLink to="home">
-                           <Button width="196px" height="37px">
+                           <Button
+                              onClick={() => onChangeOpen()}
+                              width="196px"
+                              height="37px"
+                           >
                               Submit an ad
                            </Button>
                         </NavBtnLink>
