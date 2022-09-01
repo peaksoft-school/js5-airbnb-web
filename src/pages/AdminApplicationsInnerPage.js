@@ -26,22 +26,24 @@ const AdminApplicationsInnerPage = (props) => {
    return (
       <div>
          <UserNavbar />
-         <NameApartment>{props.data.titleName}</NameApartment>
+         <NameApartment>{props.data.title}</NameApartment>
          <GlobalContainer>
             <ImageSlider images={props.data.images} />
             <ContainerDates>
                <DivClikc>
-                  <TextInDivClick1>Apartment</TextInDivClick1>
-                  <TextInDivClick2>2 Guests</TextInDivClick2>
+                  <TextInDivClick1>{props.data.houseType}</TextInDivClick1>
+                  <TextInDivClick2>
+                     {props.data.maxGuests} Guests
+                  </TextInDivClick2>
                </DivClikc>
                <TitleHome>{props.data.title}</TitleHome>
-               <AdressHome>{props.data.adress}</AdressHome>
-               <TextHome>{props.data.text}</TextHome>
+               <AdressHome>{props.data.location}</AdressHome>
+               <TextHome>{props.data.description}</TextHome>
                <UserContainer>
                   <Img src={SkeletonUser} />
                   <UserInformationContainer>
-                     <UserEmail>{props.data.name}</UserEmail>
-                     <UserName>{props.data.gmail}</UserName>
+                     <UserEmail>{props.data.ownerFullName}</UserEmail>
+                     <UserName>{props.data.ownerEmail}</UserName>
                   </UserInformationContainer>
                </UserContainer>
                <ContainerButton>

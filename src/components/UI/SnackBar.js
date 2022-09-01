@@ -30,7 +30,7 @@ export default function SnackBar({ severity, open, onClose, message, text }) {
 const NotificationAlert = styled(Alert)`
    width: 800px;
    padding: 40px;
-   height: ${(props) => (props.severity === 'success' ? '66px' : '100px')};
+   height: ${(props) => (props.severity === 'success' ? '70px' : '100px')};
    background-color: ${(props) =>
       props.severity === 'success' ? ' #F0FFF1' : '#FFF1F0'} !important;
    color: #000000;
