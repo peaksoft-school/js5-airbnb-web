@@ -16,9 +16,6 @@ const Slider = (props) => {
    const moveIndicatorHandler = (index) => {
       setCurrentSlide(index)
    }
-   const moveIndicatorHandler = (index) => {
-      setCurrentSlide(index)
-   }
 
    return (
       <ImageSlider>
@@ -30,25 +27,6 @@ const Slider = (props) => {
                         <StyledImagesAndArrows>
                            <StyledCardImage
                               key={slide.id}
-<<<<<<< HEAD
-                              src={slide.images}
-                              alt="house images"
-                           />
-                           <StyledArrows>
-                              <LeftArrow onClick={prevSlideHandler} />
-                              <RightArrow onClick={nextSlideHandler} />
-                           </StyledArrows>
-                           <Indicators>
-                              {slides.map((slideItem, index) => (
-                                 <StyledIndicator
-                                    key={slideItem.id}
-                                    slideIndex={currentSlide}
-                                    index={index}
-                                    onClick={() => moveIndicatorHandler(index)}
-                                 />
-                              ))}
-                           </Indicators>
-=======
                               src={slide}
                               alt="house images"
                            />
@@ -74,7 +52,6 @@ const Slider = (props) => {
                                  </Indicators>
                               </>
                            )}
->>>>>>> e1461c516e3a50db6be8ef79e5c5cc295f520d28
                         </StyledImagesAndArrows>
                      )}
                   </StyledSlider>
