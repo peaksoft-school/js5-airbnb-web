@@ -8,8 +8,8 @@ const MeatBalls = (props) => {
    const toggleHandler = () => {
       setState((prevstate) => !prevstate)
    }
-   const optionChangeHandler = (option) => {
-      option.onClick(option)
+   const optionChangeHandler = () => {
+      setState((prevstate) => !prevstate)
    }
    return (
       <DivBlock>
@@ -20,7 +20,8 @@ const MeatBalls = (props) => {
                   <TextMeatBalls
                      key={option.id}
                      onClick={() => {
-                        optionChangeHandler(option)
+                        optionChangeHandler()
+                        option.onClick(option.text, props.id)
                      }}
                   >
                      {option.text}

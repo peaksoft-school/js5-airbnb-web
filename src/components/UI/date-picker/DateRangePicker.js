@@ -6,7 +6,7 @@ import BasikDatePicker from './BasikDatePicker'
 import 'gestalt-datepicker/dist/gestalt-datepicker.css'
 
 const DateRangePicker = (props) => {
-   const { onDateRangeDates, day } = props
+   const { onDateRangeDates, day, dayNow } = props
 
    const dateSubmitHandler = (e) => {
       e.preventDefault()
@@ -14,10 +14,11 @@ const DateRangePicker = (props) => {
    }
    return (
       <StyledContainer>
-         <StyledH4>{day}$/</StyledH4>
+         <StyledH4>
+            ${day}/<DayNow>{dayNow}</DayNow>
+         </StyledH4>
          <form onSubmit={dateSubmitHandler}>
             <BasikDatePicker />
-            <StyledButton>REQUEST TO BOOK</StyledButton>
          </form>
       </StyledContainer>
    )
@@ -25,7 +26,7 @@ const DateRangePicker = (props) => {
 
 const StyledContainer = styled.div`
    width: 494px;
-   height: 269px;
+   height: 209px;
    background: #ffffff;
    padding: 20px;
    & div svg {
@@ -64,7 +65,7 @@ const StyledH4 = styled.h4`
    font-size: 20px;
    line-height: 24px;
    color: #000000;
-
+   display: flex;
    @media only screen and (max-width: 375px) {
       width: 311px;
       text-align: center;
@@ -80,26 +81,36 @@ const StyledH4 = styled.h4`
    }
 `
 
-const StyledButton = styled.button`
-   padding: 10px 16px;
-   gap: 10px;
-   width: 454px;
-   height: 37px;
-   border: none;
-   background: #dd8a08;
-   border-radius: 2px;
-   font-family: 'Inter';
-   font-style: normal;
-   font-weight: 500;
-   font-size: 14px;
-   line-height: 17px;
-   color: #f7f7f7;
-   margin-top: 40px;
-   @media only screen and (max-width: 375px) {
-      width: 311px;
-      height: 37px;
-      background: #dd8a08;
-      border-radius: 2px;
-   }
+const DayNow = styled.span`
+   width: 31px;
+   height: 22px;
+   font-weight: 400;
+   font-size: 18px;
+   line-height: 22px;
+   color: #6c6c6c;
+   margin-left: 4px;
 `
+
+// const StyledButton = styled.button`
+//    padding: 10px 16px;
+//    gap: 10px;
+//    width: 454px;
+//    height: 37px;
+//    border: none;
+//    background: #dd8a08;
+//    border-radius: 2px;
+//    font-family: 'Inter';
+//    font-style: normal;
+//    font-weight: 500;
+//    font-size: 14px;
+//    line-height: 17px;
+//    color: #f7f7f7;
+//    margin-top: 40px;
+//    @media only screen and (max-width: 375px) {
+//       width: 311px;
+//       height: 37px;
+//       background: #dd8a08;
+//       border-radius: 2px;
+//    }
+// `
 export default DateRangePicker
