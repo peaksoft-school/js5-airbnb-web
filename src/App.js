@@ -1,4 +1,3 @@
-// import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import './App.css'
 import AdminApplicationsInnerPage from './pages/AdminApplicationsInnerPage'
@@ -10,18 +9,11 @@ function App() {
    const selector = useSelector((store) => store)
    const dispatch = useDispatch()
 
-   // useEffect(() => {
-   //    dispatch(getAdminApplicationById(getDates))
-   // }, [])
-
    const getDates = () => {
       dispatch(getAdminApplicationById(6))
    }
    return (
       <div className="App">
-         {/* {data?.map((i) => (
-            <AdminApplicationsInnerPage data={i} />
-         ))} */}
          <button
             onClick={() => {
                getDates()

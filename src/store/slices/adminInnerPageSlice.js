@@ -11,31 +11,6 @@ const initialState = {
    },
 }
 
-// const adminInnerPage = createAsyncThunk({
-//    name: 'adminInnerPage/adminInnerPage',
-//    initialState,
-//    extraReducers: {
-//       [acceptInnerPage.fulfilled]: (state) => {
-//          state.accepted.status = 'success'
-//       },
-//       [acceptInnerPage.rejected]: (state) => {
-//          state.accepted.status = 'error'
-//       },
-//       [rejectInnerPage.fulfilled]: (state, action) => {
-//          console.log(action, state)
-//          state.rejected.status = 'success'
-//          state.rejected.message = action.payload
-//       },
-//       rejectStatus(state, action) {
-//          console.log(action.accepted)
-//          console.log(state, action)
-//       },
-//       [rejectInnerPage.rejected]: (state) => {
-//          state.rejected.status = 'error'
-//       },
-//    },
-// })
-
 const adminInnerPage = createSlice({
    name: 'adminInnerPage',
    initialState,
