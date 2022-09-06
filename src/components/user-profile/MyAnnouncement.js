@@ -1,7 +1,7 @@
 /* eslint-disable import/order */
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 // import { useNavigate } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux'
+// import { useSelector, useDispatch } from 'react-redux'
 import styled from 'styled-components'
 // import appFetch from '../../api/appFetch'
 import photo from '../../assets/images/Rectangle 7 (5).png'
@@ -10,7 +10,7 @@ import UserProfileAnnouncementCard from '../UI/cards/UserProfilleAnnouncementCar
 import Modal from '../UI/Modal'
 import SnackBar from '../UI/SnackBar'
 import UserSelect from './SelectFilter'
-import { getUserBooking } from '../../store/slices/getUserAnniuncement'
+// import { getUserBooking } from '../../store/slices/getUserAnniuncement'
 
 export const array = [
    {
@@ -116,8 +116,8 @@ function MyAnnouncment() {
    //    console.log('hiuse')
    //    dispatch(getUserBooking())
    // }, [])
-   const data = useSelector((s) => s)
-   const dispatch = useDispatch()
+   // const data = useSelector((s) => s)
+   // const dispatch = useDispatch()
    // const a = async () => {
    //    const d = await fetch(
    // eslint-disable-next-line max-len
@@ -134,11 +134,11 @@ function MyAnnouncment() {
    //       .then((data) => console.log(data))
    //    console.log(d)
    // }
-   console.log(data)
-   useEffect(() => {
-      // a()
-      dispatch(getUserBooking())
-   }, [])
+   // console.log(data)
+   // useEffect(() => {
+   //    // a()
+   //    dispatch(getUserBooking())
+   // }, [])
 
    return (
       <Announcement>

@@ -8,13 +8,12 @@ export const injectStore = (_store) => {
 
 function appFetch(props) {
    const token = store.getState()
-
    const requestOptions = {
-      method: props.method || 'GET',
-      headers: token.login.login.jwt
+      method: props?.method || 'GET',
+      headers: token?.login?.login?.jwt
          ? {
               'Content-Type': 'application/json',
-              Authorization: `Bearer ${token.login.login.jwt}`,
+              Authorization: `Bearer ${token?.login?.login?.jwt}`,
            }
          : {
               'Content-Type': 'application/json; charset=utf-8',

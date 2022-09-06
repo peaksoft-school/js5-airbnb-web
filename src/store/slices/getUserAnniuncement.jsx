@@ -5,11 +5,10 @@ export const getUserBooking = createAsyncThunk(
    'getUserAnnouncementCard/getUserBooking',
    async () => {
       const response = await appFetch({
-         // url: 'user/profile/bookings/myAnnouncements',
          url: 'user/profile/bookings/myAnnouncements',
       })
-      console.log(response)
       return response
+      // console.log(response)
    }
 )
 const initialState = {
@@ -29,7 +28,6 @@ const getUserAnnouncementCard = createSlice({
          state.status = 'error'
       },
       [getUserBooking.fulfilled]: (state, action) => {
-         // console.log(state)
          state.status = 'success'
          state.data = action.payload
          state.bookings = action.payload.bookings

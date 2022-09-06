@@ -3,18 +3,18 @@ import styled from 'styled-components'
 import Button from '../UI/Button'
 import AdminProfileApplicationCard from '../UI/cards/UserProfilleAnnouncementCard'
 // import slides2 from '../../assets/images/Rectangle 14.png'
-// import { useDispatch, useSelector } from 'react-redux'
-// import { useEffect } from 'react'
-// import { getUserBooking } from '../../store/slices/getUserAnniuncement'
+import { useDispatch, useSelector } from 'react-redux'
+import { useEffect } from 'react'
+import { getUserBooking } from '../../store/slices/getUserAnniuncement'
 import { array } from './MyAnnouncement'
 
 function Bookings() {
-   // const data = useSelector((s) => s)
-   // const dispatch = useDispatch()
-   // console.log(data)
-   // useEffect(() => {
-   //    dispatch(getUserBooking())
-   // }, [])
+   const data = useSelector((s) => s)
+   const dispatch = useDispatch()
+   console.log(data)
+   useEffect(() => {
+      dispatch(getUserBooking())
+   }, [])
    return (
       <Announcement>
          {array.map((el) => {
