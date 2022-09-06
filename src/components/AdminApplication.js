@@ -8,7 +8,6 @@ import {
    getAllApplications,
    rejectAnnouncements,
 } from '../store/slices/adminApplicationActions'
-// import RejectedModal from './RejectedModal'
 import Button from './UI/Button'
 import AdminProfileApplicationCard from './UI/cards/AdminProfileApplicationCard'
 import Modal from './UI/Modal'
