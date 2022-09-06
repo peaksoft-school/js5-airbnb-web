@@ -23,7 +23,6 @@ const adminInnerPage = createSlice({
          state.accepted.status = 'error'
       },
       [rejectInnerPage.fulfilled]: (state, action) => {
-         console.log(action, state)
          state.rejected.status = 'success'
          state.rejected.message = action.payload
       },
