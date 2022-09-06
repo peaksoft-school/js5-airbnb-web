@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import React from 'react'
 import { it } from 'date-fns/locale'
 import 'gestalt/dist/gestalt.css'

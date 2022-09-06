@@ -12,8 +12,8 @@ function UserProfile() {
       fontFamily: 'Inter',
       fontStyle: 'normal',
       fontWeight: '600',
-      fontSize: '18px',
-      lineHeight: '22px',
+      fontSize: '17px',
+      lineHeight: '12px',
       textDecoration: 'none',
    }
    return (
@@ -21,7 +21,10 @@ function UserProfile() {
          <Container>
             <Profile>PROFILE</Profile>
             <Lov>
-               <UserCard emile="mederbekov@gmail.com" name="Meder" />
+               <UserCard
+                  email="mairamkulkeldibekuulu76@gmail.com"
+                  name="fvws"
+               />
                <Cart>
                   <Nav>
                      <NavLink
@@ -97,7 +100,8 @@ const Nav = styled.div`
    border-bottom: 1px solid #c4c4c4;
    position: relative;
    @media (max-width: 375px) {
-      width: 343px;
+      font-size: 17px;
+      width: 443px;
       height: 39px;
       margin-top: 40px;
       justify-content: start;

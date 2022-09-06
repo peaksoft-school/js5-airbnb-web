@@ -1,33 +1,33 @@
 /* eslint-disable import/order */
 import styled from 'styled-components'
 import Button from '../UI/Button'
-import { array } from './MyAnnouncement'
 import AdminProfileApplicationCard from '../UI/cards/UserProfilleAnnouncementCard'
-import slides2 from '../../assets/images/Rectangle 14.png'
-import { useDispatch, useSelector } from 'react-redux'
-import { useEffect } from 'react'
-import { getUserBooking } from '../../store/slices/getUserAnniuncement'
+// import slides2 from '../../assets/images/Rectangle 14.png'
+// import { useDispatch, useSelector } from 'react-redux'
+// import { useEffect } from 'react'
+// import { getUserBooking } from '../../store/slices/getUserAnniuncement'
+import { array } from './MyAnnouncement'
 
 function Bookings() {
-   const data = useSelector((s) => s)
-   console.log(data)
-   const dispatch = useDispatch()
-   useEffect(() => {
-      dispatch(getUserBooking())
-   }, [])
+   // const data = useSelector((s) => s)
+   // const dispatch = useDispatch()
+   // console.log(data)
+   // useEffect(() => {
+   //    dispatch(getUserBooking())
+   // }, [])
    return (
       <Announcement>
          {array.map((el) => {
             return (
                <StyledCard key={el.id}>
                   <AdminProfileApplicationCard
-                     img={slides2}
+                     img={el.image}
                      price={el.price}
                      ratings={el.ratings}
                      description={el.description}
                      location={el.location}
                      guestsAmount={el.guestsAmount}
-                     open="none"
+                     open="true"
                      data={el}
                      key={el.id}
                   />
@@ -47,7 +47,7 @@ function Bookings() {
                      height="37px"
                      fontSize="14px"
                   >
-                     change
+                     CHANGE
                   </Button>
                </StyledCard>
             )

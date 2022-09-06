@@ -1,17 +1,16 @@
-/* eslint-disable import/order */
 import './App.css'
+import AddAnnouncementForm from './components/AddAnnountCementForm'
 import UserProfile from './components/user-profile/UserProfile'
-// import ApartmentHouseInnerPageFeedback from './pages/ApartmentHouseInnerPageFeedback'
-import AdminApplication from './components/AdminApplication'
-import SignupAdmin from './components/SignupAdmin'
+// eslint-disable-next-line import/order
+import { SignUp } from './components/SignUp'
 
 function App() {
    return (
       <div className="App">
+         <SignUp />
+         <AddAnnouncementForm />
          <UserProfile />
          {/* <p>development</p> */}
-         <SignupAdmin />
-         <AdminApplication />
       </div>
    )
 }

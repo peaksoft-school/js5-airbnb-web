@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable import/order */
 /* eslint-disable react/jsx-no-undef */
 /* eslint-disable jsx-a11y/alt-text */
@@ -9,6 +10,8 @@ import date from '../../../assets/icons/Frame (2).svg'
 import MeatBalls from '../MeatBalls'
 import BlockedInfoMessage from './BlockedInfoMessage'
 import like from '../../../assets/icons/Like.png'
+import vector from '../../../assets/icons/vector.svg'
+import Button from '../Button'
 
 const UserProfileAnnouncementCard = (props) => {
    // const { isBlocked, img } = props
@@ -30,14 +33,19 @@ const UserProfileAnnouncementCard = (props) => {
       },
    ]
 
+   // eslint-disable-next-line no-unused-vars
+   // const [blockMessage, setBlockMessage] = useState(props.status)
    const [showMessage, setShowMessage] = useState(false)
 
    const showMessageHandler = () => {
       setShowMessage(!showMessage)
    }
-
    return (
-      <StyledCard isBlocked={props.isBlocked} open={props.open}>
+      <StyledCard
+         isBlocked={props.isBlocked}
+         open={props.open}
+         status={props.data.status}
+      >
          {props.isBlocked && (
             <BlockedInfoMessage
                onClick={showMessageHandler}
@@ -57,25 +65,44 @@ const UserProfileAnnouncementCard = (props) => {
                </StyledLike>
             </StyledIcons>
          ) : null}
+         {props.data.status === 'NEW' ? (
+            <>
+               <BlockMessage src={vector} />
+               <TextMessage>
+                  <p>
+                     Your application has been blocked, please contact the
+                     administrator
+                  </p>
+               </TextMessage>
+            </>
+         ) : null}
+
          <StyledCardImage
-            src={props.data.img}
+            src={props.data.image}
             isBlocked={props.data.isBlocked}
             alt="card"
          />
          <Cont>
-            <p>{props.data.price}</p>
+            <p>$ {props.data.prise} / day</p>
             <div>
                <img src={star} alt="star" />
                <p>{props.data.ratings}</p>
             </div>
          </Cont>
-         <Description>{props.data.description}</Description>
+         <Description>{props.data.title}</Description>
          <Location>
             <img src={locationIcon} alt="locationIcon" />
             <p>{props.data.location}</p>
          </Location>
          <Amount>
-            <p>{props.data.guestsAmount} guests</p>
+            <p>{props.data.maxGuests} guests</p>
+            {props.data.status === 'NEW' ? (
+               <StyledBlockButton>
+                  <Button disabled fontSize="12px">
+                     Blocked
+                  </Button>
+               </StyledBlockButton>
+            ) : null}
             {props.meetballs === 'true' ? (
                <StyledMeatBalls>
                   <MeatBalls
@@ -105,12 +132,14 @@ const StyledMeatBalls = styled.div`
 
 const StyledCard = styled.div`
    width: 260px;
-   height: 320px;
+   height: 336px;
    border-radius: 4px;
-   background: ${({ open }) => open || 'white'};
+   /* background: ${({ open }) => open || 'white'}; */
+   background: ${({ open, status }) =>
+      status === 'NEW' ? '#D4D4D4' : open === 'true' ? 'none' : 'white'};
    position: relative;
    z-index: 10;
-   opacity: 1;
+   opacity: ${({ status }) => (status === 'NEW' ? '0.7' : '1')};
    ${(props) =>
       props.width &&
       css`
@@ -125,6 +154,12 @@ const StyledCard = styled.div`
       width: 168px;
       height: 110px;
    }
+`
+const BlockMessage = styled.img`
+   position: absolute;
+   top: 12px;
+   left: 224px;
+   color: red;
 `
 const StyledCardImage = styled.img`
    width: 260px;
@@ -146,6 +181,11 @@ const StyledCardImage = styled.img`
       width: 168px;
       height: 108px;
    }
+`
+const StyledBlockButton = styled.div`
+   position: absolute;
+   bottom: 8px;
+   left: 100px;
 `
 const Cont = styled.div`
    display: flex;
@@ -238,4 +278,25 @@ const StyledLike = styled.div`
    height: 27px;
    top: 12px;
    left: 67px;
+`
+const TextMessage = styled.div`
+   width: 214px;
+   height: 34px;
+   position: absolute;
+   top: 42px;
+   left: 34px;
+   border-radius: 4px;
+   background: #646464;
+
+   & p {
+      width: 201px;
+      height: 24px;
+      color: #ffffff;
+      font-family: 'Inter';
+      font-style: normal;
+      margin: 5px;
+      font-weight: 400;
+      font-size: 10px;
+      line-height: 12px;
+   }
 `

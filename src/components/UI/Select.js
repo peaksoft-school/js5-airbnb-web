@@ -40,7 +40,7 @@ export default Select
 
 const BoxStyled = styled(Box)`
    width: ${(props) => (props.variant === 'sort' ? '271px' : '610px')};
-   height: 200px;
+   height: 120px;
    background: #ffffff;
    border-radius: 2px;
    & fieldset {

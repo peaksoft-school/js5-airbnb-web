@@ -1,6 +1,12 @@
 import styled from 'styled-components'
 
 function UserCard(props) {
+   const email = {
+      email: '',
+   }
+   if (props.email.length > 15) {
+      email.email = props?.email?.slice(0, -15).concat('...')
+   }
    return (
       <User>
          <Logo>{props.name.charAt(0).toUpperCase()}</Logo>
@@ -8,7 +14,7 @@ function UserCard(props) {
             Name:<UserName>{props.name}</UserName>
          </Name>
          <Contact>
-            Contact:<UserName>{props.emile}</UserName>
+            Contact:<UserName>{email.email}</UserName>
          </Contact>
          <Logout>Log out</Logout>
       </User>
@@ -19,9 +25,12 @@ export default UserCard
 
 const User = styled.div`
    width: 372px;
+   overflow: auto;
    height: 285px;
    border: 1px solid #c4c4c4;
    border-radius: 16px;
+   display: flex;
+   flex-direction: column;
    font-family: 'Inter';
    margin-top: 37px;
    @media (max-width: 375px) {
@@ -65,6 +74,7 @@ const UserName = styled.b`
    font-size: 18px;
    line-height: 22px;
    color: #363636;
+   overflow: hidden;
    margin-left: 16px;
 `
 const Contact = styled.p`

@@ -51,7 +51,7 @@ function OnModeration() {
                      description={el.description}
                      location={el.location}
                      guestsAmount={el.guestsAmount}
-                     open="none"
+                     open="true"
                      onClick={(text, id) => {
                         setModal(true)
                         getid(text, id)

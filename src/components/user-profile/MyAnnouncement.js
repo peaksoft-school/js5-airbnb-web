@@ -1,16 +1,16 @@
-/* eslint-disable jsx-a11y/alt-text */
-/* eslint-disable no-console */
-/* eslint-disable import/named */
 /* eslint-disable import/order */
 import { useState, useEffect } from 'react'
 // import { useNavigate } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
 import styled from 'styled-components'
+// import appFetch from '../../api/appFetch'
 import photo from '../../assets/images/Rectangle 7 (5).png'
-import UserProfileAnnouncementCard from '../UI/cards/UserProfilleAnnouncementCard'
 import Button from '../UI/Button'
+import UserProfileAnnouncementCard from '../UI/cards/UserProfilleAnnouncementCard'
 import Modal from '../UI/Modal'
-import UserSelect from './SelectFilter'
 import SnackBar from '../UI/SnackBar'
+import UserSelect from './SelectFilter'
+import { getUserBooking } from '../../store/slices/getUserAnniuncement'
 
 export const array = [
    {
@@ -19,7 +19,7 @@ export const array = [
       ratings: 4,
       description: 'Beautiful and picturesque 2 ...',
       location: '12 Morris Ave, Toronto, ON, ...',
-      guestsAmount: 3,
+      maxGuests: 3,
       img: photo,
    },
    {
@@ -70,10 +70,11 @@ export const array = [
    },
 ]
 function MyAnnouncment() {
-   const [arr, setarr] = useState(array)
-   const [id, setid] = useState('')
+   // const [arr, setarr] = useState(array)
+   // const [id, setid] = useState('')
+   // eslint-disable-next-line no-unused-vars
    const [edit, setedit] = useState('')
-   console.log(edit)
+   // console.log(edit)
    const [modal, setModal] = useState(false)
    // const [bools, setBools] = useState(false)
    const [delete2, setdelete] = useState({
@@ -84,7 +85,7 @@ function MyAnnouncment() {
 
    const getid = (text, id) => {
       if (text === 'delet') {
-         setid(id)
+         // setid(id)
          setModal(true)
       }
       if (text === 'edit') {
@@ -93,12 +94,51 @@ function MyAnnouncment() {
          // nav('/main/addanounsement')
       }
    }
+   // useEffect(() => {
+   //    if (delete2.yes) {
+   //       const newarr = arr.filter((i) => i.id !== +id)
+   //       setarr(newarr)
+   //    }
+   // }, [id, delete2])
+
+   // const data = useSelector((s) => s)
+   // console.log(data)
+   // const dispatch = useDispatch()
+   // const d = async () => {
+   //    console.log('hi')
+   //    const f = await appFetch({
+   //       url: 'user/profile/bookings/myAnnouncements',
+   //    })
+   //    console.log(f)
+   // }
+   // useEffect(() => {
+   //    d()
+   //    console.log('hiuse')
+   //    dispatch(getUserBooking())
+   // }, [])
+   const data = useSelector((s) => s)
+   const dispatch = useDispatch()
+   // const a = async () => {
+   //    const d = await fetch(
+   // eslint-disable-next-line max-len
+   //       'http://airbnb-env.eba-bxmudt83.eu-central-1.elasticbeanstalk.com/user/profile/bookings/myAnnouncements',
+   //       {
+   //          method: 'GET',
+   //          headers: {
+   //             'Content-Type': 'application/json',
+   //             Authorization: `Bearer ${data.login.login.jwt}`,
+   //          },
+   //       }
+   //    )
+   //       .then((res) => res.json())
+   //       .then((data) => console.log(data))
+   //    console.log(d)
+   // }
+   console.log(data)
    useEffect(() => {
-      if (delete2.yes) {
-         const newarr = arr.filter((i) => i.id !== +id)
-         setarr(newarr)
-      }
-   }, [id, delete2])
+      // a()
+      dispatch(getUserBooking())
+   }, [])
 
    return (
       <Announcement>
@@ -107,20 +147,22 @@ function MyAnnouncment() {
                <UserSelect line="true" />
             </PosisionSelect>
          </StyledBlock>
-         {arr.map((el) => {
+         {array.map((el, index) => {
             return (
-               <StyledUserProfile key={el.id}>
+               // eslint-disable-next-line react/no-array-index-key
+               <StyledUserProfile key={index}>
                   <UserProfileAnnouncementCard
+                     img={el?.image}
                      bookingQuantity="30"
                      likeQuantity="18"
-                     icons="true"
-                     open="none"
+                     // icons="true"
+                     open="true"
+                     // meetballs="true"
                      onClick={(text, id) => {
                         setModal(true)
                         getid(text, id)
                      }}
                      data={el}
-                     meetballs="true"
                   />
                </StyledUserProfile>
             )
@@ -174,24 +216,28 @@ export default MyAnnouncment
 const Announcement = styled.div`
    padding-top: 30px;
    display: flex;
-   justify-content: space-between;
+   column-gap: 20px;
+   justify-content: flex-start;
    flex-wrap: wrap;
    align-content: flex-start;
    flex-direction: row;
    width: 820px;
    align-items: flex-start;
    @media (max-width: 375px) {
+      padding-top: 10px;
       display: grid;
       column-gap: 5px;
-      row-gap: 170px;
+      row-gap: 150px;
       grid-template-columns: auto auto;
-      margin: 15px 0 0 0;
+      justify-content: start;
    }
 `
 const StyledUserProfile = styled.div`
+   margin-top: 19px;
    @media (max-width: 375px) {
       position: relative;
       top: 160px;
+      margin-top: 25px;
    }
 `
 const StyledModal = styled.div`
@@ -223,5 +269,6 @@ const PosisionSelect = styled.div`
    @media (max-width: 375px) {
       display: flex;
       flex-direction: column;
+      margin-top: 10px;
    }
 `

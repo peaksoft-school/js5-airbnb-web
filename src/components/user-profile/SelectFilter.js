@@ -41,7 +41,7 @@ export default function UserSelect(props) {
    return (
       <Block>
          <Container>
-            <div>
+            <Position>
                <BoxWrapper>
                   <Box sx={{ minWidth: 120 }}>
                      <FormControl fullWidth>
@@ -140,7 +140,7 @@ export default function UserSelect(props) {
                      </FormControl>
                   </Box>
                </BoxWrapper>
-            </div>
+            </Position>
             <StyledText>
                {dele.checkBox ? (
                   <Text
@@ -199,6 +199,12 @@ export default function UserSelect(props) {
 const Block = styled.div`
    display: block;
 `
+const Position = styled.div`
+   @media (max-width: 375px) {
+      display: flex;
+      flex-direction: column;
+   }
+`
 const BoxWrapper = styled.div`
    border: 1px solid #adabab;
    border-radius: 2px;
@@ -206,6 +212,12 @@ const BoxWrapper = styled.div`
    height: 42px;
    &.select-left {
       margin-left: 10px;
+      @media (max-width: 375px) {
+         width: 271px;
+         position: relative;
+         top: 10px;
+         right: 10px;
+      }
    }
    :hover {
       border: 1px solid #615f5f;
@@ -246,6 +258,9 @@ const Text = styled.p`
       margin-left: 15px;
       margin-right: 15px;
    }
+   @media (max-width: 375px) {
+      margin-top: 5px;
+   }
 `
 const Container = styled.div`
    width: 900px;
@@ -279,8 +294,8 @@ const StyledText = styled.div`
    display: flex;
    align-items: center;
    @media (max-width: 375px) {
-      display: grid;
-      grid-template-columns: auto auto;
+      flex-wrap: wrap;
+      width: 300px;
    }
 `
 const SelectItemText = styled.p`
