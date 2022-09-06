@@ -8,7 +8,6 @@ import {
    getAllApplications,
    rejectAnnouncements,
 } from '../store/slices/adminApplicationActions'
-// import RejectedModal from './RejectedModal'
 import Button from './UI/Button'
 import AdminProfileApplicationCard from './UI/cards/AdminProfileApplicationCard'
 import Modal from './UI/Modal'
@@ -37,9 +36,8 @@ const AdminApplication = () => {
       dispatch(getAllApplications({ pagination }))
    }, [])
    useEffect(() => {
-      if (rejected?.status === 'rejected') {
-         setIsRejected(false)
-      }
+      // eslint-disable-next-line no-unused-expressions
+      rejected?.status === 'rejected' && setIsRejected(false)
    })
 
    const acceptAnnouncementHandler = (id) => {

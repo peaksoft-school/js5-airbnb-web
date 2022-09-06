@@ -20,10 +20,7 @@ const MeatBalls = (props) => {
                {props.balls.map((option) => (
                   <TextMeatBalls
                      key={option.id}
-                     onClick={
-                        () => optionChangeHandler(option)
-                        // option.onClick(option.text, props.id)
-                     }
+                     onClick={() => optionChangeHandler(option)}
                   >
                      {option.text}
                   </TextMeatBalls>
