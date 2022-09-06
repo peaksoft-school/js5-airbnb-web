@@ -1,24 +1,32 @@
 import { useState } from 'react'
+import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
-import SkeletonUser from '../assets/icons/SkeletonUser.png'
 import ImageSlider from '../components/ImageSlider'
 import Button from '../components/UI/Button'
 import Modal from '../components/UI/Modal'
 import SnackBar from '../components/UI/SnackBar'
 import UserNavbar from '../layout/headers/AdminHeader/AdminNavbar/AdminNavbar'
+import {
+   acceptInnerPage,
+   rejectInnerPage,
+} from '../store/slices/adminInnerPageActions'
 
 const AdminApplicationsInnerPage = (props) => {
    const [isAccepted, setIsAccepted] = useState(false)
    const [isRejectModal, setIsRejectModal] = useState(false)
    const [isSent, setIsSent] = useState(false)
+   const dispatch = useDispatch()
+
    const togleHandlerAccept = () => {
       setIsAccepted(true)
+      dispatch(acceptInnerPage(props.data.announcementId))
    }
    const togleHandlerReject = () => {
       setIsRejectModal((prevState) => !prevState)
    }
 
    const togleHandlerSent = () => {
+      dispatch(rejectInnerPage(props.data.announcementId))
       setIsSent(true)
       setIsRejectModal(false)
    }
@@ -40,7 +48,9 @@ const AdminApplicationsInnerPage = (props) => {
                <AdressHome>{props.data.location}</AdressHome>
                <TextHome>{props.data.description}</TextHome>
                <UserContainer>
-                  <Img src={SkeletonUser} />
+                  <Logo>
+                     {props.data.ownerFullName.charAt(0).toUpperCase()}
+                  </Logo>
                   <UserInformationContainer>
                      <UserEmail>{props.data.ownerFullName}</UserEmail>
                      <UserName>{props.data.ownerEmail}</UserName>
@@ -70,6 +80,7 @@ const AdminApplicationsInnerPage = (props) => {
                      text="Moderation successfully passed"
                      message="Accepted :)"
                      onClose={setIsAccepted}
+                     severity="success"
                   />
                )}
                {isSent && (
@@ -92,14 +103,14 @@ const AdminApplicationsInnerPage = (props) => {
                            onClick={togleHandlerReject}
                            variant="contained"
                            border="none"
-                           width="150px"
-                           height="33px"
+                           width="197px"
+                           height="37px"
                            hover="none"
                         >
                            CANCEL
                         </Button>
                         <Button
-                           width="196px"
+                           width="197px"
                            height="37px"
                            onClick={togleHandlerSent}
                         >
@@ -245,9 +256,19 @@ const TextInDivClick2 = styled.span`
    color: #000000;
 `
 
-const Img = styled.img`
+const Logo = styled.div`
    width: 36px;
    height: 36px;
+   background: #c4c4c4;
+   border-radius: 50%;
+   font-style: normal;
+   font-weight: 350;
+   font-size: 22px;
+   line-height: 35px;
+   color: #ffffff;
+   display: flex;
+   align-items: center;
+   justify-content: center;
 `
 
 const TitleTextModal = styled.h3`
@@ -260,21 +281,25 @@ const TitleTextModal = styled.h3`
 
 const TextAreaModal = styled.textarea`
    resize: none;
-   width: 414px;
+   width: 412px;
    height: 104px;
    border: 1px solid #c4c4c4;
    border-radius: 2px;
    outline: none;
-   &::placeholder {
-      padding-left: 10px;
+   padding: 10px 8px 10px 16px;
+   @media (max-width: 375px) {
+      width: 322px;
    }
 `
 
 const ContainerModalButtons = styled.div`
-   width: 350px;
+   width: 399px;
    height: 50px;
    display: flex;
    justify-content: space-between;
-   align-items: flex-end;
-   margin-left: 64px;
+   align-items: center;
+   margin-left: 14px;
+   @media (max-width: 375px) {
+      width: 246px;
+   }
 `

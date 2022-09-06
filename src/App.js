@@ -1,45 +1,37 @@
 // import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom'
 import './App.css'
 import AdminApplicationsInnerPage from './pages/AdminApplicationsInnerPage'
-// import { getapplicationByid } from './store/slices/adminInnerPageSlice'
+import { getAdminApplicationById } from './store/slices/getAdminApplicationById'
 
 export const data = []
 
 function App() {
    const selector = useSelector((store) => store)
    const dispatch = useDispatch()
-   console.log(dispatch)
-
-   const location = useLocation()
-   const pageId = location.pathname.split('/')[2]
-   console.log(pageId)
-
-   // const getDates = () => {
-   //    dispatch(getapplicationByid(1))
-   // }
 
    // useEffect(() => {
-   //    dispatch(getapplicationByid(params))
+   //    dispatch(getAdminApplicationById(getDates))
    // }, [])
 
+   const getDates = () => {
+      dispatch(getAdminApplicationById(6))
+   }
    return (
       <div className="App">
-         <BrowserRouter>
-         <Routes>
-            <Route></Route>
-         </Routes>
-         </BrowserRouter>
-         {/* <button
+         {/* {data?.map((i) => (
+            <AdminApplicationsInnerPage data={i} />
+         ))} */}
+         <button
             onClick={() => {
                getDates()
             }}
          >
-            getInnerPage
-         </button> */}
-         {selector?.getAnnountcementbyid?.data?.map((i) => (
-            <AdminApplicationsInnerPage data={i} />
+            getDates
+         </button>
+
+         {selector?.getAdminApplicationById?.data?.map((i) => (
+            <AdminApplicationsInnerPage key={i.id} data={i} />
          ))}
       </div>
    )
