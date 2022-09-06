@@ -37,9 +37,8 @@ const AdminApplication = () => {
       dispatch(getAllApplications({ pagination }))
    }, [])
    useEffect(() => {
-      if (rejected?.status === 'rejected') {
-         setIsRejected(false)
-      }
+      // eslint-disable-next-line no-unused-expressions
+      rejected?.status === 'rejected' && setIsRejected(false)
    })
 
    const acceptAnnouncementHandler = (id) => {

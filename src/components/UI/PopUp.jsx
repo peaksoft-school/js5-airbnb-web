@@ -22,7 +22,7 @@ const PopUp = (props) => {
                   return (
                      <MenuItem
                         // eslint-disable-next-line react/no-array-index-key
-                        key={index}
+                        id={index}
                         onClick={(e) => {
                            e.stopPropagation()
                            closeHandler()
