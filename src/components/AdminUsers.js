@@ -1,6 +1,7 @@
+/* eslint-disable import/no-useless-path-segments */
 import React from 'react'
-import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined'
 import styled from 'styled-components'
+import deleteIcon from './../assets/icons/deleteIcon.svg'
 
 const AdminUsers = ({ users, onDelete }) => {
    return (
@@ -24,7 +25,11 @@ const AdminUsers = ({ users, onDelete }) => {
                      <td>{user?.booking}</td>
                      <td>{user?.announcement}</td>
                      <td>
-                        <DeleteOutlinedIcon onClick={() => onDelete(user.id)} />
+                        <img
+                           onClick={() => onDelete(user.id)}
+                           src={deleteIcon}
+                           alt="delete"
+                        />
                      </td>
                   </tr>
                ))}
@@ -51,8 +56,8 @@ const StyledDivScroll = styled.div`
 const StyledTable = styled.table`
    font-family: arial, sans-serif;
    border-collapse: collapse;
-   width: 1300px;
    border-collapse: collapse;
+   width: 100%;
    margin: auto;
    & td,
    th {
