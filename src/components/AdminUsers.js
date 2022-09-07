@@ -1,9 +1,24 @@
-/* eslint-disable import/no-useless-path-segments */
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
+import { adminUsersDelet } from '../store/slices/adminUserDeletSlice'
+import { adminUsersGet } from '../store/slices/adminUserSlice'
+// eslint-disable-next-line import/no-useless-path-segments
 import deleteIcon from './../assets/icons/deleteIcon.svg'
+import SnackBar from './UI/SnackBar'
 
-const AdminUsers = ({ users, onDelete }) => {
+const AdminUsers = () => {
+   const [openDelet, setOpenDelet] = useState(false)
+   const dispatch = useDispatch()
+   const { users } = useSelector((state) => state.adminUsers)
+   const { status } = useSelector((state) => state.adminUsersDelet)
+   const userDeleteHandler = (id) => {
+      dispatch(adminUsersDelet(id))
+      setOpenDelet(true)
+   }
+   useEffect(() => {
+      dispatch(adminUsersGet())
+   }, [dispatch])
    return (
       <StyledDiv>
          <StyledDivScroll>
@@ -19,14 +34,14 @@ const AdminUsers = ({ users, onDelete }) => {
                </tr>
                {users?.map((user) => (
                   <tr key={user.id}>
-                     <td>{user?.usersAmount}</td>
+                     <td>{user?.id}</td>
                      <td>{user?.fullName}</td>
                      <td>{user?.email}</td>
                      <td>{user?.booking}</td>
                      <td>{user?.announcement}</td>
                      <td>
                         <img
-                           onClick={() => onDelete(user.id)}
+                           onClick={() => userDeleteHandler(user.id)}
                            src={deleteIcon}
                            alt="delete"
                         />
@@ -35,6 +50,16 @@ const AdminUsers = ({ users, onDelete }) => {
                ))}
             </StyledTable>
          </StyledDivScroll>
+         {status === 'succes' ? (
+            <SnackBar
+               severity="success"
+               message="Пользователь успешно удалён!"
+               open={openDelet}
+               onClose={setOpenDelet}
+            />
+         ) : (
+            ''
+         )}
       </StyledDiv>
    )
 }
