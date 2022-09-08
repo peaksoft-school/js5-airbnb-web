@@ -5,6 +5,9 @@ import { Route, Routes, Outlet, NavLink, Navigate } from 'react-router-dom'
 import Bookings from './Bookings'
 import MyAnnouncment from './MyAnnouncement'
 import OnModeration from './OnModeration'
+import { useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { getUserBooking } from '../../store/slices/getUserAnniuncement'
 
 function UserProfile() {
    const stylednav = {
@@ -16,15 +19,19 @@ function UserProfile() {
       lineHeight: '12px',
       textDecoration: 'none',
    }
+   const data = useSelector((s) => s.getUserAnnouncement)
+   const dispatch = useDispatch()
+   useEffect(() => {
+      dispatch(getUserBooking())
+   }, [])
+   const announcement = data.announcements.filter((i) => i.status !== 'NEW')
+   const moderation = data.announcements.filter((i) => i.status === 'NEW')
    return (
       <Box>
          <Container>
             <Profile>PROFILE</Profile>
             <Lov>
-               <UserCard
-                  email="mairamkulkeldibekuulu76@gmail.com"
-                  name="fvws"
-               />
+               <UserCard email={data.user.email} name={data.user.name} />
                <Cart>
                   <Nav>
                      <NavLink
@@ -32,13 +39,13 @@ function UserProfile() {
                         style={stylednav}
                         className={({ isActive }) => (isActive ? 'active' : '')}
                      >
-                        Bookings(4)
+                        Bookings({data.bookings.length})
                      </NavLink>
                      <NavLink to="MyAnnouncement" style={stylednav}>
-                        My announcement(8)
+                        My announcement({announcement.length})
                      </NavLink>
                      <NavLink to="OnModeration" style={stylednav}>
-                        On Moderation(36)
+                        On Moderation({moderation.length})
                      </NavLink>
                   </Nav>
                   <Outlet />
@@ -47,12 +54,18 @@ function UserProfile() {
                         path=""
                         element={<Navigate to="/Bookings" replace />}
                      />
-                     <Route path="/Bookings" element={<Bookings />} />
+                     <Route
+                        path="/Bookings"
+                        element={<Bookings data={data.bookings} />}
+                     />
                      <Route
                         path="/MyAnnouncement"
-                        element={<MyAnnouncment />}
+                        element={<MyAnnouncment data={announcement} />}
                      />
-                     <Route path="/OnModeration" element={<OnModeration />} />
+                     <Route
+                        path="/OnModeration"
+                        element={<OnModeration data={moderation} />}
+                     />
                   </Routes>
                </Cart>
             </Lov>
@@ -88,9 +101,6 @@ const Profile = styled.h3`
    line-height: 24px;
    text-transform: uppercase;
    color: #363636;
-   @media (max-width: 375px) {
-      /* margin-left: 16px; */
-   }
 `
 const Nav = styled.div`
    width: 820px;
@@ -122,7 +132,7 @@ const Cart = styled.div`
    display: flex;
    flex-direction: column;
    width: 820px;
-   margin-left: 60px;
+   margin-left: 50px;
    @media (max-width: 375px) {
       margin-left: 0;
    }

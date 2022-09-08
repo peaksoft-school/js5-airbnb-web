@@ -1,145 +1,38 @@
 /* eslint-disable import/order */
 import { useState } from 'react'
-// import { useNavigate } from 'react-router-dom'
-// import { useSelector, useDispatch } from 'react-redux'
 import styled from 'styled-components'
-// import appFetch from '../../api/appFetch'
-import photo from '../../assets/images/Rectangle 7 (5).png'
 import Button from '../UI/Button'
 import UserProfileAnnouncementCard from '../UI/cards/UserProfilleAnnouncementCard'
 import Modal from '../UI/Modal'
 import SnackBar from '../UI/SnackBar'
+import { useNavigate } from 'react-router-dom'
 import UserSelect from './SelectFilter'
-// import { getUserBooking } from '../../store/slices/getUserAnniuncement'
+import { deleteUserAnnouncementCard } from '../../store/slices/getUserAnniuncement'
+import { useDispatch } from 'react-redux'
 
-export const array = [
-   {
-      id: 1,
-      price: 52,
-      ratings: 4,
-      description: 'Beautiful and picturesque 2 ...',
-      location: '12 Morris Ave, Toronto, ON, ...',
-      maxGuests: 3,
-      img: photo,
-   },
-   {
-      id: 2,
-      price: 52,
-      ratings: 4,
-      description: 'Beautiful and picturesque 2 ...',
-      location: '12 Morris Ave, Toronto, ON, ...',
-      guestsAmount: 3,
-      img: photo,
-   },
-   {
-      price: 52,
-      ratings: 4,
-      description: '3Beautiful and picturesque 2 ...',
-      location: '12 Morris Ave, Toronto, ON, ...',
-      id: 3,
-      guestsAmount: 3,
-      img: photo,
-   },
-   {
-      id: 4,
-      price: 52,
-      ratings: 4,
-      description: 'Beautiful and picturesque 2 ...',
-      location: '12 Morris Ave, Toronto, ON, ...',
-      guestsAmount: 3,
-      img: photo,
-   },
-   {
-      id: 5,
-      price: 52,
-      ratings: 4,
-      description: 'Beautiful and picturesque 2 ...',
-      location: '12 Morris Ave, Toronto, ON, ...',
-      guestsAmount: 3,
-      img: photo,
-   },
-   {
-      id: 6,
-      price: 52,
-      ratings: 4,
-      description: 'Beautiful and picturesque 2 ...',
-      location: '12 Morris Ave, Toronto, ON, ...',
-      guestsAmount: 3,
-      img: photo,
-      isBlocked: true,
-   },
-]
-function MyAnnouncment() {
-   // const [arr, setarr] = useState(array)
-   // const [id, setid] = useState('')
-   // eslint-disable-next-line no-unused-vars
-   const [edit, setedit] = useState('')
-   // console.log(edit)
+function MyAnnouncment(props) {
+   const [id, setId] = useState('')
    const [modal, setModal] = useState(false)
-   // const [bools, setBools] = useState(false)
    const [delete2, setdelete] = useState({
       yes: false,
       no: false,
    })
-   // const nav = useNavigate()
+   const dispatch = useDispatch()
+   const navigate = useNavigate()
 
-   const getid = (text, id) => {
+   const definition = (text, id) => {
       if (text === 'delet') {
-         // setid(id)
+         setId(id)
          setModal(true)
       }
       if (text === 'edit') {
-         setedit(id)
          setModal(false)
-         // nav('/main/addanounsement')
+         navigate(`/main/editannouncment=${id}`)
       }
    }
-   // useEffect(() => {
-   //    if (delete2.yes) {
-   //       const newarr = arr.filter((i) => i.id !== +id)
-   //       setarr(newarr)
-   //    }
-   // }, [id, delete2])
-
-   // const data = useSelector((s) => s)
-   // console.log(data)
-   // const dispatch = useDispatch()
-   // const d = async () => {
-   //    console.log('hi')
-   //    const f = await appFetch({
-   //       url: 'user/profile/bookings/myAnnouncements',
-   //    })
-   //    console.log(f)
-   // }
-   // useEffect(() => {
-   //    d()
-   //    console.log('hiuse')
-   //    dispatch(getUserBooking())
-   // }, [])
-   // const data = useSelector((s) => s)
-   // const dispatch = useDispatch()
-   // const a = async () => {
-   //    const d = await fetch(
-   // eslint-disable-next-line max-len
-   //       'http://airbnb-env.eba-bxmudt83.eu-central-1.elasticbeanstalk.com/user/profile/bookings/myAnnouncements',
-   //       {
-   //          method: 'GET',
-   //          headers: {
-   //             'Content-Type': 'application/json',
-   //             Authorization: `Bearer ${data.login.login.jwt}`,
-   //          },
-   //       }
-   //    )
-   //       .then((res) => res.json())
-   //       .then((data) => console.log(data))
-   //    console.log(d)
-   // }
-   // console.log(data)
-   // useEffect(() => {
-   //    // a()
-   //    dispatch(getUserBooking())
-   // }, [])
-
+   const deleteUserAnnouncementHandler = () => {
+      dispatch(deleteUserAnnouncementCard(id))
+   }
    return (
       <Announcement>
          <StyledBlock>
@@ -147,27 +40,25 @@ function MyAnnouncment() {
                <UserSelect line="true" />
             </PosisionSelect>
          </StyledBlock>
-         {array.map((el, index) => {
+         {props.data.map((el) => {
             return (
-               // eslint-disable-next-line react/no-array-index-key
-               <StyledUserProfile key={index}>
+               <StyledUserProfile key={el.id}>
                   <UserProfileAnnouncementCard
-                     img={el?.image}
                      bookingQuantity="30"
                      likeQuantity="18"
-                     // icons="true"
                      open="true"
-                     // meetballs="true"
+                     nav={navigate}
+                     meetballs="true"
                      onClick={(text, id) => {
                         setModal(true)
-                        getid(text, id)
+                        definition(text, id)
                      }}
                      data={el}
                   />
                </StyledUserProfile>
             )
          })}
-         {modal ? (
+         {modal === true ? (
             <Modal open={modal}>
                <StyledModal>
                   <p>Do you want to delete?</p>
@@ -175,6 +66,7 @@ function MyAnnouncment() {
                      <Button
                         height="38px"
                         onClick={() => {
+                           deleteUserAnnouncementHandler()
                            setModal(false)
                            setdelete({
                               yes: true,

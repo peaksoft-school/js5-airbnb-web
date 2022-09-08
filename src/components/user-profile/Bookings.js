@@ -2,31 +2,14 @@
 import styled from 'styled-components'
 import Button from '../UI/Button'
 import AdminProfileApplicationCard from '../UI/cards/UserProfilleAnnouncementCard'
-// import slides2 from '../../assets/images/Rectangle 14.png'
-import { useDispatch, useSelector } from 'react-redux'
-import { useEffect } from 'react'
-import { getUserBooking } from '../../store/slices/getUserAnniuncement'
-import { array } from './MyAnnouncement'
 
-function Bookings() {
-   const data = useSelector((s) => s)
-   const dispatch = useDispatch()
-   console.log(data)
-   useEffect(() => {
-      dispatch(getUserBooking())
-   }, [])
+function Bookings(props) {
    return (
       <Announcement>
-         {array.map((el) => {
+         {props.data.map((el) => {
             return (
                <StyledCard key={el.id}>
                   <AdminProfileApplicationCard
-                     img={el.image}
-                     price={el.price}
-                     ratings={el.ratings}
-                     description={el.description}
-                     location={el.location}
-                     guestsAmount={el.guestsAmount}
                      open="true"
                      data={el}
                      key={el.id}

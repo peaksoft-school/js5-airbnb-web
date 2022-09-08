@@ -1,34 +1,32 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable import/order */
-/* eslint-disable react/jsx-no-undef */
 /* eslint-disable jsx-a11y/alt-text */
 import React, { useState } from 'react'
 import styled, { css } from 'styled-components'
 import locationIcon from '../../../assets/icons/locationIcon.png'
 import star from '../../../assets/icons/Star.png'
 import date from '../../../assets/icons/Frame (2).svg'
-import MeatBalls from '../MeatBalls'
 import BlockedInfoMessage from './BlockedInfoMessage'
 import like from '../../../assets/icons/Like.png'
 import vector from '../../../assets/icons/vector.svg'
 import Button from '../Button'
+import PopUp from '../PopUp'
 
 const UserProfileAnnouncementCard = (props) => {
-   // const { isBlocked, img } = props
-
    const balls = [
       {
          text: 'delet',
          id: 1,
-         onClick: (text, id) => {
-            props.onClick(text, id)
+         onClick: () => {
+            props.onClick('delet', props.data.id)
+            // props.getId(props.id)
          },
       },
       {
          text: 'edit',
          id: 2,
-         onClick: (text, id) => {
-            props.onClick(text, id)
+         onClick: () => {
+            props.onEdit()
          },
       },
    ]
@@ -83,7 +81,7 @@ const UserProfileAnnouncementCard = (props) => {
             alt="card"
          />
          <Cont>
-            <p>$ {props.data.prise} / day</p>
+            <p>$ {props.data.price} / day</p>
             <div>
                <img src={star} alt="star" />
                <p>{props.data.ratings}</p>
@@ -105,10 +103,10 @@ const UserProfileAnnouncementCard = (props) => {
             ) : null}
             {props.meetballs === 'true' ? (
                <StyledMeatBalls>
-                  <MeatBalls
-                     state={props.opens}
+                  <PopUp
+                     // state={props.opens}
                      setState={props.setOpen}
-                     balls={balls}
+                     options={balls}
                      id={props.data.id}
                   />
                </StyledMeatBalls>
@@ -131,10 +129,10 @@ const StyledMeatBalls = styled.div`
 `
 
 const StyledCard = styled.div`
+   overflow: hidden;
    width: 260px;
    height: 336px;
    border-radius: 4px;
-   /* background: ${({ open }) => open || 'white'}; */
    background: ${({ open, status }) =>
       status === 'NEW' ? '#D4D4D4' : open === 'true' ? 'none' : 'white'};
    position: relative;

@@ -20,9 +20,10 @@ const Checkbox = ({
       maximumAge: 0,
    }
    function success(pos) {
+      // eslint-disable-next-line no-unused-vars
       const crd = pos.coords
       // console.log('Ваше текущее местоположение:')
-      console.log(`Широта: ${crd.latitude}`)
+      // console.log(`Широта: ${crd.latitude}`)
       // console.log(`Долгота: ${crd.longitude}`)
       // console.log(`Плюс-минус ${crd.accuracy} метров.`)
    }

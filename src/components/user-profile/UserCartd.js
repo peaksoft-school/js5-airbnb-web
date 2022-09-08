@@ -1,20 +1,16 @@
 import styled from 'styled-components'
 
 function UserCard(props) {
-   const email = {
-      email: '',
-   }
-   if (props.email.length > 15) {
-      email.email = props?.email?.slice(0, -15).concat('...')
-   }
+   const filterName = props.name
    return (
       <User>
-         <Logo>{props.name.charAt(0).toUpperCase()}</Logo>
+         <Logo>{filterName?.charAt(0).toUpperCase()}</Logo>
          <Name>
-            Name:<UserName>{props.name}</UserName>
+            Name:<UserName>{props.name?.slice(0, 22)}</UserName>
          </Name>
          <Contact>
-            Contact:<UserName>{email.email}</UserName>
+            Contact:
+            <UserName>{props.email?.slice(0, 22)}...</UserName>
          </Contact>
          <Logout>Log out</Logout>
       </User>
@@ -25,7 +21,7 @@ export default UserCard
 
 const User = styled.div`
    width: 372px;
-   overflow: auto;
+   overflow: hidden;
    height: 285px;
    border: 1px solid #c4c4c4;
    border-radius: 16px;

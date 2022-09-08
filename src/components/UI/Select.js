@@ -46,13 +46,26 @@ const BoxStyled = styled(Box)`
    & fieldset {
       border: 1px solid #c4c4c4 !important;
    }
+   & div {
+      width: 610px;
+      margin: 0px;
+      padding: 5px;
+      height: 39px;
+   }
 
-   @media (max-width: 480px) {
+   @media (max-width: 375px) {
       width: 343px;
-      height: 262px;
+      height: 120px;
       background: #ffffff;
       border-radius: 2px;
       margin: 16px;
+      & div {
+         width: 343px;
+         height: 39px;
+         margin: 0px;
+         padding: 5px;
+         height: 39px;
+      }
    }
 `
 const StyledInputLabel = styled(InputLabel)`

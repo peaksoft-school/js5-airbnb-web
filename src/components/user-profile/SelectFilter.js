@@ -1,29 +1,25 @@
-/* eslint-disable no-undef */
 /* eslint-disable jsx-a11y/alt-text */
-/* eslint-disable import/order */
-/* eslint-disable no-unused-vars */
 import { useState } from 'react'
-import CheckBox from '../UI/CheckBox'
 import Box from '@mui/material/Box'
 import FormControl from '@mui/material/FormControl'
 import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
 import Select from '@mui/material/Select'
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 import star5 from '../../assets/icons/Group 1934.svg'
-import Vector from '../../assets/icons/Vector (5).svg'
 import star4 from '../../assets/icons/Group 1935.svg'
 import star3 from '../../assets/icons/Group 1936.svg'
 import star2 from '../../assets/icons/Group 1937.svg'
 import star1 from '../../assets/icons/Group 1938.svg'
+import Vector from '../../assets/icons/Vector (5).svg'
+import CheckBox from '../UI/CheckBox'
 import RadioButton from '../UI/RadioButton'
 
 const names = ['In wish list', 'Appartment', 'House']
 const prise = ['Low to high', 'High to low']
 const images = [star5, star4, star3, star2, star1]
 
-export default function UserSelect(props) {
-   const [btn, setbtn] = useState(false)
+export default function UserSelect() {
    const [dele, setDele] = useState({
       checkBox: false,
       radioBtn: false,
@@ -127,7 +123,6 @@ export default function UserSelect(props) {
                                  ...dele,
                                  img: 'true',
                               })
-                              setbtn(true)
                               setrating(e.target.value)
                            }}
                         >

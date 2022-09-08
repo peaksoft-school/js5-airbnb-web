@@ -8,11 +8,10 @@ export const getUserBooking = createAsyncThunk(
          url: 'user/profile/bookings/myAnnouncements',
       })
       return response
-      // console.log(response)
    }
 )
 const initialState = {
-   data: null,
+   user: {},
    bookings: [],
    announcements: [],
    status: null,
@@ -28,11 +27,27 @@ const getUserAnnouncementCard = createSlice({
          state.status = 'error'
       },
       [getUserBooking.fulfilled]: (state, action) => {
+         console.log(action.payload)
          state.status = 'success'
-         state.data = action.payload
+         state.user = {
+            email: action.payload.contact,
+            name: action.payload.name,
+         }
          state.bookings = action.payload.bookings
          state.announcements = action.payload.announcements
       },
    },
 })
 export default getUserAnnouncementCard
+
+export const deleteUserAnnouncementCard = createAsyncThunk(
+   'getUserAnnouncementCard/deleteUserBooking',
+   async (id, { dispatch }) => {
+      const res = await appFetch({
+         url: `api/announcements/delete/${id}`,
+         method: 'DELETE',
+      })
+      dispatch(getUserBooking())
+      return res
+   }
+)
