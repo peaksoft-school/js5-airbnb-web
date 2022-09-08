@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import appFetch from '../../api/appFetch'
+import { acceptInnerPage, rejectInnerPage } from './adminInnerPageActions'
 
 export const getAdminApplicationById = createAsyncThunk(
    'getDates/getAdminApplicationById',
@@ -14,6 +15,13 @@ export const getAdminApplicationById = createAsyncThunk(
 const initialState = {
    data: [],
    status: null,
+   accepted: {
+      status: null,
+   },
+   rejected: {
+      status: null,
+      message: '',
+   },
 }
 
 const innerPageSlice = createSlice({
@@ -29,6 +37,19 @@ const innerPageSlice = createSlice({
       },
       [getAdminApplicationById.error]: (state) => {
          state.status = 'error'
+      },
+      [acceptInnerPage.fulfilled]: (state) => {
+         state.accepted.status = 'success'
+      },
+      [acceptInnerPage.rejected]: (state) => {
+         state.accepted.status = 'error'
+      },
+      [rejectInnerPage.fulfilled]: (state, action) => {
+         state.rejected.status = 'success'
+         state.rejected.message = action.payload
+      },
+      [rejectInnerPage.rejected]: (state) => {
+         state.rejected.status = 'error'
       },
    },
 })

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
 import ImageSlider from '../components/ImageSlider'
 import Button from '../components/UI/Button'
@@ -11,22 +11,23 @@ import {
    rejectInnerPage,
 } from '../store/slices/adminInnerPageActions'
 
-const AdminApplicationsInnerPage = (props) => {
+const AdminApplicationsInnerPage = () => {
    const [isAccepted, setIsAccepted] = useState(false)
    const [isRejectModal, setIsRejectModal] = useState(false)
    const [isSent, setIsSent] = useState(false)
    const dispatch = useDispatch()
+   const { data } = useSelector((state) => state.getAdminApplicationById)
 
-   const togleHandlerAccept = () => {
+   const togleHandlerAccept = (announcementId) => {
       setIsAccepted(true)
-      dispatch(acceptInnerPage(props.data.announcementId))
+      dispatch(acceptInnerPage(announcementId))
    }
    const togleHandlerReject = () => {
       setIsRejectModal((prevState) => !prevState)
    }
-
-   const togleHandlerSent = () => {
-      dispatch(rejectInnerPage(props.data.announcementId))
+   const [text, settext] = useState('')
+   const togleHandlerSent = (announcementId) => {
+      dispatch(rejectInnerPage({ id: announcementId, message: text }))
       setIsSent(true)
       setIsRejectModal(false)
    }
@@ -34,93 +35,105 @@ const AdminApplicationsInnerPage = (props) => {
    return (
       <div>
          <UserNavbar />
-         <NameApartment>{props.data.title}</NameApartment>
-         <GlobalContainer>
-            <ImageSlider images={props.data.images} />
-            <ContainerDates>
-               <DivClikc>
-                  <TextInDivClick1>{props.data.houseType}</TextInDivClick1>
-                  <TextInDivClick2>
-                     {props.data.maxGuests} Guests
-                  </TextInDivClick2>
-               </DivClikc>
-               <TitleHome>{props.data.title}</TitleHome>
-               <AdressHome>{props.data.location}</AdressHome>
-               <TextHome>{props.data.description}</TextHome>
-               <UserContainer>
-                  <Logo>
-                     {props.data.ownerFullName.charAt(0).toUpperCase()}
-                  </Logo>
-                  <UserInformationContainer>
-                     <UserEmail>{props.data.ownerFullName}</UserEmail>
-                     <UserName>{props.data.ownerEmail}</UserName>
-                  </UserInformationContainer>
-               </UserContainer>
-               <ContainerButton>
-                  <Button
-                     onClick={togleHandlerReject}
-                     border="1px solid #DD8A08"
-                     variant="contained"
-                     width="196px"
-                     height="37px"
-                  >
-                     REJECT
-                  </Button>
-                  <Button
-                     onClick={togleHandlerAccept}
-                     width="196px"
-                     height="37px"
-                  >
-                     ACCEPT
-                  </Button>
-               </ContainerButton>
-               {isAccepted && (
-                  <SnackBar
-                     open="open"
-                     text="Moderation successfully passed"
-                     message="Accepted :)"
-                     onClose={setIsAccepted}
-                     severity="success"
-                  />
-               )}
-               {isSent && (
-                  <SnackBar
-                     open="open"
-                     message="Successfully sent :)"
-                     onClose={setIsSent}
-                     severity="success"
-                  />
-               )}
-               {isRejectModal && (
-                  <Modal open="open" handleClose={togleHandlerReject}>
-                     <TitleTextModal>REJECT</TitleTextModal>
-                     <TextAreaModal
-                        type="text"
-                        placeholder="Write the reason for your rejection"
-                     />
-                     <ContainerModalButtons>
+         {data?.map((data) => (
+            <div>
+               <NameApartment>{data.title}</NameApartment>
+               <GlobalContainer>
+                  <ImageSlider images={data.images} />
+                  <ContainerDates>
+                     <DivClikc>
+                        <TextInDivClick1>{data.houseType}</TextInDivClick1>
+                        <TextInDivClick2>
+                           {data.maxGuests} Guests
+                        </TextInDivClick2>
+                     </DivClikc>
+                     <TitleHome>{data.title}</TitleHome>
+                     <AdressHome>{data.location}</AdressHome>
+                     <TextHome>{data.description}</TextHome>
+                     <UserContainer>
+                        <Logo>
+                           {data.ownerFullName.charAt(0).toUpperCase()}
+                        </Logo>
+                        <UserInformationContainer>
+                           <UserEmail>{data.ownerFullName}</UserEmail>
+                           <UserName>{data.ownerEmail}</UserName>
+                        </UserInformationContainer>
+                     </UserContainer>
+                     <ContainerButton>
                         <Button
                            onClick={togleHandlerReject}
+                           border="1px solid #DD8A08"
                            variant="contained"
-                           border="none"
-                           width="197px"
+                           width="196px"
                            height="37px"
-                           hover="none"
                         >
-                           CANCEL
+                           REJECT
                         </Button>
                         <Button
-                           width="197px"
+                           onClick={() =>
+                              togleHandlerAccept(data.announcementId)
+                           }
+                           width="196px"
                            height="37px"
-                           onClick={togleHandlerSent}
                         >
-                           SEND
+                           ACCEPT
                         </Button>
-                     </ContainerModalButtons>
-                  </Modal>
-               )}
-            </ContainerDates>
-         </GlobalContainer>
+                     </ContainerButton>
+                     {isAccepted && (
+                        <SnackBar
+                           open="open"
+                           text="Moderation successfully passed"
+                           message="Accepted :)"
+                           onClose={setIsAccepted}
+                           severity="success"
+                        />
+                     )}
+                     {isSent && (
+                        <SnackBar
+                           open="open"
+                           message="Successfully sent :)"
+                           onClose={setIsSent}
+                           severity="success"
+                        />
+                     )}
+                     {isRejectModal && (
+                        <Modal open="open" handleClose={togleHandlerReject}>
+                           <TitleTextModal>REJECT</TitleTextModal>
+                           <TextAreaModal
+                              value={text}
+                              onChange={(e) => {
+                                 settext(e.target.value)
+                              }}
+                              type="text"
+                              placeholder="Write the reason for your rejection"
+                           />
+                           <ContainerModalButtons>
+                              <Button
+                                 onClick={togleHandlerReject}
+                                 variant="contained"
+                                 border="none"
+                                 width="197px"
+                                 height="37px"
+                                 hover="none"
+                              >
+                                 CANCEL
+                              </Button>
+                              <Button
+                                 width="197px"
+                                 height="37px"
+                                 onClick={() =>
+                                    togleHandlerSent(data.announcementId)
+                                 }
+                              >
+                                 SEND
+                              </Button>
+                           </ContainerModalButtons>
+                        </Modal>
+                     )}
+                  </ContainerDates>
+               </GlobalContainer>
+            </div>
+         ))}
       </div>
    )
 }

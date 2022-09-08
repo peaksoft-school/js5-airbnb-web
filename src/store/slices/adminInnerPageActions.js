@@ -15,10 +15,10 @@ export const rejectInnerPage = createAsyncThunk(
    'adminInnerPage/rejectInnerPage',
    async (id) => {
       const response = await appFetch({
-         url: `api/admin/announcement/reject/${id}`,
+         url: `api/admin/announcement/reject/${id.id}`,
          method: 'PUT',
          body: {
-            message: 'rejected',
+            message: id.message,
          },
       })
       return response
