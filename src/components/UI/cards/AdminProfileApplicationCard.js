@@ -1,37 +1,37 @@
+// import { useState } from 'react'
 import styled, { css } from 'styled-components'
 import locationIcon from '../../../assets/icons/locationIcon.svg'
 import star from '../../../assets/icons/Star.png'
 import Slider from '../../Slider'
-import MeatBalls from '../MeatBalls'
+import PopUp from '../PopUp'
 
 const AdminProfileApplicationCard = (props) => {
    const meatBallsOptions = [
       {
          text: 'Accept',
          id: 1,
-         onClick: (option, id) => {
-            props.onClick(option, id)
+         onClick: () => {
+            props.onAccept(props.id)
          },
       },
       {
          text: 'Delete',
          id: 2,
-         onClick: (option, id) => {
-            props.onClick(option, id)
+         onClick: () => {
+            props.onDelete(props.id)
          },
       },
       {
          text: 'Reject',
          id: 3,
-         onClick: (option, id) => {
-            props.onClick(option, id)
+         onClick: () => {
+            props.onReject(props.id)
          },
       },
    ]
-   const { isViewed } = props
 
    return (
-      <StyledCard isViewed={isViewed}>
+      <StyledCard isViewed={props.isViewed}>
          <Slider images={props.images} />
          <Cont>
             <p>
@@ -49,7 +49,7 @@ const AdminProfileApplicationCard = (props) => {
          </Location>
          <Amount>
             <p>{props.maxGuests} guests</p>
-            <MeatBalls balls={meatBallsOptions} id={props.id} />
+            <PopUp options={meatBallsOptions} />
          </Amount>
       </StyledCard>
    )
@@ -68,8 +68,8 @@ const StyledCard = styled.div`
    border-radius: 4px;
    background: white;
    border: ${(props) =>
-      props.isViewed === true ? '3px solid rgba(255, 0, 0, 0.18)' : ''};
-   outline: ${(props) => (props.isViewed === true ? '3px solid #FF0000' : '')};
+      props.isViewed === 'NEW' ? '3px solid rgba(255, 0, 0, 0.18)' : ''};
+   outline: ${(props) => (props.isViewed === 'NEW' ? '3px solid #FF0000' : '')};
    position: relative;
    z-index: 10;
    opacity: 1;
@@ -87,9 +87,9 @@ const StyledCard = styled.div`
       width: 320px;
       height: 340px;
       border: ${(props) =>
-         props.isViewed === true ? '1px solid rgba(255, 0, 0, 0.18)' : ''};
+         props.isViewed === 'NEW' ? '1px solid rgba(255, 0, 0, 0.18)' : ''};
       outline: ${(props) =>
-         props.isViewed === true ? '3px solid #FF0000' : ''};
+         props.isViewed === 'NEW' ? '3px solid #FF0000' : ''};
    }
 `
 
@@ -149,6 +149,11 @@ const Description = styled.p`
    font-weight: 400;
    font-size: 14px;
    line-height: 17px;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   display: -webkit-box;
+   -webkit-line-clamp: 1;
+   -webkit-box-orient: vertical;
 `
 const Amount = styled.div`
    padding: 0 12px;
