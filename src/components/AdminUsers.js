@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
-import { adminUsersDelet } from '../store/slices/adminUserDeletSlice'
-import { adminUsersGet } from '../store/slices/adminUserSlice'
+import { adminUsersGet, adminUsersDelet } from '../store/slices/adminUserSlice'
 // eslint-disable-next-line import/no-useless-path-segments
 import deleteIcon from './../assets/icons/deleteIcon.svg'
 import SnackBar from './UI/SnackBar'
@@ -10,8 +9,9 @@ import SnackBar from './UI/SnackBar'
 const AdminUsers = () => {
    const [openDelet, setOpenDelet] = useState(false)
    const dispatch = useDispatch()
-   const { users } = useSelector((state) => state.adminUsers)
-   const { status } = useSelector((state) => state.adminUsersDelet)
+   const { users, statusDelet, errorDelet } = useSelector(
+      (state) => state.adminUsers
+   )
    const userDeleteHandler = (id) => {
       dispatch(adminUsersDelet(id))
       setOpenDelet(true)
@@ -50,10 +50,19 @@ const AdminUsers = () => {
                ))}
             </StyledTable>
          </StyledDivScroll>
-         {status === 'succes' ? (
+         {statusDelet === 'succes' ? (
             <SnackBar
                severity="success"
                message="Пользователь успешно удалён!"
+               open={openDelet}
+               onClose={setOpenDelet}
+            />
+         ) : (
+            ''
+         )}
+         {errorDelet === 'Rejected' ? (
+            <SnackBar
+               message="что то пошло не так повторите еще раз"
                open={openDelet}
                onClose={setOpenDelet}
             />
@@ -82,7 +91,7 @@ const StyledTable = styled.table`
    font-family: arial, sans-serif;
    border-collapse: collapse;
    border-collapse: collapse;
-   width: 100%;
+   width: 1360px;
    margin: auto;
    & td,
    th {
@@ -92,9 +101,10 @@ const StyledTable = styled.table`
    }
    & tr td {
       border: none;
+      height: 54px;
    }
    & th {
-      height: 17px;
+      height: 37px;
       font-family: 'Inter';
       font-style: normal;
       font-weight: 400;
@@ -121,6 +131,7 @@ const StyledH2 = styled('h2')`
    line-height: 24px;
    text-transform: uppercase;
    color: #000000;
+   margin-bottom: 20px;
 `
 
 export default AdminUsers

@@ -1,7 +1,9 @@
-/* eslint-disable consistent-return */
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import appFetch from '../../api/appFetch'
-import { adminUsersUrl } from '../../utils/constants/constants'
+import {
+   adminUsersUrl,
+   adminUsersDeletUrl,
+} from '../../utils/constants/constants'
 
 export const adminUsersGet = createAsyncThunk(
    'adminUsers/adminUsersGet',
@@ -11,9 +13,23 @@ export const adminUsersGet = createAsyncThunk(
             url: adminUsersUrl,
          })
          dispatch(AdminUserActions.addUsers(response))
-         return response
       } catch (error) {
          rejectWithValue(error)
+      }
+   }
+)
+export const adminUsersDelet = createAsyncThunk(
+   'adminUsers/adminUsersDelet',
+   async (id, { rejectWithValue, dispatch }) => {
+      try {
+         const response = await appFetch({
+            url: `${adminUsersDeletUrl}${id}`,
+            method: 'DELETE',
+         })
+         dispatch(adminUsersGet())
+         return response
+      } catch (error) {
+         return rejectWithValue('error')
       }
    }
 )
@@ -21,10 +37,12 @@ export const adminUsersGet = createAsyncThunk(
 const initialState = {
    status: null,
    error: null,
+   statusDelet: null,
+   errorDelet: null,
    users: [],
 }
 const adminUserSlice = createSlice({
-   name: 'adminUsersGet',
+   name: 'adminUsers',
    initialState,
    reducers: {
       addUsers(state, action) {
@@ -41,6 +59,17 @@ const adminUserSlice = createSlice({
       },
       [adminUsersGet.rejected]: (state, action) => {
          state.error = action.error
+      },
+      [adminUsersDelet.pending]: (state) => {
+         state.statusDelet = 'pending'
+      },
+      [adminUsersDelet.fulfilled]: (state) => {
+         state.statusDelet = 'succes'
+         state.errorDelet = null
+      },
+      [adminUsersDelet.rejected]: (state, action) => {
+         state.errorDelet = action.error.message
+         state.statusDelet = null
       },
    },
 })
