@@ -1,6 +1,6 @@
 import './App.css'
-import AdminApplicationsInnerPage from './pages/AdminApplicationsInnerPage'
-// import ApartmentHouseInnerPageFeedback from './pages/ApartmentHouseInnerPageFeedback'
+// import AdminApplicationsInnerPage from './pages/AdminApplicationsInnerPage'
+import ApartmentHouseInnerPageFeedback from './pages/ApartmentHouseInnerPageFeedback'
 
 const data = [
    {
@@ -22,12 +22,13 @@ const data = [
 function App() {
    return (
       <div className="App">
-         {/* {data.map((i) => (
-            <ApartmentHouseInnerPageFeedback data={i} />
-         ))} */}
          {data.map((i) => (
-            <AdminApplicationsInnerPage data={i} />
+            <ApartmentHouseInnerPageFeedback data={i} />
          ))}
+         {/* {data.map((i) => (
+            <AdminApplicationsInnerPage data={i} />
+         ))} */}
+         <p>Development</p>
       </div>
    )
 }
