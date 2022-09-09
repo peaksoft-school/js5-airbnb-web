@@ -35,3 +35,10 @@ export const HeaderImages2 = [
    { img: photo77, id: 7, text: 'OSH' },
    { img: photo88, id: 8, text: 'BISHKEK' },
 ]
+
+export const timer = [
+   {
+      id: 1,
+      time: '12:00',
+   },
+]

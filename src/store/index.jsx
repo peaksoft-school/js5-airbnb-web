@@ -1,8 +1,9 @@
+/* eslint-disable import/order */
 import { configureStore } from '@reduxjs/toolkit'
 import addAnnountcementSlice from './slices/addAnnountcementSlice'
 import adminApplicationSlice from './slices/adminApplicationSlice'
-// eslint-disable-next-line import/no-cycle
 import addAnnountcementSlice from './slices/addAnnountcementSlice'
+import innerPageSlice from './slices/getAdminApplicationById'
 import editAnnountcementSlice from './slices/editAnnountcementSlice'
 
 import LoginSlice from './slices/LoginSlice'
@@ -12,6 +13,7 @@ const store = configureStore({
       login: LoginSlice.reducer,
       applications: adminApplicationSlice.reducer,
       addAnnountcement: addAnnountcementSlice.reducer,
+      getAdminApplicationById: innerPageSlice.reducer,
       editAnnountcement: editAnnountcementSlice.reducer,
    },
 })
