@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import appFetch from '../../api/appFetch'
 import {
    adminUsersUrl,
-   adminUsersDeletUrl,
+   adminUsersDeleteUrl,
 } from '../../utils/constants/constants'
 
 export const adminUsersGet = createAsyncThunk(
@@ -18,12 +18,12 @@ export const adminUsersGet = createAsyncThunk(
       }
    }
 )
-export const adminUsersDelet = createAsyncThunk(
-   'adminUsers/adminUsersDelet',
+export const adminUsersDelete = createAsyncThunk(
+   'adminUsers/adminUsersDelete',
    async (id, { rejectWithValue, dispatch }) => {
       try {
          const response = await appFetch({
-            url: `${adminUsersDeletUrl}${id}`,
+            url: `${adminUsersDeleteUrl}${id}`,
             method: 'DELETE',
          })
          dispatch(adminUsersGet())
@@ -37,8 +37,8 @@ export const adminUsersDelet = createAsyncThunk(
 const initialState = {
    status: null,
    error: null,
-   statusDelet: null,
-   errorDelet: null,
+   statusDelete: null,
+   errorDelete: null,
    users: [],
 }
 const adminUserSlice = createSlice({
@@ -54,22 +54,22 @@ const adminUserSlice = createSlice({
          state.status = 'pending'
       },
       [adminUsersGet.fulfilled]: (state) => {
-         state.status = 'succes'
+         state.status = 'success'
          state.error = null
       },
       [adminUsersGet.rejected]: (state, action) => {
          state.error = action.error
       },
-      [adminUsersDelet.pending]: (state) => {
-         state.statusDelet = 'pending'
+      [adminUsersDelete.pending]: (state) => {
+         state.statusDelete = 'pending'
       },
-      [adminUsersDelet.fulfilled]: (state) => {
-         state.statusDelet = 'succes'
-         state.errorDelet = null
+      [adminUsersDelete.fulfilled]: (state) => {
+         state.statusDelete = 'success'
+         state.errorDelete = null
       },
-      [adminUsersDelet.rejected]: (state, action) => {
-         state.errorDelet = action.error.message
-         state.statusDelet = null
+      [adminUsersDelete.rejected]: (state, action) => {
+         state.errorDelete = action.error.message
+         state.statusDelete = null
       },
    },
 })

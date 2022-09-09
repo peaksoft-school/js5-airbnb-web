@@ -1,28 +1,29 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
-import { adminUsersGet, adminUsersDelet } from '../store/slices/adminUserSlice'
-// eslint-disable-next-line import/no-useless-path-segments
-import deleteIcon from './../assets/icons/deleteIcon.svg'
+import deleteIcon from '../assets/icons/deleteIcon.svg'
+
+import { adminUsersGet, adminUsersDelete } from '../store/slices/adminUserSlice'
+
 import SnackBar from './UI/SnackBar'
 
 const AdminUsers = () => {
-   const [openDelet, setOpenDelet] = useState(false)
+   const [openDelete, setOpenDelete] = useState(false)
    const dispatch = useDispatch()
-   const { users, statusDelet, errorDelet } = useSelector(
+   const { users, statusDelete, errorDelete } = useSelector(
       (state) => state.adminUsers
    )
    const userDeleteHandler = (id) => {
-      dispatch(adminUsersDelet(id))
-      setOpenDelet(true)
+      dispatch(adminUsersDelete(id))
+      setOpenDelete(true)
    }
    useEffect(() => {
       dispatch(adminUsersGet())
    }, [dispatch])
    return (
       <StyledDiv>
+         <StyledH2>users</StyledH2>
          <StyledDivScroll>
-            <StyledH2>users</StyledH2>
             <StyledTable>
                <tr>
                   <th>№</th>
@@ -50,21 +51,22 @@ const AdminUsers = () => {
                ))}
             </StyledTable>
          </StyledDivScroll>
-         {statusDelet === 'succes' ? (
+         {statusDelete === 'success' ? (
             <SnackBar
                severity="success"
                message="Пользователь успешно удалён!"
-               open={openDelet}
-               onClose={setOpenDelet}
+               open={openDelete}
+               onClose={setOpenDelete}
             />
          ) : (
             ''
          )}
-         {errorDelet === 'Rejected' ? (
+         {errorDelete === 'Rejected' ? (
             <SnackBar
+               severity="error"
                message="что то пошло не так повторите еще раз"
-               open={openDelet}
-               onClose={setOpenDelet}
+               open={openDelete}
+               onClose={setOpenDelete}
             />
          ) : (
             ''
@@ -73,9 +75,15 @@ const AdminUsers = () => {
    )
 }
 const StyledDiv = styled.div`
+   width: 1360px;
+   margin: auto 40px;
+   height: 500px;
    @media screen and (max-width: 375px) {
+      width: 350px;
       max-width: fit-content;
       max-height: fit-content;
+      margin: 0px 0px 100px 16px;
+      height: 500px;
    }
 `
 const StyledDivScroll = styled.div`
@@ -84,6 +92,7 @@ const StyledDivScroll = styled.div`
       overflow-x: scroll;
       height: fit-content;
       max-height: 790px;
+      height: 450px;
    }
 `
 
@@ -91,12 +100,11 @@ const StyledTable = styled.table`
    font-family: arial, sans-serif;
    border-collapse: collapse;
    border-collapse: collapse;
-   width: 1360px;
-   margin: auto;
+   width: 1270px;
+   text-align: center;
    & td,
    th {
       border: 1px solid #dddddd;
-      text-align: left;
       padding: 8px;
    }
    & tr td {

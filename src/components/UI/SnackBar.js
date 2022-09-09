@@ -55,7 +55,7 @@ const NotificationAlert = styled(Alert)`
    }
    @media (max-width: 375px) {
       width: 322px;
-      height: ${(props) => (props.severity === 'success' ? '66px' : '100px')};
+      height: ${(props) => (props.severity === 'success' ? '70px' : '100px')};
       background: #fff1f0;
       & h1 {
          width: 246px;
