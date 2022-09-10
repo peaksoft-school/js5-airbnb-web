@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-// import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
+import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
 // eslint-disable-next-line import/no-cycle
 import appFetch from '../../api/appFetch'
 import { Auth } from '../../components/SignupFirebase'
@@ -11,8 +11,8 @@ export const getUserOrAdmin = createAsyncThunk(
    // eslint-disable-next-line consistent-return
    async (props) => {
       if (props.fetchrole === 'USER') {
-         // const provider = new GoogleAuthProvider()
-         // const { user } = await signInWithPopup(Auth, provider)
+         const provider = new GoogleAuthProvider()
+         const { user } = await signInWithPopup(Auth, provider)
          const response = await appFetch({
             url: `${LoginUserUrl}?token=${user.accessToken}`,
             method: 'POST',
