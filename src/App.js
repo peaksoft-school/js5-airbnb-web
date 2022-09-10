@@ -1,8 +1,11 @@
-import React from 'react'
 import './App.css'
 
 function App() {
-   return <p>development</p>
+   return (
+      <div className="App">
+         <p>development</p>
+      </div>
+   )
 }
 
 export default App
