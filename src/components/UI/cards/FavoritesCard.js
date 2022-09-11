@@ -7,7 +7,7 @@ import Button from '../Button'
 
 const FavoritesCard = (props) => {
    const DeleteFromFavoritesHandler = (id) => {
-      props.like(id)
+      props.delete(id)
    }
    return (
       <FavoritesCards>
