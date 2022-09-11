@@ -27,7 +27,6 @@ const getUserAnnouncementCard = createSlice({
          state.status = 'error'
       },
       [getUserBooking.fulfilled]: (state, action) => {
-         console.log(action.payload)
          state.status = 'success'
          state.user = {
             email: action.payload.contact,

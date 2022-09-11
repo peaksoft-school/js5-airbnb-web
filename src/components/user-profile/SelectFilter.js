@@ -17,7 +17,13 @@ import RadioButton from '../UI/RadioButton'
 
 const names = ['In wish list', 'Appartment', 'House']
 const prise = ['Low to high', 'High to low']
-const images = [star5, star4, star3, star2, star1]
+const images = [
+   { id: 5, images: star5 },
+   { id: 4, images: star4 },
+   { id: 3, images: star3 },
+   { id: 2, images: star2 },
+   { id: 1, images: star1 },
+]
 
 export default function UserSelect() {
    const [dele, setDele] = useState({
@@ -127,8 +133,8 @@ export default function UserSelect() {
                            }}
                         >
                            {images.map((icons) => (
-                              <MenuItem value={icons} key={icons}>
-                                 <img src={icons} />
+                              <MenuItem value={icons.images} key={icons.images}>
+                                 <img src={icons.images} />
                               </MenuItem>
                            ))}
                         </Select>

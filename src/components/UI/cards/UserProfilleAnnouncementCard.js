@@ -51,17 +51,17 @@ const UserProfileAnnouncementCard = (props) => {
                onOpenMessage={setShowMessage}
             />
          )}
-         {props.icons === 'true' ? (
-            <StyledIcons>
-               <StyledData>
-                  <img src={date} />
-                  <p>{props.bookingQuantity}</p>
-               </StyledData>
-               <StyledLike>
-                  <img src={like} />
-                  <p>{props.likeQuantity}</p>
-               </StyledLike>
-            </StyledIcons>
+         {props.bookmarkCountAnnouncement >= 1 ? (
+            <StyledData>
+               <img src={date} />
+               <p>{props.bookmarkCountAnnouncement}</p>
+            </StyledData>
+         ) : null}
+         {props.likeCountAnnouncement >= 1 ? (
+            <StyledLike>
+               <img src={like} />
+               <p>{props.likeCountAnnouncement}</p>
+            </StyledLike>
          ) : null}
          {props.data.status === 'NEW' ? (
             <>
@@ -81,7 +81,10 @@ const UserProfileAnnouncementCard = (props) => {
             alt="card"
          />
          <Cont>
-            <p>$ {props.data.price} / day</p>
+            <span>
+               <p>${props.data.price}/</p>
+               <StyledDay>day</StyledDay>
+            </span>
             <div>
                <img src={star} alt="star" />
                <p>{props.data.ratings}</p>
@@ -192,6 +195,7 @@ const Cont = styled.div`
    padding: 16px 12px;
    & div {
       width: 62px;
+      display: flex;
       height: 25px;
       background: #828282;
       border-radius: 2px;
@@ -209,6 +213,19 @@ const Cont = styled.div`
          margin-right: 4px;
       }
    }
+   & span {
+      display: flex;
+   }
+   &.price {
+      display: flex;
+   }
+`
+const StyledDay = styled.p`
+   font-weight: 400;
+   font-size: 16px;
+   line-height: 19px;
+   color: #6c6c6c;
+   margin-left: 5px;
 `
 const Location = styled.div`
    display: flex;
@@ -242,8 +259,17 @@ const Amount = styled.div`
    color: #939393;
    font-size: 14px;
 `
-
-const StyledIcons = styled.div`
+const StyledData = styled.div`
+   background: #1c2e20;
+   position: absolute;
+   display: flex;
+   justify-content: space-evenly;
+   align-items: center;
+   border-radius: 2px;
+   width: 45px;
+   height: 27px;
+   top: 12px;
+   left: 12px;
    & img {
       width: 16px;
       height: 16px;
@@ -256,26 +282,30 @@ const StyledIcons = styled.div`
       line-height: 17px;
       color: #f7f7f7;
    }
-   & div {
-      background: #1c2e20;
-      position: absolute;
-      display: flex;
-      justify-content: space-evenly;
-      align-items: center;
-      border-radius: 2px;
-   }
-`
-const StyledData = styled.div`
-   width: 45px;
-   height: 27px;
-   top: 12px;
-   left: 12px;
 `
 const StyledLike = styled.div`
+   background: #1c2e20;
+   position: absolute;
+   display: flex;
+   justify-content: space-evenly;
+   align-items: center;
+   border-radius: 2px;
    width: 52px;
    height: 27px;
    top: 12px;
    left: 67px;
+   & img {
+      width: 16px;
+      height: 16px;
+   }
+   & p {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 17px;
+      color: #f7f7f7;
+   }
 `
 const TextMessage = styled.div`
    width: 214px;

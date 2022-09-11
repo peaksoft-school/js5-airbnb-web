@@ -2,6 +2,7 @@ import styled from 'styled-components'
 import UserProfileAnnouncementCard from '../UI/cards/UserProfilleAnnouncementCard'
 
 function OnModeration(props) {
+   console.log(props.data)
    return (
       <Announcement>
          {props.data.map((el) => {

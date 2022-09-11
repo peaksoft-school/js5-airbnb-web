@@ -33,6 +33,7 @@ function MyAnnouncment(props) {
    const deleteUserAnnouncementHandler = () => {
       dispatch(deleteUserAnnouncementCard(id))
    }
+   console.log(props.data)
    return (
       <Announcement>
          <StyledBlock>
@@ -44,8 +45,8 @@ function MyAnnouncment(props) {
             return (
                <StyledUserProfile key={el.id}>
                   <UserProfileAnnouncementCard
-                     bookingQuantity="30"
-                     likeQuantity="18"
+                     bookmarkCountAnnouncement={el.bookmarkCountAnnouncement}
+                     likeCountAnnouncement={el.likeCountAnnouncement}
                      open="true"
                      nav={navigate}
                      meetballs="true"
