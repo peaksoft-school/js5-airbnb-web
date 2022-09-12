@@ -4,11 +4,14 @@ import styled from 'styled-components'
 import deleteIcon from '../assets/icons/deleteIcon.svg'
 
 import { adminUsersGet, adminUsersDelete } from '../store/slices/adminUserSlice'
+import Button from './UI/Button'
+import Modal from './UI/Modal'
 
 import SnackBar from './UI/SnackBar'
 
 const AdminUsers = () => {
    const [openDelete, setOpenDelete] = useState(false)
+   const [modalUsers, setModalUsers] = useState(false)
    const dispatch = useDispatch()
    const { users, statusDelete, errorDelete } = useSelector(
       (state) => state.adminUsers
@@ -16,6 +19,7 @@ const AdminUsers = () => {
    const userDeleteHandler = (id) => {
       dispatch(adminUsersDelete(id))
       setOpenDelete(true)
+      setModalUsers(false)
    }
    useEffect(() => {
       dispatch(adminUsersGet())
@@ -42,11 +46,44 @@ const AdminUsers = () => {
                      <td>{user?.announcement}</td>
                      <td>
                         <img
-                           onClick={() => userDeleteHandler(user.id)}
+                           onClick={() => setModalUsers(true)}
                            src={deleteIcon}
                            alt="delete"
                         />
                      </td>
+                     <Modal
+                        open={modalUsers}
+                        handleClose={() => setModalUsers(false)}
+                     >
+                        <StyledDivText>
+                           do you really want to delete
+                        </StyledDivText>
+                        <StyledModal>
+                           <Button
+                              height="37px"
+                              width="113px"
+                              fontSize="14px"
+                              lineHeight="19px"
+                              textTransform="uppercase"
+                              fontWeight="400"
+                              onClick={() => userDeleteHandler(user.id)}
+                           >
+                              Delete
+                           </Button>
+                           <Button
+                              height="37px"
+                              width="113px"
+                              fontSize="14px"
+                              lineHeight="19px"
+                              textTransform="uppercase"
+                              fontWeight="500"
+                              variant="outlined"
+                              onClick={() => setModalUsers(false)}
+                           >
+                              cancel
+                           </Button>
+                        </StyledModal>
+                     </Modal>
                   </tr>
                ))}
             </StyledTable>
@@ -121,11 +158,11 @@ const StyledTable = styled.table`
       color: #ffffff;
       border: none;
    }
-   & tr:nth-child(0n + 1) {
+   & tr:nth-child(0n + 1):not(.disable) {
       background: #646464;
       border-collapse: collapse;
    }
-   & tr:nth-child(0n + 2) {
+   & tr:hover {
       background: #d8d8d8;
    }
 `
@@ -139,6 +176,15 @@ const StyledH2 = styled('h2')`
    line-height: 24px;
    text-transform: uppercase;
    color: #000000;
+   margin-bottom: 20px;
+`
+const StyledModal = styled('div')`
+   width: 322px;
+   display: flex;
+   justify-content: space-around;
+`
+const StyledDivText = styled('div')`
+   text-align: center;
    margin-bottom: 20px;
 `
 
