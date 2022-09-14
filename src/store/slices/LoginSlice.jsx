@@ -62,6 +62,9 @@ const LoginSlice = createSlice({
       closemodal: (state) => {
          state.modal = false
       },
+      clearlogin: (state) => {
+         state.login = {}
+      },
    },
    extraReducers: {
       [getUserOrAdmin.pending]: (state) => {

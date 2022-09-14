@@ -1,60 +1,92 @@
-/* eslint-disable import/order */
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
+import { deleteUserAnnouncementCard } from '../../store/slices/getUserAnniuncement'
 import Button from '../UI/Button'
 import UserProfileAnnouncementCard from '../UI/cards/UserProfilleAnnouncementCard'
 import Modal from '../UI/Modal'
 import SnackBar from '../UI/SnackBar'
-import { useNavigate } from 'react-router-dom'
 import UserSelect from './SelectFilter'
-import { deleteUserAnnouncementCard } from '../../store/slices/getUserAnniuncement'
-import { useDispatch } from 'react-redux'
 
 function MyAnnouncment(props) {
    const [id, setId] = useState('')
    const [modal, setModal] = useState(false)
-   const [delete2, setdelete] = useState({
-      yes: false,
-      no: false,
-   })
+   const [deleteCard, setdelete] = useState(false)
+   const store = useSelector((store) => store.getUserAnnouncement)
+   console.log(props)
    const dispatch = useDispatch()
    const navigate = useNavigate()
 
-   const definition = (text, id) => {
-      if (text === 'delet') {
-         setId(id)
-         setModal(true)
-      }
-      if (text === 'edit') {
-         setModal(false)
-         navigate(`/main/editannouncment=${id}`)
-      }
-   }
    const deleteUserAnnouncementHandler = () => {
       dispatch(deleteUserAnnouncementCard(id))
    }
-   console.log(props.data)
+   const [filtervalue, setfiltervalue] = useState({
+      rating: '',
+      type: '',
+      price: '',
+   })
+   const getfiltervalue = (obj) => {
+      setfiltervalue({
+         rating: obj.rating,
+         type: obj.type,
+         price: obj.price,
+      })
+   }
+   const [data, setdata] = useState([])
+
+   useEffect(() => {
+      setdata(props.data)
+      if (filtervalue.rating) {
+         // eslint-disable-next-line consistent-return, array-callback-return
+         const arr = props.data.filter((i) => {
+            if (Math.ceil(i.rating) === +filtervalue.rating) {
+               return i
+            }
+         })
+         setdata(arr)
+      }
+      if (!filtervalue.rating) {
+         setdata(props.data)
+      }
+   }, [filtervalue.rating, filtervalue.price, filtervalue.type, props.data])
+   function sortbyPriceHigh(a, b) {
+      return a.price - b.price
+   }
+   function sortbyPriceLow(a, b) {
+      return b.price - a.price
+   }
+   if (filtervalue.price === 'High to low') {
+      data.sort(sortbyPriceLow)
+   }
+   if (filtervalue.price === 'Low to high') {
+      data.sort(sortbyPriceHigh)
+   }
+   console.log(modal, 'daswv')
    return (
       <Announcement>
          <StyledBlock>
             <PosisionSelect>
-               <UserSelect line="true" />
+               <UserSelect getvalue={getfiltervalue} />
             </PosisionSelect>
          </StyledBlock>
-         {props.data.map((el) => {
+         {data?.map((el) => {
             return (
                <StyledUserProfile key={el.id}>
                   <UserProfileAnnouncementCard
                      bookmarkCountAnnouncement={el.bookmarkCountAnnouncement}
                      likeCountAnnouncement={el.likeCountAnnouncement}
-                     open="true"
                      nav={navigate}
-                     meetballs="true"
-                     onClick={(text, id) => {
-                        setModal(true)
-                        definition(text, id)
-                     }}
                      data={el}
+                     meetballs="true"
+                     onDelete={() => {
+                        setModal(true)
+                        setId(el.id)
+                     }}
+                     onEdit={() => {
+                        setModal(false)
+                        navigate(`/main/editannouncment=${el.id}`)
+                     }}
                   />
                </StyledUserProfile>
             )
@@ -69,10 +101,7 @@ function MyAnnouncment(props) {
                         onClick={() => {
                            deleteUserAnnouncementHandler()
                            setModal(false)
-                           setdelete({
-                              yes: true,
-                              no: false,
-                           })
+                           setdelete(true)
                         }}
                      >
                         Yes
@@ -81,10 +110,7 @@ function MyAnnouncment(props) {
                         variant="contained"
                         height="38px"
                         onClick={() => {
-                           setdelete({
-                              yes: false,
-                              no: true,
-                           })
+                           setdelete(false)
                            setModal(false)
                         }}
                      >
@@ -94,12 +120,22 @@ function MyAnnouncment(props) {
                </StyledModal>
             </Modal>
          ) : null}
-         <SnackBar
-            open={delete2.yes}
-            text="Your request is successful"
-            onClose={() => setdelete(false)}
-            autoHideDuration="1000"
-         />
+         {store?.deleteStatus === 'success' ? (
+            <SnackBar
+               open={deleteCard}
+               text="Your request is successful"
+               onClose={setdelete}
+               severity="success"
+               autoHideDuration="1000"
+            />
+         ) : (
+            <SnackBar
+               open={deleteCard}
+               text="Your request is error"
+               onClose={setdelete}
+               autoHideDuration="1000"
+            />
+         )}
       </Announcement>
    )
 }

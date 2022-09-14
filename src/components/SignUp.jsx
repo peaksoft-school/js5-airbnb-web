@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
 import { ReactComponent as Google } from '../assets/icons/logo-google.svg'
@@ -11,10 +10,6 @@ export const SignUp = (props) => {
       dispatch(getUserOrAdmin({ fetchrole: 'USER' }))
       props.close()
    }
-   // "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIGRldGFpbHMiLCJpc3MiOiJwZWFrc29mdCIsImV4cCI6MTY2NTEyNTIxNCwiaWF0IjoxNjYyNTMzMjE0LCJ1c2VybmFtZSI6Im1haXJhbWt1bGtlbGRpYmVrdXVsdTc2QGdtYWlsLmNvbSJ9.jtnAXlwoJCQ5NiaEvel49nWVR8z2hKIUFjTAlcMyNik"
-   // "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIGRldGFpbHMiLCJpc3MiOiJwZWFrc29mdCIsImV4cCI6MTY2NTEyNTIxNCwiaWF0IjoxNjYyNTMzMjE0LCJ1c2VybmFtZSI6Im1haXJhbWt1bGtlbGRpYmVrdXVsdTc2QGdtYWlsLmNvbSJ9.jtnAXlwoJCQ5NiaEvel49nWVR8z2hKIUFjTAlcMyNik"
-   // "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIGRldGFpbHMiLCJpc3MiOiJwZWFrc29mdCIsImV4cCI6MTY2NTE0NTM5NCwiaWF0IjoxNjYyNTUzMzk0LCJ1c2VybmFtZSI6InVzZXJuYW1ldXNlcjQxOEBnbWFpbC5jb20ifQ.IP4ytlmNamlgmCBFJXlY_r_-lEVtfMWEsilmEiI42rs"
-   // "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIGRldGFpbHMiLCJpc3MiOiJwZWFrc29mdCIsImV4cCI6MTY2NTE0NTM5NCwiaWF0IjoxNjYyNTUzMzk0LCJ1c2VybmFtZSI6InVzZXJuYW1ldXNlcjQxOEBnbWFpbC5jb20ifQ.IP4ytlmNamlgmCBFJXlY_r_-lEVtfMWEsilmEiI42rs"
 
    return (
       <Container>
@@ -47,7 +42,6 @@ export const SignUp = (props) => {
       </Container>
    )
 }
-// export default SignUp
 
 const ButtonAdmin = styled.button`
    font-weight: 400;

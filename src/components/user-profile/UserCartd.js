@@ -1,10 +1,26 @@
+import { signOut } from 'firebase/auth'
+import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
+import { LoginSliceAction } from '../../store/slices/LoginSlice'
+import { LocalStorageFunction } from '../../utils/helpers/LocalStorageFunction'
+import { Auth } from '../SignupFirebase'
 
 function UserCard(props) {
-   const filterName = props.name
+   const nav = useNavigate()
+   const dispatch = useDispatch()
+   const logout = () => {
+      signOut(Auth)
+      LocalStorageFunction({
+         key: 'login',
+         type: 'removeItem',
+      })
+      dispatch(LoginSliceAction.clearlogin())
+      nav('/')
+   }
    return (
       <User>
-         <Logo>{filterName?.charAt(0).toUpperCase()}</Logo>
+         <Logo>{props.name?.charAt(0).toUpperCase() || null}</Logo>
          <Name>
             Name:<UserName>{props.name?.slice(0, 22)}</UserName>
          </Name>
@@ -12,13 +28,15 @@ function UserCard(props) {
             Contact:
             <UserName>{props.email?.slice(0, 22)}...</UserName>
          </Contact>
-         <Logout>Log out</Logout>
+         <PhoneNumber>
+            Tel: <span>+996 708480586</span>
+         </PhoneNumber>
+         <Logout onClick={logout}>Log out</Logout>
       </User>
    )
 }
 
 export default UserCard
-
 const User = styled.div`
    width: 372px;
    overflow: hidden;
@@ -33,6 +51,11 @@ const User = styled.div`
       width: 343px;
       height: 216px;
    }
+`
+const PhoneNumber = styled.span`
+   position: relative;
+   top: 8px;
+   left: 37px;
 `
 const Logo = styled.div`
    width: 89px;

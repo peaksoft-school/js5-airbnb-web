@@ -1,13 +1,12 @@
-/* eslint-disable import/order */
-import styled from 'styled-components'
-import UserCard from './UserCartd'
+import { useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import { Route, Routes, Outlet, NavLink, Navigate } from 'react-router-dom'
+import styled from 'styled-components'
+import { getUserBooking } from '../../store/slices/getUserAnniuncement'
 import Bookings from './Bookings'
 import MyAnnouncment from './MyAnnouncement'
 import OnModeration from './OnModeration'
-import { useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { getUserBooking } from '../../store/slices/getUserAnniuncement'
+import UserCard from './UserCartd'
 
 function UserProfile() {
    const stylednav = {

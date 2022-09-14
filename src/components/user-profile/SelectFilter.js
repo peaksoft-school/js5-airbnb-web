@@ -1,45 +1,46 @@
-/* eslint-disable jsx-a11y/alt-text */
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Box from '@mui/material/Box'
 import FormControl from '@mui/material/FormControl'
 import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
 import Select from '@mui/material/Select'
 import styled from 'styled-components'
-import star5 from '../../assets/icons/Group 1934.svg'
-import star4 from '../../assets/icons/Group 1935.svg'
-import star3 from '../../assets/icons/Group 1936.svg'
-import star2 from '../../assets/icons/Group 1937.svg'
-import star1 from '../../assets/icons/Group 1938.svg'
+import staricon1 from '../../assets/icons/star1.svg'
+import staricon2 from '../../assets/icons/star2.svg'
+import staricon3 from '../../assets/icons/star3.svg'
+import staricon4 from '../../assets/icons/star4.svg'
+import staricon5 from '../../assets/icons/star5.svg'
 import Vector from '../../assets/icons/Vector (5).svg'
-import CheckBox from '../UI/CheckBox'
 import RadioButton from '../UI/RadioButton'
 
 const names = ['In wish list', 'Appartment', 'House']
 const prise = ['Low to high', 'High to low']
 const images = [
-   { id: 5, images: star5 },
-   { id: 4, images: star4 },
-   { id: 3, images: star3 },
-   { id: 2, images: star2 },
-   { id: 1, images: star1 },
+   { id: 5, images: staricon5 },
+   { id: 4, images: staricon4 },
+   { id: 3, images: staricon3 },
+   { id: 2, images: staricon2 },
+   { id: 1, images: staricon1 },
 ]
 
-export default function UserSelect() {
-   const [dele, setDele] = useState({
-      checkBox: false,
-      radioBtn: false,
-      img: false,
-      btncheck: false,
-   })
+export default function UserSelect(props) {
    const [data, setData] = useState({
       text: '',
       textRadio: '',
    })
 
-   const [rating, setrating] = useState('')
-   const [clear, setClear] = useState({ checkBox: true, images: true })
+   const [rating, setrating] = useState({
+      id: '',
+      img: '',
+   })
    const [text, setText] = useState('')
+   useEffect(() => {
+      props.getvalue({
+         rating: rating.id,
+         type: data.text,
+         price: data.textRadio,
+      })
+   }, [rating.id, data.text, data.textRadio, text])
    return (
       <Block>
          <Container>
@@ -60,9 +61,8 @@ export default function UserSelect() {
                         <Select
                            labelId="demo-multiple-checkbox-label"
                            id="demo-multiple-checkbox"
-                           value={clear.checkBox ? text : null}
+                           value={text}
                            onChange={(e) => {
-                              setClear({ ...clear, checkBox: true })
                               setText(e.target.value)
                            }}
                            renderValue={(selected) => selected}
@@ -75,15 +75,10 @@ export default function UserSelect() {
                                  key={name}
                                  value={name}
                                  onClick={() => {
-                                    setDele({ ...dele, checkBox: true })
                                     setData({ ...data, text: name })
                                  }}
                               >
-                                 <CheckBox
-                                    width="20px"
-                                    height="20px"
-                                    border="1px solid #C4C4C4"
-                                 />
+                                 <RadioButton />
                                  <SelectItemText>{name}</SelectItemText>
                               </MenuItem>
                            ))}
@@ -93,14 +88,11 @@ export default function UserSelect() {
                                  key={element}
                                  value={element}
                                  onClick={() => {
-                                    setDele({ ...dele, radioBtn: true })
                                     setData({ ...data, textRadio: element })
                                  }}
                               >
                                  <RadioButton />
-                                 <SelectItemText className="radio">
-                                    {element}
-                                 </SelectItemText>
+                                 <SelectItemText>{element}</SelectItemText>
                               </MenuItem>
                            ))}
                         </Select>
@@ -122,19 +114,21 @@ export default function UserSelect() {
                         </InputLabel>
                         <Select
                            labelId="demo-simple-select-label"
-                           value={clear.images ? rating : null}
-                           onChange={(e) => {
-                              setClear({ ...clear, images: true })
-                              setDele({
-                                 ...dele,
-                                 img: 'true',
+                           value={rating.img}
+                           onChange={(e, id) => {
+                              setrating({
+                                 id: id.props.altKey,
+                                 img: e.target.value,
                               })
-                              setrating(e.target.value)
                            }}
                         >
                            {images.map((icons) => (
-                              <MenuItem value={icons.images} key={icons.images}>
-                                 <img src={icons.images} />
+                              <MenuItem
+                                 value={icons.images}
+                                 altKey={icons.id}
+                                 key={icons.id}
+                              >
+                                 <img src={icons.images} alt="Images" />
                               </MenuItem>
                            ))}
                         </Select>
@@ -143,50 +137,57 @@ export default function UserSelect() {
                </BoxWrapper>
             </Position>
             <StyledText>
-               {dele.checkBox ? (
+               {data.text && (
                   <Text
                      onClick={() => {
-                        setClear({ ...clear, checkBox: false })
-                        setDele({ ...dele, checkBox: false, btncheck: true })
+                        setText(null)
+                        setData({
+                           ...data,
+                           text: '',
+                        })
                      }}
                   >
                      <StyledVector src={Vector} />
                      {data.text}
                   </Text>
-               ) : null}
-               {dele.radioBtn ? (
+               )}
+               {data.textRadio && (
                   <Text
                      className="posisionText"
                      onClick={() => {
-                        setClear({ ...clear, checkBox: false })
-                        setDele({ ...dele, radioBtn: false })
+                        setText(null)
+                        setData({
+                           ...data,
+                           textRadio: '',
+                        })
                      }}
                   >
                      <StyledVector src={Vector} />
                      {data.textRadio}
                   </Text>
-               ) : null}
-               {dele.img ? (
+               )}
+               {rating.id && (
                   <Text
                      onClick={() => {
-                        setClear({ ...clear, images: false })
-                        setDele({ ...dele, img: false })
+                        setrating({ id: '', img: null })
                      }}
                   >
                      <StyledVector src={Vector} />
-                     <img src={rating} />
+                     <img src={rating.img} alt="rating icons" />
                   </Text>
-               ) : null}
-               {dele.img || dele.checkBox || dele.radioBtn ? (
+               )}
+               {data.text || data.textRadio || rating.id ? (
                   <StyledClear
                      onClick={() => {
-                        setClear({ ...clear, checkBox: false, images: false })
-                        setDele({
-                           ...dele,
-                           checkBox: false,
-                           radioBtn: false,
-                           img: false,
+                        setData({
+                           text: '',
+                           textRadio: '',
                         })
+                        setrating({
+                           id: '',
+                           img: null,
+                        })
+                        setText(null)
                      }}
                   >
                      Clear all
@@ -306,7 +307,5 @@ const SelectItemText = styled.p`
    font-size: 16px;
    line-height: 19px;
    color: #828282;
-   &.radio {
-      padding-left: 25px;
-   }
+   padding-left: 25px;
 `

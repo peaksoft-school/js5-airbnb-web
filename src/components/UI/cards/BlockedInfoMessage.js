@@ -5,9 +5,8 @@ const BlockedInfoMessage = (props) => {
    const { openMessage, onOpenMessage } = props
    return (
       <StyledBlockedCard>
-         <img onClick={() => onOpenMessage(true)} src={infIcon} alt="icon" />
+         <img onClick={() => onOpenMessage()} src={infIcon} alt="icon" />
          {openMessage && <StyledMessage>{props.message}</StyledMessage>}
-         <StyledButton>BLOCKED</StyledButton>
       </StyledBlockedCard>
    )
 }
@@ -38,23 +37,4 @@ const StyledMessage = styled.div`
    justify-content: center;
    position: absolute;
    left: -205px;
-`
-const StyledButton = styled.button`
-   color: white;
-   font-style: normal;
-   font-weight: 500;
-   font-size: 14px;
-   line-height: 17px;
-   line-height: 17px;
-   display: flex;
-   align-items: center;
-   justify-content: center;
-   padding: 10px;
-   width: 153px;
-   position: absolute;
-   top: 260px;
-   right: -3px;
-   background: #c4c4c4;
-   border-radius: 2px;
-   border: none;
 `

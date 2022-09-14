@@ -10,16 +10,34 @@ export const getUserBooking = createAsyncThunk(
       return response
    }
 )
+export const deleteUserAnnouncementCard = createAsyncThunk(
+   'getUserAnnouncementCard/deleteUserBooking',
+   async (id, { dispatch }) => {
+      const res = await appFetch({
+         url: `api/announcements/delete/${id}`,
+         method: 'DELETE',
+      })
+      dispatch(getUserBooking())
+      return res
+   }
+)
 const initialState = {
    user: {},
    bookings: [],
    announcements: [],
    status: null,
+   deleteStatus: null,
 }
 const getUserAnnouncementCard = createSlice({
    name: 'getUserAnnouncementCard',
    initialState,
    extraReducers: {
+      [deleteUserAnnouncementCard.fulfilled]: (state) => {
+         state.deleteStatus = 'success'
+      },
+      [deleteUserAnnouncementCard.rejected]: (state) => {
+         state.deleteStatus = 'error'
+      },
       [getUserBooking.pending]: (state) => {
          state.status = 'pending'
       },
@@ -38,15 +56,3 @@ const getUserAnnouncementCard = createSlice({
    },
 })
 export default getUserAnnouncementCard
-
-export const deleteUserAnnouncementCard = createAsyncThunk(
-   'getUserAnnouncementCard/deleteUserBooking',
-   async (id, { dispatch }) => {
-      const res = await appFetch({
-         url: `api/announcements/delete/${id}`,
-         method: 'DELETE',
-      })
-      dispatch(getUserBooking())
-      return res
-   }
-)

@@ -1,82 +1,66 @@
-/* eslint-disable no-nested-ternary */
-/* eslint-disable import/order */
-/* eslint-disable jsx-a11y/alt-text */
 import React, { useState } from 'react'
 import styled, { css } from 'styled-components'
+import dateIcon from '../../../assets/icons/dateIcon.svg'
+import likeIcon from '../../../assets/icons/Like.png'
 import locationIcon from '../../../assets/icons/locationIcon.png'
-import star from '../../../assets/icons/Star.png'
-import date from '../../../assets/icons/Frame (2).svg'
-import BlockedInfoMessage from './BlockedInfoMessage'
-import like from '../../../assets/icons/Like.png'
-import vector from '../../../assets/icons/vector.svg'
+import { ReactComponent as PopupSvg } from '../../../assets/icons/popupsvg.svg'
+import starIcon from '../../../assets/icons/Star.png'
 import Button from '../Button'
 import PopUp from '../PopUp'
+import BlockedInfoMessage from './BlockedInfoMessage'
 
 const UserProfileAnnouncementCard = (props) => {
    const balls = [
       {
-         text: 'delet',
+         text: 'Edit',
          id: 1,
-         onClick: () => {
-            props.onClick('delet', props.data.id)
-            // props.getId(props.id)
-         },
-      },
-      {
-         text: 'edit',
-         id: 2,
          onClick: () => {
             props.onEdit()
          },
       },
+      {
+         text: 'Delete',
+         id: 2,
+         onClick: () => {
+            props.onDelete()
+         },
+      },
    ]
 
-   // eslint-disable-next-line no-unused-vars
-   // const [blockMessage, setBlockMessage] = useState(props.status)
    const [showMessage, setShowMessage] = useState(false)
-
+   const [openPopup, closePopup] = useState(false)
    const showMessageHandler = () => {
-      setShowMessage(!showMessage)
+      setShowMessage((p) => !p)
    }
+   const [position, setposition] = useState(null)
+   const openpopup = (e) => {
+      setposition(e.currentTarget)
+      closePopup((p) => !p)
+   }
+   const NEW = 'NEW'
    return (
-      <StyledCard
-         isBlocked={props.isBlocked}
-         open={props.open}
-         status={props.data.status}
-      >
-         {props.isBlocked && (
+      <StyledCard isBlocked={props.isBlocked} status={props.data?.status}>
+         {props.data?.status !== 'ACCEPTED' && (
             <BlockedInfoMessage
-               onClick={showMessageHandler}
                openMessage={showMessage}
-               onOpenMessage={setShowMessage}
+               onOpenMessage={showMessageHandler}
+               message={props.message}
             />
          )}
-         {props.bookmarkCountAnnouncement >= 1 ? (
+         {props.bookmarkCountAnnouncement >= 1 && (
             <StyledData>
-               <img src={date} />
+               <img src={dateIcon} alt="icone date" />
                <p>{props.bookmarkCountAnnouncement}</p>
             </StyledData>
-         ) : null}
-         {props.likeCountAnnouncement >= 1 ? (
+         )}
+         {props.likeCountAnnouncement >= 1 && (
             <StyledLike>
-               <img src={like} />
+               <img src={likeIcon} alt="icone like" />
                <p>{props.likeCountAnnouncement}</p>
             </StyledLike>
-         ) : null}
-         {props.data.status === 'NEW' ? (
-            <>
-               <BlockMessage src={vector} />
-               <TextMessage>
-                  <p>
-                     Your application has been blocked, please contact the
-                     administrator
-                  </p>
-               </TextMessage>
-            </>
-         ) : null}
-
+         )}
          <StyledCardImage
-            src={props.data.image}
+            src={props.data?.image}
             isBlocked={props.data.isBlocked}
             alt="card"
          />
@@ -86,8 +70,8 @@ const UserProfileAnnouncementCard = (props) => {
                <StyledDay>day</StyledDay>
             </span>
             <div>
-               <img src={star} alt="star" />
-               <p>{props.data.ratings}</p>
+               <img src={starIcon} alt="star" />
+               <p>{`${props.data.rating}`.slice(0, 3)}</p>
             </div>
          </Cont>
          <Description>{props.data.title}</Description>
@@ -97,23 +81,40 @@ const UserProfileAnnouncementCard = (props) => {
          </Location>
          <Amount>
             <p>{props.data.maxGuests} guests</p>
-            {props.data.status === 'NEW' ? (
+            {props.data?.status === NEW && (
                <StyledBlockButton>
-                  <Button disabled fontSize="12px">
-                     Blocked
-                  </Button>
+                  <Button disabled>On Moderation</Button>
                </StyledBlockButton>
-            ) : null}
-            {props.meetballs === 'true' ? (
-               <StyledMeatBalls>
-                  <PopUp
-                     // state={props.opens}
-                     setState={props.setOpen}
-                     options={balls}
-                     id={props.data.id}
-                  />
+            )}
+            {props.data.status === 'REJECTED' ? (
+               <StyledBlockButtonMeatbalse onClick={openpopup}>
+                  {props.meetballs && (
+                     <PopUp
+                        openPopup={openPopup}
+                        closePopup={openpopup}
+                        options={balls}
+                        id={props.data.id}
+                        position={position}
+                     >
+                        <Button variant="contained">BLOCK</Button>
+                     </PopUp>
+                  )}
+               </StyledBlockButtonMeatbalse>
+            ) : (
+               <StyledMeatBalls onClick={openpopup}>
+                  {props.meetballs && (
+                     <PopUp
+                        openPopup={openPopup}
+                        closePopup={openpopup}
+                        options={balls}
+                        id={props.data.id}
+                        position={position}
+                     >
+                        <PopupSvg />
+                     </PopUp>
+                  )}
                </StyledMeatBalls>
-            ) : null}
+            )}
          </Amount>
       </StyledCard>
    )
@@ -123,8 +124,8 @@ export default UserProfileAnnouncementCard
 
 const StyledMeatBalls = styled.div`
    position: relative;
-   left: 210px;
-   bottom: 10px;
+   left: 215px;
+   bottom: 15px;
    @media (max-width: 375px) {
       position: relative;
       left: 115px;
@@ -136,11 +137,11 @@ const StyledCard = styled.div`
    width: 260px;
    height: 336px;
    border-radius: 4px;
-   background: ${({ open, status }) =>
-      status === 'NEW' ? '#D4D4D4' : open === 'true' ? 'none' : 'white'};
+   background: ${({ status }) => (status !== 'ACCEPTED' ? '#D4D4D4' : 'none')};
    position: relative;
    z-index: 10;
-   opacity: ${({ status }) => (status === 'NEW' ? '0.7' : '1')};
+   opacity: ${({ status, isBlocked }) =>
+      status !== 'ACCEPTED' || isBlocked ? '0.7' : '1'};
    ${(props) =>
       props.width &&
       css`
@@ -155,12 +156,6 @@ const StyledCard = styled.div`
       width: 168px;
       height: 110px;
    }
-`
-const BlockMessage = styled.img`
-   position: absolute;
-   top: 12px;
-   left: 224px;
-   color: red;
 `
 const StyledCardImage = styled.img`
    width: 260px;
@@ -183,10 +178,22 @@ const StyledCardImage = styled.img`
       height: 108px;
    }
 `
+const StyledBlockButtonMeatbalse = styled.div`
+   position: absolute;
+   bottom: 8px;
+   left: 165px;
+   & > button {
+      padding: 0;
+      width: 85px;
+   }
+`
 const StyledBlockButton = styled.div`
    position: absolute;
    bottom: 8px;
    left: 100px;
+   & > button {
+      padding: 0;
+   }
 `
 const Cont = styled.div`
    display: flex;
@@ -305,26 +312,5 @@ const StyledLike = styled.div`
       font-size: 14px;
       line-height: 17px;
       color: #f7f7f7;
-   }
-`
-const TextMessage = styled.div`
-   width: 214px;
-   height: 34px;
-   position: absolute;
-   top: 42px;
-   left: 34px;
-   border-radius: 4px;
-   background: #646464;
-
-   & p {
-      width: 201px;
-      height: 24px;
-      color: #ffffff;
-      font-family: 'Inter';
-      font-style: normal;
-      margin: 5px;
-      font-weight: 400;
-      font-size: 10px;
-      line-height: 12px;
    }
 `

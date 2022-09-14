@@ -2,13 +2,15 @@ import styled from 'styled-components'
 import UserProfileAnnouncementCard from '../UI/cards/UserProfilleAnnouncementCard'
 
 function OnModeration(props) {
-   console.log(props.data)
    return (
       <Announcement>
          {props.data.map((el) => {
             return (
                <StyledUserProfile key={el.id}>
-                  <UserProfileAnnouncementCard open="true" data={el} />
+                  <UserProfileAnnouncementCard
+                     data={el}
+                     message="Your added application is reviewed by administration"
+                  />
                </StyledUserProfile>
             )
          })}

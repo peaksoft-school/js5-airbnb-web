@@ -1,4 +1,3 @@
-/* eslint-disable import/order */
 import styled from 'styled-components'
 import Button from '../UI/Button'
 import AdminProfileApplicationCard from '../UI/cards/UserProfilleAnnouncementCard'
@@ -17,21 +16,14 @@ function Bookings(props) {
                   <Block>
                      <div>
                         <Par>Check in</Par>
-                        <Date>02.02.22</Date>
+                        <StyledDate>02.02.22</StyledDate>
                      </div>
                      <div>
                         <Par>Check out</Par>
-                        <Date style={{ marginLeft: '10px' }}>02.02.22</Date>
+                        <StyledDate className="leftText">02.02.22</StyledDate>
                      </div>
                   </Block>
-                  <Button
-                     widthMedia="168px !important"
-                     width="260px"
-                     height="37px"
-                     fontSize="14px"
-                  >
-                     CHANGE
-                  </Button>
+                  <Button>CHANGE</Button>
                </StyledCard>
             )
          })}
@@ -68,6 +60,9 @@ const Block = styled.div`
       margin: 155px 10px 0 10px;
       padding-bottom: 8px;
    }
+   &.leftText {
+      margin-left: 10px;
+   }
 `
 const StyledCard = styled.div`
    display: flex;
@@ -75,6 +70,16 @@ const StyledCard = styled.div`
    @media (max-width: 375px) {
       margin: 29px 0 0 0;
       height: 200px;
+      :nth-child(3) {
+         padding: 0;
+         width: 168px;
+      }
+   }
+   :nth-child(3) {
+      padding: 0;
+      width: 260px;
+      height: 37px;
+      font-size: 14px;
    }
 `
 const Par = styled.p`
@@ -91,7 +96,7 @@ const Par = styled.p`
       line-height: 15px;
    }
 `
-const Date = styled.p`
+const StyledDate = styled.p`
    font-family: 'Roboto';
    font-style: normal;
    font-weight: 400;
