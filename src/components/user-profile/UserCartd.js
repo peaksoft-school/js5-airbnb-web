@@ -29,7 +29,7 @@ function UserCard(props) {
             <UserName>{props.email?.slice(0, 22)}...</UserName>
          </Contact>
          <PhoneNumber>
-            Tel: <span>+996 708480586</span>
+            Tel: <p>+996 708480586</p>
          </PhoneNumber>
          <Logout onClick={logout}>Log out</Logout>
       </User>
@@ -40,7 +40,7 @@ export default UserCard
 const User = styled.div`
    width: 372px;
    overflow: hidden;
-   height: 285px;
+   height: 320px;
    border: 1px solid #c4c4c4;
    border-radius: 16px;
    display: flex;
@@ -54,8 +54,25 @@ const User = styled.div`
 `
 const PhoneNumber = styled.span`
    position: relative;
-   top: 8px;
+   top: 18px;
    left: 37px;
+   font-family: 'Inter';
+   font-style: normal;
+   font-weight: 400;
+   font-size: 16px;
+   line-height: 19px;
+   color: #646464;
+   & p {
+      font-style: normal;
+      font-weight: 500;
+      font-size: 18px;
+      line-height: 22px;
+      color: #363636;
+      overflow: hidden;
+      position: relative;
+      bottom: 20px;
+      left: 35px;
+   }
 `
 const Logo = styled.div`
    width: 89px;

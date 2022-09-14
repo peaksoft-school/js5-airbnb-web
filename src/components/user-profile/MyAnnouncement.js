@@ -14,7 +14,6 @@ function MyAnnouncment(props) {
    const [modal, setModal] = useState(false)
    const [deleteCard, setdelete] = useState(false)
    const store = useSelector((store) => store.getUserAnnouncement)
-   console.log(props)
    const dispatch = useDispatch()
    const navigate = useNavigate()
 
@@ -62,7 +61,6 @@ function MyAnnouncment(props) {
    if (filtervalue.price === 'Low to high') {
       data.sort(sortbyPriceHigh)
    }
-   console.log(modal, 'daswv')
    return (
       <Announcement>
          <StyledBlock>
