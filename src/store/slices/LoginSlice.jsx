@@ -14,7 +14,7 @@ export const getUserOrAdmin = createAsyncThunk(
          const provider = new GoogleAuthProvider()
          const { user } = await signInWithPopup(Auth, provider)
          const response = await appFetch({
-            url: `${LoginUserUrl}?token=${user.accessToken}`,
+            url: `${LoginUserUrl}?token=${user.accessToken}&phoneNumber=${props.phonenumber}`,
             method: 'POST',
          })
          response.name = user.displayName
@@ -54,6 +54,7 @@ const initialState = {
       role: null,
       name: null,
       status: null,
+      phoneNumber: null,
    },
 }
 const LoginSlice = createSlice({
@@ -62,6 +63,9 @@ const LoginSlice = createSlice({
    reducers: {
       closemodal: (state) => {
          state.modal = false
+      },
+      clearlogin: (state) => {
+         state.login = {}
       },
    },
    extraReducers: {
