@@ -45,7 +45,20 @@ function MyAnnouncment(props) {
          })
          setdata(arr)
       }
-      if (!filtervalue.rating) {
+      if (filtervalue.type === 'In wish list') {
+         setdata(props.data)
+      }
+      if (filtervalue.type !== 'In wish list') {
+         // eslint-disable-next-line consistent-return, array-callback-return
+         const arr = props.data.filter((i) => {
+            const type = filtervalue.type?.toUpperCase()
+            if (i.houseType === type) {
+               return i
+            }
+         })
+         setdata(arr)
+      }
+      if (!filtervalue.type && !filtervalue.rating) {
          setdata(props.data)
       }
    }, [filtervalue.rating, filtervalue.price, filtervalue.type, props.data])

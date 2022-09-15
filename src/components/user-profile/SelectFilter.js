@@ -13,7 +13,7 @@ import staricon5 from '../../assets/icons/star5.svg'
 import Vector from '../../assets/icons/Vector (5).svg'
 import RadioButton from '../UI/RadioButton'
 
-const names = ['In wish list', 'Appartment', 'House']
+const names = ['In wish list', 'Apartment', 'House']
 const prise = ['Low to high', 'High to low']
 const images = [
    { id: 5, images: staricon5 },

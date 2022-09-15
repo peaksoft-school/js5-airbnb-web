@@ -40,7 +40,7 @@ export default UserCard
 const User = styled.div`
    width: 372px;
    overflow: hidden;
-   height: 320px;
+   height: 330px;
    border: 1px solid #c4c4c4;
    border-radius: 16px;
    display: flex;
@@ -55,7 +55,7 @@ const User = styled.div`
 const PhoneNumber = styled.span`
    position: relative;
    top: 18px;
-   left: 37px;
+   left: 77px;
    font-family: 'Inter';
    font-style: normal;
    font-weight: 400;
@@ -133,7 +133,7 @@ const Logout = styled.a`
    color: #ff4b4b;
    position: relative;
    top: 15px;
-   left: 38px;
+   left: 44px;
    @media (max-width: 375px) {
       display: none;
    }
