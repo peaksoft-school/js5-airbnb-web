@@ -49,6 +49,7 @@ const DateImg = styled.img`
 
 const LittleContainerImage = styled.div`
    display: flex;
+   align-items: flex-start;
    justify-content: space-between;
    margin-top: 10px;
    @media (max-width: 375px) {
