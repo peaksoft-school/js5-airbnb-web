@@ -20,7 +20,7 @@ export default function SnackBar({ severity, open, onClose, message, text }) {
                onClose={() => onClose(false)}
                severity={severity}
             >
-               <h1>{message} :)</h1>
+               <h1>{message}</h1>
                <p>{text}</p>
             </NotificationAlert>
          </Snackbar>

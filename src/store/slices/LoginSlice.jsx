@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
-// eslint-disable-next-line import/no-cycle
 import appFetch from '../../api/appFetch'
 import { Auth } from '../../components/SignupFirebase'
 import { LoginUserUrl, LoginAdminUrl } from '../../utils/constants/constants'

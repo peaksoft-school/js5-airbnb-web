@@ -19,6 +19,7 @@ const SignUp = (props) => {
       props?.close()
       setphonenumber('')
    }
+
    return (
       <Container>
          <Title1>Join us</Title1>
@@ -59,6 +60,7 @@ const SignUp = (props) => {
       </Container>
    )
 }
+
 export default React.memo(SignUp)
 const ButtonAdmin = styled.button`
    font-weight: 400;

@@ -10,6 +10,7 @@ function Button({
 }) {
    return (
       <CustomButton
+         widthMedia={widthMedia}
          onClick={onClick}
          variant={variant}
          style={props}
@@ -77,7 +78,8 @@ const CustomButton = styled.button`
       background-color: #a9a9a9;
    }
 
-   @media screen and (max-width: 414px) {
-      width: ${(props) => props.widthMedia};
+   @media screen and (max-width: 375px) {
+      width: ${(props) => props.width || '168px !important;'};
+      width: 168px !important;
    }
 `

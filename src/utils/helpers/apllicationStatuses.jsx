@@ -1,0 +1,6 @@
+export const APLLICATION_STATUSES = {
+   NEW: 'NEW',
+   ACCEPTED: 'ACCEPTED',
+   BLOCKED: 'BLOCKED',
+   REJECTED: 'REJECTED',
+}
