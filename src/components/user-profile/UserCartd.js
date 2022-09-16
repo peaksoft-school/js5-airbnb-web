@@ -29,7 +29,7 @@ function UserCard(props) {
             <UserName>{props.email?.slice(0, 22)}...</UserName>
          </Contact>
          <PhoneNumber>
-            Tel: <p>+996 708480586</p>
+            Tel: <p>{props.phoneNumber}</p>
          </PhoneNumber>
          <Logout onClick={logout}>Log out</Logout>
       </User>

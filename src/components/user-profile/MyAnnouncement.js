@@ -16,7 +16,6 @@ function MyAnnouncment(props) {
    const store = useSelector((store) => store.getUserAnnouncement)
    const dispatch = useDispatch()
    const navigate = useNavigate()
-
    const deleteUserAnnouncementHandler = () => {
       dispatch(deleteUserAnnouncementCard(id))
    }
@@ -37,25 +36,18 @@ function MyAnnouncment(props) {
    useEffect(() => {
       setdata(props.data)
       if (filtervalue.rating) {
-         // eslint-disable-next-line consistent-return, array-callback-return
-         const arr = props.data.filter((i) => {
-            if (Math.ceil(i.rating) === +filtervalue.rating) {
-               return i
-            }
-         })
+         const arr = props.data.filter(
+            (i) => Math.ceil(i.rating) === +filtervalue.rating
+         )
          setdata(arr)
       }
       if (filtervalue.type === 'In wish list') {
          setdata(props.data)
       }
       if (filtervalue.type !== 'In wish list') {
-         // eslint-disable-next-line consistent-return, array-callback-return
-         const arr = props.data.filter((i) => {
-            const type = filtervalue.type?.toUpperCase()
-            if (i.houseType === type) {
-               return i
-            }
-         })
+         const arr = props.data.filter(
+            (i) => i.houseType === filtervalue.type?.toUpperCase()
+         )
          setdata(arr)
       }
       if (!filtervalue.type && !filtervalue.rating) {
@@ -74,6 +66,11 @@ function MyAnnouncment(props) {
    if (filtervalue.price === 'Low to high') {
       data.sort(sortbyPriceHigh)
    }
+   const buttonTask = () => {
+      deleteUserAnnouncementHandler()
+      setModal(false)
+      setdelete(true)
+   }
    return (
       <Announcement>
          <StyledBlock>
@@ -85,6 +82,7 @@ function MyAnnouncment(props) {
             return (
                <StyledUserProfile key={el.id}>
                   <UserProfileAnnouncementCard
+                     innerPage={() => navigate(`/innerPage`)}
                      bookmarkCountAnnouncement={el.bookmarkCountAnnouncement}
                      likeCountAnnouncement={el.likeCountAnnouncement}
                      nav={navigate}
@@ -107,14 +105,7 @@ function MyAnnouncment(props) {
                <StyledModal>
                   <p>Do you want to delete?</p>
                   <StyledButton>
-                     <Button
-                        height="38px"
-                        onClick={() => {
-                           deleteUserAnnouncementHandler()
-                           setModal(false)
-                           setdelete(true)
-                        }}
-                     >
+                     <Button height="38px" onClick={buttonTask}>
                         Yes
                      </Button>
                      <Button

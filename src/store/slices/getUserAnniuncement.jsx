@@ -10,8 +10,18 @@ export const getUserBooking = createAsyncThunk(
       return response
    }
 )
+export const deleteUserMessage = createAsyncThunk(
+   'getUserAnnouncementCard/deleteUserMessage',
+   async (_, { dispatch }) => {
+      const response = await appFetch({
+         url: 'user/profile/delete/messages',
+      })
+      dispatch(getUserBooking())
+      return response
+   }
+)
 export const deleteUserAnnouncementCard = createAsyncThunk(
-   'getUserAnnouncementCard/deleteUserBooking',
+   'getUserAnnouncementCard/deleteUserAnnouncementCard',
    async (id, { dispatch }) => {
       const res = await appFetch({
          url: `api/announcements/delete/${id}`,
@@ -21,12 +31,14 @@ export const deleteUserAnnouncementCard = createAsyncThunk(
       return res
    }
 )
+
 const initialState = {
    user: {},
    bookings: [],
    announcements: [],
    status: null,
    deleteStatus: null,
+   messageFromAdmin: [],
 }
 const getUserAnnouncementCard = createSlice({
    name: 'getUserAnnouncementCard',
@@ -46,12 +58,14 @@ const getUserAnnouncementCard = createSlice({
       },
       [getUserBooking.fulfilled]: (state, action) => {
          state.status = 'success'
+         state.messageFromAdmin = action.payload?.messageFromAdmin
          state.user = {
-            email: action.payload.contact,
-            name: action.payload.name,
+            email: action.payload?.contact,
+            name: action.payload?.name,
+            phoneNumber: action.payload?.phoneNumber,
          }
-         state.bookings = action.payload.bookings
-         state.announcements = action.payload.announcements
+         state.bookings = action.payload?.bookings
+         state.announcements = action.payload?.announcements
       },
    },
 })

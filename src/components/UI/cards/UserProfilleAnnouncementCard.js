@@ -5,6 +5,7 @@ import likeIcon from '../../../assets/icons/Like.png'
 import locationIcon from '../../../assets/icons/locationIcon.png'
 import { ReactComponent as PopupSvg } from '../../../assets/icons/popupsvg.svg'
 import starIcon from '../../../assets/icons/Star.png'
+import { APLLICATION_STATUSES } from '../../../utils/helpers/apllicationStatuses'
 import Button from '../Button'
 import PopUp from '../PopUp'
 import BlockedInfoMessage from './BlockedInfoMessage'
@@ -37,14 +38,34 @@ const UserProfileAnnouncementCard = (props) => {
       setposition(e.currentTarget)
       closePopup((p) => !p)
    }
-   const NEW = 'NEW'
+   const closepopup = () => {
+      setposition(null)
+   }
+   const { NEW } = APLLICATION_STATUSES
+   const message = {
+      message: '',
+   }
+   if (props.data.status === APLLICATION_STATUSES.NEW) {
+      message.message = 'Your added application is reviewed by administration'
+   }
+   if (props.data.status === APLLICATION_STATUSES.REJECTED) {
+      message.message =
+         'Your application blocked by administration, please edite or delete this application'
+   }
    return (
-      <StyledCard isBlocked={props.isBlocked} status={props.data?.status}>
-         {props.data?.status !== 'ACCEPTED' && (
+      <StyledCard
+         onClick={(e) => {
+            e.stopPropagation()
+            props.innerPage()
+         }}
+         isBlocked={props.isBlocked}
+         status={props.data?.status}
+      >
+         {props.data?.status !== APLLICATION_STATUSES.ACCEPTED && (
             <BlockedInfoMessage
                openMessage={showMessage}
                onOpenMessage={showMessageHandler}
-               message={props.message}
+               message={props.data?.messagesFromAdmin || message.message}
             />
          )}
          {props.bookmarkCountAnnouncement >= 1 && (
@@ -86,12 +107,20 @@ const UserProfileAnnouncementCard = (props) => {
                   <Button disabled>On Moderation</Button>
                </StyledBlockButton>
             )}
-            {props.data.status === 'REJECTED' ? (
-               <StyledBlockButtonMeatbalse onClick={openpopup}>
+            {props.data.status === APLLICATION_STATUSES.REJECTED ||
+            props.data.status === APLLICATION_STATUSES.BLOCKED ? (
+               <StyledBlockButtonMeatbalse
+                  onClick={(e) => {
+                     e.stopPropagation()
+                     openpopup(e)
+                  }}
+               >
                   {props.meetballs && (
                      <PopUp
                         openPopup={openPopup}
-                        closePopup={openpopup}
+                        closePopup={(e) => {
+                           openpopup(e)
+                        }}
                         options={balls}
                         id={props.data.id}
                         position={position}
@@ -101,14 +130,21 @@ const UserProfileAnnouncementCard = (props) => {
                   )}
                </StyledBlockButtonMeatbalse>
             ) : (
-               <StyledMeatBalls onClick={openpopup}>
+               <StyledMeatBalls
+                  onClick={(e) => {
+                     e.stopPropagation()
+                     openpopup(e)
+                  }}
+               >
                   {props.meetballs && (
                      <PopUp
                         openPopup={openPopup}
-                        closePopup={openpopup}
+                        closePopup={() => {
+                           closepopup()
+                        }}
                         options={balls}
                         id={props.data.id}
-                        position={position}
+                        position={position || null}
                      >
                         <PopupSvg />
                      </PopUp>
@@ -133,15 +169,17 @@ const StyledMeatBalls = styled.div`
 `
 
 const StyledCard = styled.div`
+   cursor: pointer;
    overflow: hidden;
    width: 260px;
    height: 336px;
    border-radius: 4px;
-   background: ${({ status }) => (status !== 'ACCEPTED' ? '#D4D4D4' : 'none')};
+   background: ${({ status }) =>
+      status !== APLLICATION_STATUSES.ACCEPTED ? '#D4D4D4' : 'none'};
    position: relative;
    z-index: 10;
    opacity: ${({ status, isBlocked }) =>
-      status !== 'ACCEPTED' || isBlocked ? '0.7' : '1'};
+      status !== APLLICATION_STATUSES.ACCEPTED || isBlocked ? '0.7' : '1'};
    ${(props) =>
       props.width &&
       css`

@@ -40,7 +40,7 @@ export default function UserSelect(props) {
          type: data.text,
          price: data.textRadio,
       })
-   }, [rating.id, data.text, data.textRadio, text])
+   }, [rating.id, data, text])
    return (
       <Block>
          <Container>

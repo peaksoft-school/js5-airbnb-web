@@ -7,6 +7,7 @@ import Bookings from './Bookings'
 import MyAnnouncment from './MyAnnouncement'
 import OnModeration from './OnModeration'
 import UserCard from './UserCartd'
+import UserMessage from './UserMessage'
 
 function UserProfile() {
    const stylednav = {
@@ -23,14 +24,23 @@ function UserProfile() {
    useEffect(() => {
       dispatch(getUserBooking())
    }, [])
-   const announcement = data.announcements.filter((i) => i.status !== 'NEW')
-   const moderation = data.announcements.filter((i) => i.status === 'NEW')
+   const announcement = data.announcements?.filter((i) => i.status !== 'NEW')
+   const moderation = data.announcements?.filter((i) => i.status === 'NEW')
    return (
       <Box>
          <Container>
             <Profile>PROFILE</Profile>
             <Lov>
-               <UserCard email={data.user.email} name={data.user.name} />
+               <div className="positionCard">
+                  <UserCard
+                     email={data.user.email}
+                     name={data.user.name}
+                     phoneNumber={data.user.phoneNumber}
+                  />
+                  {data?.messageFromAdmin[0] && (
+                     <UserMessage messageFromAdmin={data.messageFromAdmin} />
+                  )}
+               </div>
                <Cart>
                   <Nav>
                      <NavLink
@@ -125,6 +135,9 @@ const Lov = styled.div`
    @media (max-width: 375px) {
       display: flex;
       flex-direction: column;
+   }
+   &.positionCard {
+      display: flex;
    }
 `
 const Cart = styled.div`

@@ -7,10 +7,7 @@ function OnModeration(props) {
          {props.data.map((el) => {
             return (
                <StyledUserProfile key={el.id}>
-                  <UserProfileAnnouncementCard
-                     data={el}
-                     message="Your added application is reviewed by administration"
-                  />
+                  <UserProfileAnnouncementCard data={el} />
                </StyledUserProfile>
             )
          })}
