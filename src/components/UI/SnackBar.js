@@ -20,7 +20,7 @@ export default function SnackBar({ severity, open, onClose, message, text }) {
                onClose={() => onClose(false)}
                severity={severity}
             >
-               <h1>{message} :)</h1>
+               <h1>{message}</h1>
                <p>{text}</p>
             </NotificationAlert>
          </Snackbar>
@@ -56,7 +56,10 @@ const NotificationAlert = styled(Alert)`
    @media (max-width: 375px) {
       width: 322px;
       height: ${(props) => (props.severity === 'success' ? '70px' : '100px')};
+<<<<<<< HEAD
+=======
       overflow: hidden;
+>>>>>>> 9470914611f938adedaa49f980e51401e0a8c41d
       background: #fff1f0;
       & h1 {
          width: 246px;

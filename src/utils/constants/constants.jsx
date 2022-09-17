@@ -6,6 +6,8 @@ export const LoginAdminUrl = 'api/login'
 export const addAnnoutnCementUrl = 'api/announcements/save'
 export const addAnnountFileUrl = 'api/file/upload'
 export const editAnnountUrl = 'api/announcements/update/'
+export const adminUsersUrl = 'api/admin/users'
+export const adminUsersDeleteUrl = 'api/admin/delete/user/'
 export const options = [
    {
       id: 1,
@@ -40,3 +42,21 @@ export const options = [
       regionName: 'Bishkek',
    },
 ]
+export const UserAndGuestsRoutePath = {
+   homePage: 'main',
+   InnerPageCatalogCard: 'main/:id',
+   moreinfoCard: 'main/moreinfo=:id',
+   findbyCardId: 'main/:id/:id',
+   userProfilePage: 'main/profile/*',
+   userAddAnnouncement: 'main/addanounsement',
+   userEditAnnouncementPage: 'main/editannouncement=:id',
+   userFavoritePage: 'main/favorite',
+}
+export const AdminRoutePath = {
+   ApplicationPage: 'application',
+   ApplicationInnerPage: 'application/:id',
+   adminAllUsersPage: 'users',
+   adminSingleUserPage: 'users/:id/*',
+   adminAllHousingPage: 'all-housing',
+   adminSingleHousePage: 'all-housing/:id',
+}

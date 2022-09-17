@@ -42,7 +42,7 @@ const AddAnnouncementForm = () => {
          formValue.description.length >= 1 &&
          formValue.maxGuests.length >= 1 &&
          formValue.townProvince.length >= 1
-      return valueIsValid
+      return !valueIsValid
    }
    const submitHandlerForm = (e) => {
       e.preventDefault()
