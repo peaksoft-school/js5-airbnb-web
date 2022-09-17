@@ -5,7 +5,7 @@ import { ReactComponent as LogoMobile } from '../../../../../assets/icons/LogoMo
 import { ReactComponent as Telegram } from '../../../../../assets/icons/Telegram.svg'
 import { ReactComponent as Times } from '../../../../../assets/icons/times.svg'
 import { ReactComponent as WhatsApp } from '../../../../../assets/icons/WhatsApp.svg'
-import Button from '../../../../../components/UI/Button'
+import Button from '../../../../UI/Button'
 
 const AdminSidebar = ({ isOpen, mobileToggle, register }) => {
    return (

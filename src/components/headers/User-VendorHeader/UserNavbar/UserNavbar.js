@@ -5,9 +5,9 @@ import styled from 'styled-components'
 import { ReactComponent as BlackBars } from '../../../../assets/icons/BlackBars.svg'
 import { ReactComponent as DropdownBlack } from '../../../../assets/icons/dropdownBlack.svg'
 import { ReactComponent as Logo } from '../../../../assets/icons/LogoBlack.svg'
-import Button from '../../../../components/UI/Button'
-import Input from '../../../../components/UI/Input'
-import SearchInput from '../../../../components/UI/SearchInput'
+import Button from '../../../UI/Button'
+import Input from '../../../UI/Input'
+import SearchInput from '../../../UI/SearchInput'
 
 const AdminNavbar = ({ mobileToggle, register, onChangeOpen }) => {
    const [isOpen, setIsOpen] = useState(false)
