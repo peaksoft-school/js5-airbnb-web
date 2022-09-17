@@ -1,8 +1,8 @@
 import { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
 import IconShape from '../assets/icons/IconShape.png'
 import IsActiveLike from '../assets/icons/IsActiveLike.png'
-import SkeletonUser from '../assets/icons/SkeletonUser.png'
 import FeedbackFiltered from '../components/FeedbackFiltered'
 import FeedbackApartmentHouse from '../components/FeedbackForApartmentHouse'
 import ImageSlider from '../components/ImageSlider'
@@ -12,25 +12,32 @@ import ImagePicker from '../components/UI/ImagePicker'
 import Modal from '../components/UI/Modal'
 import Rating from '../components/UI/Rating'
 import UserHeader from '../layout/headers/User-VendorHeader/UserHeader'
+import { apartmentHouseInnerPage } from '../store/slices/getApartmentHouseInnerPage'
+import { postFeedbackInnerPage } from '../store/slices/postFeedbackInnerPageSlice'
 
-const ApartmentHouseInnerPageFeedback = (props) => {
+const ApartmentHouseInnerPageFeedback = () => {
    const [photos, setPhotos] = useState([])
    const [textState, setTextState] = useState('')
    const [ratingState, setRatingState] = useState('')
    const [isfeedbackModal, setIsFeedbackModal] = useState(false)
    const [isActive, setIsActive] = useState(false)
-   const [add, setAdd] = useState([])
+   const { datas } = useSelector((state) => state.getApartmentHouseInnerpage)
+   // console.log(datas, 'datas')
+   const dispatch = useDispatch()
+
+   const getDates = () => {
+      dispatch(apartmentHouseInnerPage(1))
+   }
 
    const toogleOpenModalForFeedback = () => {
       setIsFeedbackModal((prevState) => !prevState)
-      const obj = {
-         photos,
-         ratingState,
-         textState,
+      const Object = {
+         images: photos,
+         rating: ratingState,
+         description: textState,
       }
-      setAdd((prev) => {
-         return [...prev, obj]
-      })
+      dispatch(postFeedbackInnerPage(Object))
+
       setPhotos([])
       setTextState('')
       setRatingState('')
@@ -44,139 +51,164 @@ const ApartmentHouseInnerPageFeedback = (props) => {
    }
 
    return (
-      <Div>
-         <UserHeader />
-         <AraptmentName>{props.data.titleName}</AraptmentName>
-         <ContainerApartmenInformation>
-            <ImageSlider images={props.data.images} />
-            <ContainerDates>
-               <div>
-                  <DivClikc>
-                     <TextInDivClick1>Apartment</TextInDivClick1>
-                     <TextInDivClick2>2 Guests</TextInDivClick2>
-                  </DivClikc>
-                  <TitleHome>{props.data.title}</TitleHome>
-                  <AdressHome>{props.data.adress}</AdressHome>
-                  <TextHome>{props.data.text}</TextHome>
-                  <UserContainer>
-                     <Img src={SkeletonUser} />
-                     <UserInformationContainer>
-                        <UserName>{props.data.name}</UserName>
-                        <UserGmail>{props.data.gmail}</UserGmail>
-                     </UserInformationContainer>
-                  </UserContainer>
-               </div>
-               <ContainerDateRange>
-                  <DateRangePicer day="26" dayNow="day" />
-                  <ContainerRequestToBookAndLike>
+      <div>
+         <button
+            onClick={() => {
+               getDates()
+            }}
+         >
+            GETDATES
+         </button>
+         {datas?.map((data) => (
+            <div>
+               <Div>
+                  <UserHeader />
+                  <AraptmentName>{data.houseType}</AraptmentName>
+                  <ContainerApartmenInformation>
+                     <ImageSlider images={data.images} />
+                     <ContainerDates>
+                        <div>
+                           <DivClikc>
+                              <TextInDivClick1>
+                                 {data.houseType}
+                              </TextInDivClick1>
+                              <TextInDivClick2>
+                                 {data.maxGuests} Guests
+                              </TextInDivClick2>
+                           </DivClikc>
+                           <TitleHome>{data.houseType}</TitleHome>
+                           <AdressHome>{data.location}</AdressHome>
+                           <TextHome>{data.description}</TextHome>
+                           <UserContainer>
+                              <Logo>{`${data.ownerFullName
+                                 .charAt(0)
+                                 .toUpperCase()}`}</Logo>
+                              <UserInformationContainer>
+                                 <UserName>{data.ownerFullName}</UserName>
+                                 <UserGmail>{data.ownerEmail}</UserGmail>
+                              </UserInformationContainer>
+                           </UserContainer>
+                        </div>
+                        <ContainerDateRange>
+                           <DateRangePicer day="26" dayNow="day" />
+                           <ContainerRequestToBookAndLike>
+                              <Button
+                                 width="423px"
+                                 widthMedia="272px !important"
+                                 height="37px"
+                                 fontSize="14px"
+                                 lineHeight="17px"
+                                 textTransform="uppercase"
+                                 fontWeight="500"
+                              >
+                                 request to book
+                              </Button>
+                              <ContainerLiked>
+                                 <Liked
+                                    onClick={handleClick}
+                                    src={isActive ? IsActiveLike : IconShape}
+                                    alt="like"
+                                 />
+                              </ContainerLiked>
+                           </ContainerRequestToBookAndLike>
+                           <ContainerDateText>
+                              <DataText>
+                                 You have to be signed in to book a listing!
+                              </DataText>
+                           </ContainerDateText>
+                        </ContainerDateRange>
+                        <ContainerForFilter>
+                           <FeedbackFiltered id={data.id} />
+                        </ContainerForFilter>
+                     </ContainerDates>
+                  </ContainerApartmenInformation>
+                  <ContainerFeedback>
+                     <TitleFeedback>feedback</TitleFeedback>
+                     {isfeedbackModal && (
+                        <Modal open="open">
+                           <ModalContainer>
+                              <TitleModal>Leave feedback</TitleModal>
+                              <ModalImagePicker>
+                                 <ImagePicker
+                                    allPhotos={photos}
+                                    getPhoto={setPhotos}
+                                 />
+                              </ModalImagePicker>
+                              <RatingModalContainer>
+                                 <RatingText>Rate</RatingText>
+                                 <ContainerRating>
+                                    <Rating
+                                       width="28px"
+                                       height="28px"
+                                       onChange={(i) => setRatingState(i)}
+                                    />
+                                 </ContainerRating>
+                              </RatingModalContainer>
+                              <FeedbackContainer>
+                                 <TitleFeedbackInModal>
+                                    Feedback
+                                 </TitleFeedbackInModal>
+                                 <TextareaForFeedback
+                                    placeholder="Share your impressions about this place"
+                                    value={textState}
+                                    onChange={(e) =>
+                                       setTextState(e.target.value)
+                                    }
+                                 />
+                              </FeedbackContainer>
+                              <ModalButtons>
+                                 <Button
+                                    width="150px"
+                                    widthMedia="105px"
+                                    height="37px"
+                                    fontSize="16px"
+                                    lineHeight="19px"
+                                    textTransform="uppercase"
+                                    fontWeight="500"
+                                    color="#828282"
+                                    backgroundColor="outlined"
+                                    variant="outlined"
+                                    onClick={closeModalHandler}
+                                    border="none"
+                                 >
+                                    Cancel
+                                 </Button>
+                                 <Button
+                                    width="196px"
+                                    height="37px"
+                                    widthMedia="147px"
+                                    onClick={toogleOpenModalForFeedback}
+                                 >
+                                    Publick
+                                 </Button>
+                              </ModalButtons>
+                           </ModalContainer>
+                        </Modal>
+                     )}
+                     <ContainerAddFeedback>
+                        <FeedbackApartmentHouse id={data.id} />
+                     </ContainerAddFeedback>
                      <Button
-                        width="423px"
-                        widthMedia="272px !important"
-                        height="37px"
-                        fontSize="14px"
-                        lineHeight="17px"
+                        onClick={closeModalHandler}
+                        variant="outlined"
+                        width="630px"
+                        height="35px"
+                        fontSize="16px"
+                        lineHeight="19px"
                         textTransform="uppercase"
                         fontWeight="500"
+                        color="#828282"
+                        backgroundColor="outlined"
+                        marginTop="46px"
+                        widthMedia="343px !important"
                      >
-                        request to book
+                        leave feedback
                      </Button>
-                     <ContainerLiked>
-                        <Liked
-                           onClick={handleClick}
-                           src={isActive ? IsActiveLike : IconShape}
-                           alt="like"
-                        />
-                     </ContainerLiked>
-                  </ContainerRequestToBookAndLike>
-                  <ContainerDateText>
-                     <DataText>
-                        You have to be signed in to book a listing!
-                     </DataText>
-                  </ContainerDateText>
-               </ContainerDateRange>
-               <ContainerForFilter>
-                  <FeedbackFiltered />
-               </ContainerForFilter>
-            </ContainerDates>
-         </ContainerApartmenInformation>
-         <ContainerFeedback>
-            <TitleFeedback>feedback</TitleFeedback>
-            {isfeedbackModal && (
-               <Modal open="open">
-                  <ModalContainer>
-                     <TitleModal>Leave feedback</TitleModal>
-                     <ModalImagePicker>
-                        <ImagePicker allPhotos={photos} getPhoto={setPhotos} />
-                     </ModalImagePicker>
-                     <RatingModalContainer>
-                        <RatingText>Rate</RatingText>
-                        <ContainerRating>
-                           <Rating
-                              width="28px"
-                              height="28px"
-                              onChange={(i) => setRatingState(i)}
-                           />
-                        </ContainerRating>
-                     </RatingModalContainer>
-                     <FeedbackContainer>
-                        <TitleFeedbackInModal>Feedback</TitleFeedbackInModal>
-                        <TextareaForFeedback
-                           placeholder="Share your impressions about this place"
-                           value={textState}
-                           onChange={(e) => setTextState(e.target.value)}
-                        />
-                     </FeedbackContainer>
-                     <ModalButtons>
-                        <Button
-                           width="150px"
-                           widthMedia="105px"
-                           height="37px"
-                           fontSize="16px"
-                           lineHeight="19px"
-                           textTransform="uppercase"
-                           fontWeight="500"
-                           color="#828282"
-                           backgroundColor="outlined"
-                           variant="outlined"
-                           onClick={closeModalHandler}
-                           border="none"
-                        >
-                           Cancel
-                        </Button>
-                        <Button
-                           width="196px"
-                           height="37px"
-                           widthMedia="147px"
-                           onClick={toogleOpenModalForFeedback}
-                           // disabled={isfeedbackModal}
-                        >
-                           Publick
-                        </Button>
-                     </ModalButtons>
-                  </ModalContainer>
-               </Modal>
-            )}
-            <ContainerAddFeedback>
-               <FeedbackApartmentHouse add={add} />
-            </ContainerAddFeedback>
-            <Button
-               onClick={closeModalHandler}
-               variant="outlined"
-               width="630px"
-               height="35px"
-               fontSize="16px"
-               lineHeight="19px"
-               textTransform="uppercase"
-               fontWeight="500"
-               color="#828282"
-               backgroundColor="outlined"
-               marginTop="46px"
-               widthMedia="343px !important"
-            >
-               leave feedback
-            </Button>
-         </ContainerFeedback>
-      </Div>
+                  </ContainerFeedback>
+               </Div>
+            </div>
+         ))}
+      </div>
    )
 }
 
@@ -297,6 +329,20 @@ const TextInDivClick2 = styled.span`
    font-size: 14px;
    color: #000000;
 `
+const Logo = styled.div`
+   width: 36px;
+   height: 36px;
+   background: #c4c4c4;
+   border-radius: 50%;
+   font-style: normal;
+   font-weight: 350;
+   font-size: 22px;
+   line-height: 35px;
+   color: #ffffff;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+`
 
 const TitleHome = styled.h3`
    font-weight: 500;
@@ -330,11 +376,6 @@ const TextHome = styled.p`
 const UserContainer = styled.div`
    display: flex;
    margin-top: 49px;
-`
-
-const Img = styled.img`
-   width: 36px;
-   height: 36px;
 `
 
 const UserInformationContainer = styled.div`

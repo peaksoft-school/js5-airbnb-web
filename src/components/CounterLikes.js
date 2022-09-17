@@ -1,23 +1,41 @@
-import { useState } from 'react'
+// import { useEffect, useState } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import styled from 'styled-components'
 import DisLike from '../assets/icons/DisLike.svg'
 import Liked from '../assets/icons/Like.svg'
+import {
+   postDiSLikesInnerPage,
+   postLikesInnerPage,
+} from '../store/slices/postLikesInnerPageFeedback'
 
-const CounterLikes = () => {
-   const [countLike, setCountLike] = useState(0)
-   const [disCountLike, setDisCountlike] = useState(0)
+const CounterLikes = (props) => {
+   // const [countLike, setCountLike] = useState(0)
+   // const [disCountLike, setDisCountlike] = useState(0)
+   const { selector } = useSelector((store) => store.postLike)
+   console.log(selector)
+   // console.log(likeCount)
+   const dispatch = useDispatch()
+
+   // useEffect(() => {
+   //    dispatch(postLikesInnerPage(likeCount))
+   //    dispatch(postDiSLikesInnerPage(disLikeCount))
+   // }, [dispatch])
+
    return (
       <ContainerLikes>
          <LikedContainer>
-            <ImgLike onClick={() => setCountLike(countLike + 1)} src={Liked} />
-            <CounText>{countLike}</CounText>
+            <ImgLike
+               onClick={() => dispatch(postLikesInnerPage(2))}
+               src={Liked}
+            />
+            <CounText>{props.likeCount}</CounText>
          </LikedContainer>
          <DisLikedContainer>
             <ImgLike
-               onClick={() => setDisCountlike(disCountLike + 1)}
+               onClick={dispatch(postDiSLikesInnerPage())}
                src={DisLike}
             />
-            <CounText>{disCountLike}</CounText>
+            {/* <CounText>{disCountLike}</CounText> */}
          </DisLikedContainer>
       </ContainerLikes>
    )
