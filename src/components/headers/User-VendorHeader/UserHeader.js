@@ -4,17 +4,18 @@ import { signOut } from 'firebase/auth'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useSearchParams, useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
-import { ReactComponent as BlackBars } from '../../../../assets/icons/BlackBars.svg'
-import { ReactComponent as Dropdown } from '../../../../assets/icons/dropdownBlack.svg'
-import { ReactComponent as Logo } from '../../../../assets/icons/LogoBlack.svg'
-import SearchIconimage from '../../../../assets/icons/search.png'
-import { getallFavoriteCards } from '../../../../store/slices/LikeAndBookmarkSlice'
-import { LoginSliceAction } from '../../../../store/slices/LoginSlice'
-import { LocalStorageFunction } from '../../../../utils/helpers/LocalStorageFunctions/LocalStorajeFunction'
-import GlobalSearch from '../../../GlobalSearch'
-import { Auth } from '../../../SignupFirebase'
+import { ReactComponent as BlackBars } from '../../../assets/icons/BlackBars.svg'
+import { ReactComponent as Dropdown } from '../../../assets/icons/dropdownBlack.svg'
+import { ReactComponent as Logo } from '../../../assets/icons/LogoBlack.svg'
+import SearchIconimage from '../../../assets/icons/search.png'
+import { LoginSliceAction } from '../../../store/slices/LoginSlice'
+import { LocalStorageFunction } from '../../../utils/helpers/LocalStorageFunction'
+import { Auth } from '../../SignupFirebase'
+import Button from '../../UI/Button'
+import Checkbox from '../../UI/Checkbox'
+import Input from '../../UI/Input'
 
-const UserNavbar = () => {
+const UserHeader = () => {
    const login = useSelector((store) => store.login)
    const favorite = useSelector((store) => store.likeandbookmark)
    const [register, setRegister] = useState(false)
@@ -28,7 +29,7 @@ const UserNavbar = () => {
    useEffect(() => {
       if (login.login?.name && data?.name) {
          setRegister(true)
-         dispatch(getallFavoriteCards())
+         // dispatch(getallFavoriteCards())
          return
       }
       setRegister(false)
@@ -88,15 +89,7 @@ const UserNavbar = () => {
                         >
                            <img src={SearchIconimage} alt="icon" />
                         </SearchIcon>
-                        <GlobalSearch
-                           width="414px"
-                           placeholder="Search..."
-                           mediawidth="220px"
-                           handleToggle={(e) => {
-                              e.stopPropagation()
-                              setIsOpen(false)
-                           }}
-                        />
+                        <Input />
                      </Block>
                   </WrapperLi>
                </NavMenu>
@@ -173,7 +166,7 @@ const UserNavbar = () => {
    )
 }
 
-export default UserNavbar
+export default UserHeader
 
 const WrapperFavoriteBtn = styled.span`
    & > :nth-child(1) {

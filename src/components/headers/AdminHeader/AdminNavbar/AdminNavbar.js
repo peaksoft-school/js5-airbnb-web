@@ -1,16 +1,21 @@
 import React, { useState } from 'react'
-import { Link as LinkR } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { Link, Link as LinkR, useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import { ReactComponent as Bars } from '../../../../assets/icons/bars.svg'
 import { ReactComponent as Dropdown } from '../../../../assets/icons/dropdown.svg'
 import { ReactComponent as Logo } from '../../../../assets/icons/Logo.svg'
+import { LoginSliceAction } from '../../../../store/slices/LoginSlice'
+import { LocalStorageFunction } from '../../../../utils/helpers/LocalStorageFunction'
 
-const UserNavbar = ({ mobileToggle }) => {
+const AdminNavbar = ({ mobileToggle }) => {
    const [isOpen, setIsOpen] = useState(false)
 
    const handleToggle = () => {
       setIsOpen((prev) => !prev)
    }
+   const navigate = useNavigate()
+   const dispatch = useDispatch()
 
    return (
       <div>
@@ -25,13 +30,31 @@ const UserNavbar = ({ mobileToggle }) => {
                <StyledNavMenu>
                   <NavMenu>
                      <NavItem>
-                        <NavLinks to="about">Application</NavLinks>
+                        <NavLinks
+                           onClick={() => {
+                              navigate('/application')
+                           }}
+                        >
+                           Application
+                        </NavLinks>
                      </NavItem>
                      <NavItem>
-                        <NavLinks to="discover">Users</NavLinks>
+                        <NavLinks
+                           onClick={() => {
+                              navigate('/users')
+                           }}
+                        >
+                           Users
+                        </NavLinks>
                      </NavItem>
                      <NavItem>
-                        <NavLinks to="services">All housing</NavLinks>
+                        <NavLinks
+                           onClick={() => {
+                              navigate('/all-housing')
+                           }}
+                        >
+                           All housing
+                        </NavLinks>
                      </NavItem>
                   </NavMenu>
                   <NavBtn>
@@ -41,7 +64,19 @@ const UserNavbar = ({ mobileToggle }) => {
                      </NavBtnLink>
                      {isOpen && (
                         <NavDropdownLog>
-                           <DropdownOptions>Log out</DropdownOptions>
+                           <Link to="/">
+                              <DropdownOptions
+                                 onClick={() => {
+                                    LocalStorageFunction({
+                                       type: 'removeItem',
+                                       key: 'login',
+                                    })
+                                    dispatch(LoginSliceAction.clearLogin())
+                                 }}
+                              >
+                                 Log out
+                              </DropdownOptions>
+                           </Link>
                         </NavDropdownLog>
                      )}
                   </NavBtn>
@@ -52,7 +87,7 @@ const UserNavbar = ({ mobileToggle }) => {
    )
 }
 
-export default UserNavbar
+export default AdminNavbar
 
 const StyledNavMenu = styled.div`
    display: flex;
@@ -132,11 +167,8 @@ const MobileIcon = styled.div`
 const NavMenu = styled.ul`
    display: flex;
    align-items: center;
-   /* justify-content: space-between; */
    list-style: none;
    text-align: center;
-   /* margin-right: 530px; */
-
    @media screen and (max-width: 768px) {
       display: none;
    }
@@ -149,7 +181,7 @@ const StyledDropdown = styled(Dropdown)`
    margin-left: 10px;
 `
 
-const NavLinks = styled.a`
+const NavLinks = styled.span`
    color: #fff;
    display: flex;
    align-items: center;
@@ -195,7 +227,6 @@ const NavDropdownLog = styled.div`
    border: 1px solid #c4c4c4;
    display: flex;
    flex-direction: column;
-   /* align-items: center; */
    justify-content: center;
    background: #fff;
    position: absolute;
@@ -208,9 +239,9 @@ const DropdownOptions = styled.span`
    font-size: 16px;
    display: flex;
    align-items: center;
+   text-decoration: none;
    color: #5d5d5d;
    padding-left: 20px;
-   /* padding: 8px 50px; */
    cursor: pointer;
    &:hover {
       background: #f3f3f3;

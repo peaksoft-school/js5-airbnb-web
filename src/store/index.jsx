@@ -1,10 +1,8 @@
-/* eslint-disable import/order */
 import { configureStore } from '@reduxjs/toolkit'
 import addAnnountcementSlice from './slices/addAnnountcementSlice'
 import adminApplicationSlice from './slices/adminApplicationSlice'
-import innerPageSlice from './slices/getAdminApplicationById'
 import editAnnountcementSlice from './slices/editAnnountcementSlice'
-
+import innerPageSlice from './slices/getAdminApplicationById'
 import LoginSlice from './slices/LoginSlice'
 
 const store = configureStore({

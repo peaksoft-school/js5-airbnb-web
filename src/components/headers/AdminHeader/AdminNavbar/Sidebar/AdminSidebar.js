@@ -1,9 +1,14 @@
-import { Link as LinkR } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { Link as LinkR, useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import { ReactComponent as LogoMobile } from '../../../../../assets/icons/LogoMobile.svg'
 import { ReactComponent as Times } from '../../../../../assets/icons/times.svg'
+import { LoginSliceAction } from '../../../../../store/slices/LoginSlice'
+import { LocalStorageFunction } from '../../../../../utils/helpers/LocalStorageFunction'
 
-const UserSidebar = ({ isOpen, mobileToggle }) => {
+const AdminSidebar = ({ isOpen, mobileToggle }) => {
+   const navigate = useNavigate()
+   const dispatch = useDispatch()
    return (
       <SidebarContainer isOpen={isOpen} onClick={mobileToggle}>
          <Icon onClick={mobileToggle}>
@@ -14,19 +19,45 @@ const UserSidebar = ({ isOpen, mobileToggle }) => {
                <SttyledLogoMobile />
             </SidebarLogoWrap>
             <SidebarMenu>
-               <SidebarLink to="about">Application</SidebarLink>
-               <SidebarLink to="discover">Users</SidebarLink>
-               <SidebarLink to="services">All housing</SidebarLink>
+               <SidebarLink
+                  onClick={() => {
+                     navigate('/application')
+                  }}
+               >
+                  Application
+               </SidebarLink>
+               <SidebarLink
+                  onClick={() => {
+                     navigate('/users')
+                  }}
+               >
+                  Users
+               </SidebarLink>
+               <SidebarLink
+                  onClick={() => {
+                     navigate('/all-housing')
+                  }}
+               >
+                  All housing
+               </SidebarLink>
             </SidebarMenu>
             <SideBtnWrap>
-               <SidebarRoute to="/signin">Log out</SidebarRoute>
+               <SidebarRoute
+                  to="/"
+                  onClick={() => {
+                     LocalStorageFunction({ type: 'removeItem', key: 'login' })
+                     dispatch(LoginSliceAction.clearLogin())
+                  }}
+               >
+                  Log out
+               </SidebarRoute>
             </SideBtnWrap>
          </SidebarWrapper>
       </SidebarContainer>
    )
 }
 
-export default UserSidebar
+export default AdminSidebar
 
 const SidebarContainer = styled.aside`
    position: fixed;
@@ -81,7 +112,7 @@ const SidebarMenu = styled.ul`
    }
 `
 
-const SidebarLink = styled.a`
+const SidebarLink = styled.span`
    display: flex;
    align-items: center;
    justify-content: center;

@@ -1,15 +1,35 @@
-import { Link as LinkR } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { signOut } from 'firebase/auth'
+import { useSelector } from 'react-redux'
+import { Link as LinkR, useSearchParams } from 'react-router-dom'
 import styled from 'styled-components'
 import { ReactComponent as Instagram } from '../../../../../assets/icons/Instagram.svg'
 import { ReactComponent as LogoMobile } from '../../../../../assets/icons/LogoMobile.svg'
 import { ReactComponent as Telegram } from '../../../../../assets/icons/Telegram.svg'
 import { ReactComponent as Times } from '../../../../../assets/icons/times.svg'
 import { ReactComponent as WhatsApp } from '../../../../../assets/icons/WhatsApp.svg'
+import { LocalStorageFunction } from '../../../../../utils/helpers/LocalStorageFunction'
+import { Auth } from '../../../../SignupFirebase'
 import Button from '../../../../UI/Button'
 
-const AdminSidebar = ({ isOpen, mobileToggle, register }) => {
+const UserSidebar = ({ isOpen, mobileToggle }) => {
+   // eslint-disable-next-line no-unused-vars
+   const [_, setSearchParams] = useSearchParams()
+   const user = useSelector((store) => store.login.login.role)
+   const [register, setRegister] = useState(false)
+   const login = LocalStorageFunction({ type: 'getItem', key: 'login' })
+   useEffect(() => {
+      if (login?.role && user) {
+         setRegister(true)
+         return
+      }
+      setRegister(false)
+   }, [user, login?.role])
+   const handleClick = () => {
+      setSearchParams({ userSignup: 'open' })
+   }
    return (
-      <SidebarContainer isOpen={isOpen} onClick={mobileToggle}>
+      <SidebarContainer isOpen={isOpen}>
          <Icon onClick={mobileToggle}>
             <Times />
          </Icon>
@@ -19,31 +39,54 @@ const AdminSidebar = ({ isOpen, mobileToggle, register }) => {
             </SidebarLogoWrap>
             {register ? (
                <SidebarMenu>
-                  <SidebarLink to="profile">Profile</SidebarLink>
-                  <SidebarLink to="leaveanad">
-                     <Button width="283px !important" height="37px">
-                        Sunmit and
+                  <SidebarLink to="/main/profile">Profile</SidebarLink>
+                  <SidebarLink to="/main">
+                     <Button
+                        onClick={() => {
+                           signOut(Auth)
+                           LocalStorageFunction({
+                              type: 'removeItem',
+                              key: 'login',
+                           })
+                        }}
+                        width="283px"
+                        height="37px"
+                     >
+                        Log out
+                     </Button>
+                  </SidebarLink>
+                  <SidebarLink to="/main/addanounsement">
+                     <Button width="283px" height="37px">
+                        Leave an ad
                      </Button>
                   </SidebarLink>
                </SidebarMenu>
             ) : (
                <SidebarMenu>
-                  <SidebarLink to="about">Leave an ad</SidebarLink>
-                  <SidebarLink to="register">
-                     <Button width="283px !important" height="37px">
+                  {register ? (
+                     <SidebarLink to="/main/addanounsement">
+                        Leave an ad
+                     </SidebarLink>
+                  ) : (
+                     <WrapperBtn>
+                        <LeaveanAd onClick={handleClick}>Leave an ad</LeaveanAd>
+                     </WrapperBtn>
+                  )}
+                  <WrapperBtn>
+                     <Button width="283px" height="37px" onClick={handleClick}>
                         Join Us
                      </Button>
-                  </SidebarLink>
+                  </WrapperBtn>
                </SidebarMenu>
             )}
             <SideBtnWrap>
-               <SidebarSocialLinks to="/">
+               <SidebarSocialLinks href="https://www.instagram.com/airbnb/">
                   <Instagram />
                </SidebarSocialLinks>
-               <SidebarSocialLinks to="/">
+               <SidebarSocialLinks href="https://web.telegram.org/z/#-770925891">
                   <Telegram />
                </SidebarSocialLinks>
-               <SidebarSocialLinks to="/">
+               <SidebarSocialLinks href="https://www.whatsapp.com">
                   <WhatsApp />
                </SidebarSocialLinks>
             </SideBtnWrap>
@@ -52,19 +95,23 @@ const AdminSidebar = ({ isOpen, mobileToggle, register }) => {
    )
 }
 
-export default AdminSidebar
+export default UserSidebar
 
+const LeaveanAd = styled.span`
+   cursor: pointer;
+   color: orange;
+`
 const SidebarContainer = styled.aside`
-   position: fixed;
+   position: absolute;
    z-index: 999;
-   width: 100%;
+   opacity: 1;
+   width: 315px;
    height: 100%;
-   background: #f7f7f7fa;
+   background: #f7f7f7;
    display: grid;
    align-items: center;
    top: 0;
    transition: 0.3s ease-in-out;
-   opacity: ${({ isOpen }) => (isOpen ? '100%' : '0')};
    right: ${({ isOpen }) => (isOpen ? '0' : '-100%')};
 
    @media screen and (max-width: 480px) {
@@ -101,12 +148,24 @@ const SidebarMenu = styled.ul`
    grid-template-columns: 1fr;
    grid-template-rows: repeat(6, 80px);
    text-align: center;
-
+   & > :nth-child(2) {
+   }
    @media screen and (max-width: 480px) {
       grid-template-rows: repeat(4, 80px);
    }
 `
-
+const WrapperBtn = styled.div`
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   font-size: 18px;
+   text-decoration: none;
+   list-style: none;
+   transition: 0.2s ease;
+   text-decoration: none;
+   color: #dd8a08;
+   cursor: pointer;
+`
 const SidebarLink = styled(LinkR)`
    display: flex;
    align-items: center;
@@ -128,7 +187,7 @@ const SideBtnWrap = styled.div`
 const SidebarSocialLinks = styled.a`
    width: 48px;
    height: 48px;
-   padding: 9px;
+   padding: 11px;
    background: #c4c4c466;
    border-radius: 2px;
    margin: 0 16px;
