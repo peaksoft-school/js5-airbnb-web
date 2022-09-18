@@ -6,6 +6,8 @@ export const LoginAdminUrl = 'api/login'
 export const addAnnoutnCementUrl = 'api/announcements/save'
 export const addAnnountFileUrl = 'api/file/upload'
 export const editAnnountUrl = 'api/announcements/update/'
+export const adminUsersUrl = 'api/admin/users'
+export const adminUsersDeleteUrl = 'api/admin/delete/user/'
 export const options = [
    {
       id: 1,

@@ -7,6 +7,7 @@ import apartmentHouseSlice, {
    percentegCardSlice,
 } from './slices/getApartmentHouseInnerPage'
 import getFeedbackSlice from './slices/getFeedbackInnerPage'
+import getUserAnnouncementCard from './slices/getUserAnniuncement'
 import LoginSlice from './slices/LoginSlice'
 import postFeedbackSlice from './slices/postFeedbackInnerPageSlice'
 import postLikedFeedbackSlice, {
@@ -16,6 +17,7 @@ import postLikedFeedbackSlice, {
 const store = configureStore({
    reducer: {
       login: LoginSlice.reducer,
+      getUserAnnouncement: getUserAnnouncementCard.reducer,
       applications: adminApplicationSlice.reducer,
       addAnnountcement: addAnnountcementSlice.reducer,
       getAdminApplicationById: innerPageSlice.reducer,

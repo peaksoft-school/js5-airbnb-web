@@ -5,6 +5,7 @@ import { BrowserRouter } from 'react-router-dom'
 import { injectStore } from './api/appFetch'
 import App from './App'
 import store from './store/index'
+
 import './index.css'
 
 injectStore(store)
