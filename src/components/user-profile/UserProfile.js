@@ -3,7 +3,8 @@ import { useSelector, useDispatch } from 'react-redux'
 import { Route, Routes, Outlet, NavLink, Navigate } from 'react-router-dom'
 import styled from 'styled-components'
 import { getUserBooking } from '../../store/slices/getUserAnniuncement'
-import Bookings from './Bookings'
+import BlockBooking from './BlockBookings'
+import BookingRequests from './BookingRequests'
 import MyAnnouncment from './MyAnnouncement'
 import OnModeration from './OnModeration'
 import UserCard from './UserCartd'
@@ -50,6 +51,9 @@ function UserProfile() {
                      >
                         Bookings({data.bookings.length})
                      </NavLink>
+                     <NavLink to="BlockBooking" style={stylednav}>
+                        Booking Requests({data.bookings.length})
+                     </NavLink>
                      <NavLink to="MyAnnouncement" style={stylednav}>
                         My announcement({announcement.length})
                      </NavLink>
@@ -65,7 +69,11 @@ function UserProfile() {
                      />
                      <Route
                         path="/Bookings"
-                        element={<Bookings data={data.bookings} />}
+                        element={<BookingRequests data={data.bookings} />}
+                     />
+                     <Route
+                        path="./BlockBooking"
+                        element={<BlockBooking data={data.moderation} />}
                      />
                      <Route
                         path="/MyAnnouncement"
