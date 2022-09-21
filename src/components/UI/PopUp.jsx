@@ -1,32 +1,26 @@
-import { useState } from 'react'
 import { MenuItem, Menu } from '@mui/material'
 import styled from 'styled-components'
-import MeatBallsPng from '../../assets/icons/balls.png'
 
 const PopUp = (props) => {
-   const [position, setPosition] = useState(null)
-   const [openPopup, setOpenPopup] = useState(false)
-   const toggleHandler = (e) => {
-      setPosition(e.currentTarget)
-      setOpenPopup((prev) => !prev)
-   }
    const closeHandler = () => {
-      setOpenPopup((prev) => !prev)
+      props.closePopup()
    }
    return (
       <>
-         <Img onClick={toggleHandler} src={MeatBallsPng} />
-         <Menu open={openPopup} onClose={closeHandler} anchorEl={position}>
+         {props.children}
+         <Menu
+            open={props.openPopup}
+            onClose={closeHandler}
+            anchorEl={props.position}
+         >
             <WrapperMeatballs>
-               {props.options.map((i, index) => {
+               {props.options.map((i) => {
                   return (
                      <MenuItem
-                        // eslint-disable-next-line react/no-array-index-key
-                        key={index}
-                        onClick={(e) => {
-                           e.stopPropagation()
-                           closeHandler()
+                        key={i.id}
+                        onClick={() => {
                            i.onClick()
+                           closeHandler()
                         }}
                      >
                         {i.text}
@@ -41,13 +35,4 @@ const PopUp = (props) => {
 export default PopUp
 const WrapperMeatballs = styled.div`
    padding: 3px;
-`
-const Img = styled.img`
-   width: 20px;
-   cursor: pointer;
-   height: 5px;
-   @media (max-width: 375px) {
-      width: 25px;
-      height: 6px;
-   }
 `

@@ -23,7 +23,6 @@ const StyledInput = styled.input`
    border-radius: 2px;
    outline: none;
    &::placeholder {
-      width: 70px;
       height: 19px;
       font-family: 'Inter';
       font-weight: 400;

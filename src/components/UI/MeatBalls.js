@@ -60,10 +60,12 @@ const DivContainerMeatBalls = styled.div`
    justify-content: center;
    position: absolute;
    background: white;
-   left: 24px;
+   right: 224px;
    bottom: 14px;
    @media screen and (max-width: 375px) {
-      left: 39.8%;
+      width: 130px;
+      height: 90px;
+      right: 79.8%;
       bottom: 7px;
    }
 `

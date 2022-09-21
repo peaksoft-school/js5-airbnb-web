@@ -19,7 +19,7 @@ const AdminApplication = () => {
    const { applications, accepted, rejected } = useSelector(
       (state) => state.applications
    )
-   console.log(applications.pageAnnouncementResponseList)
+   // console.log(applications.pageAnnouncementResponseList)
    const [params, setParams] = useSearchParams()
    const page = params.get('page')
    const [pagination, setPagination] = useState(+page || 1)
