@@ -10,6 +10,15 @@ export const getUserBooking = createAsyncThunk(
       return response
    }
 )
+export const getBookingRequests = createAsyncThunk(
+   'getUserAnnouncementCard/getBookingRequests',
+   async () => {
+      const response = await appFetch({
+         url: 'user/profile/myBookingRequests',
+      })
+      return response
+   }
+)
 export const deleteUserMessage = createAsyncThunk(
    'getUserAnnouncementCard/deleteUserMessage',
    async (_, { dispatch }) => {
@@ -35,6 +44,7 @@ export const deleteUserAnnouncementCard = createAsyncThunk(
 const initialState = {
    user: {},
    bookings: [],
+   bookingsRequests: [],
    announcements: [],
    status: null,
    deleteStatus: null,
@@ -47,8 +57,18 @@ const getUserAnnouncementCard = createSlice({
       [deleteUserAnnouncementCard.fulfilled]: (state) => {
          state.deleteStatus = 'success'
       },
+      [getBookingRequests.pending]: (state) => {
+         state.status = 'pending'
+      },
+      [getBookingRequests.rejected]: (state) => {
+         state.status = 'error'
+      },
       [deleteUserAnnouncementCard.rejected]: (state) => {
          state.deleteStatus = 'error'
+      },
+      [getBookingRequests.fulfilled]: (state, action) => {
+         state.status = 'success'
+         state.bookingsRequests = action.payload
       },
       [getUserBooking.pending]: (state) => {
          state.status = 'pending'

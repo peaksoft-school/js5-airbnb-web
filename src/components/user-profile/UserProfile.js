@@ -2,9 +2,12 @@ import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Route, Routes, Outlet, NavLink, Navigate } from 'react-router-dom'
 import styled from 'styled-components'
-import { getUserBooking } from '../../store/slices/getUserAnniuncement'
-import BlockBooking from './BlockBookings'
+import {
+   getUserBooking,
+   getBookingRequests,
+} from '../../store/slices/getUserAnniuncement'
 import BookingRequests from './BookingRequests'
+import Bookings from './Bookings'
 import MyAnnouncment from './MyAnnouncement'
 import OnModeration from './OnModeration'
 import UserCard from './UserCartd'
@@ -25,8 +28,13 @@ function UserProfile() {
    useEffect(() => {
       dispatch(getUserBooking())
    }, [])
+   useEffect(() => {
+      dispatch(getBookingRequests())
+   }, [])
+   console.log(data.bookingsRequests)
    const announcement = data.announcements?.filter((i) => i.status !== 'NEW')
    const moderation = data.announcements?.filter((i) => i.status === 'NEW')
+
    return (
       <Box>
          <Container>
@@ -51,8 +59,8 @@ function UserProfile() {
                      >
                         Bookings({data.bookings.length})
                      </NavLink>
-                     <NavLink to="BlockBooking" style={stylednav}>
-                        Booking Requests({data.bookings.length})
+                     <NavLink to="BookingRequests" style={stylednav}>
+                        Booking Requests({data.bookingsRequests.length})
                      </NavLink>
                      <NavLink to="MyAnnouncement" style={stylednav}>
                         My announcement({announcement.length})
@@ -69,11 +77,13 @@ function UserProfile() {
                      />
                      <Route
                         path="/Bookings"
-                        element={<BookingRequests data={data.bookings} />}
+                        element={<Bookings data={data.bookings} />}
                      />
                      <Route
-                        path="./BlockBooking"
-                        element={<BlockBooking data={data.moderation} />}
+                        path="/BookingRequests"
+                        element={
+                           <BookingRequests data={data.bookingsRequests} />
+                        }
                      />
                      <Route
                         path="/MyAnnouncement"
