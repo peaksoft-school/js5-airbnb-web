@@ -14,7 +14,7 @@ export const getUserOrAdmin = createAsyncThunk(
          const provider = new GoogleAuthProvider()
          const { user } = await signInWithPopup(Auth, provider)
          const response = await appFetch({
-            url: `${LoginUserUrl}?token=${user.accessToken}&phoneNumber=${props.phonenumber}`,
+            url: `${LoginUserUrl}?token=${user.accessToken}`,
             method: 'POST',
          })
          response.name = user.displayName
