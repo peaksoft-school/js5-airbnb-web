@@ -27,14 +27,13 @@ function UserProfile() {
    const dispatch = useDispatch()
    useEffect(() => {
       dispatch(getUserBooking())
-   }, [])
-   useEffect(() => {
       dispatch(getBookingRequests())
    }, [])
-   console.log(data.bookingsRequests)
    const announcement = data.announcements?.filter((i) => i.status !== 'NEW')
    const moderation = data.announcements?.filter((i) => i.status === 'NEW')
-
+   const bookingresponse = data.bookingsRequests.filter(
+      (i) => i.bookedResponses.length > 0
+   )
    return (
       <Box>
          <Container>
@@ -60,7 +59,8 @@ function UserProfile() {
                         Bookings({data.bookings.length})
                      </NavLink>
                      <NavLink to="BookingRequests" style={stylednav}>
-                        Booking Requests({data.bookingsRequests.length})
+                        Booking Requests(
+                        {bookingresponse.length})
                      </NavLink>
                      <NavLink to="MyAnnouncement" style={stylednav}>
                         My announcement({announcement.length})
@@ -82,7 +82,10 @@ function UserProfile() {
                      <Route
                         path="/BookingRequests"
                         element={
-                           <BookingRequests data={data.bookingsRequests} />
+                           <BookingRequests
+                              bookingresponse={bookingresponse}
+                              data={data.bookingsRequests}
+                           />
                         }
                      />
                      <Route

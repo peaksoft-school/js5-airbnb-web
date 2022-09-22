@@ -81,7 +81,7 @@ const UserProfileAnnouncementCard = (props) => {
             </StyledLike>
          )}
          <StyledCardImage
-            src={props.data?.image}
+            src={props.data?.image || props.data?.images}
             isBlocked={props.data.isBlocked}
             alt="card"
          />
