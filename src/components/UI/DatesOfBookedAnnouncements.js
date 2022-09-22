@@ -3,7 +3,6 @@ import styled from 'styled-components'
 import Button from './Button'
 
 const DatesOfBookedAnnouncements = (props) => {
-   console.log(props.data, 'testg')
    return (
       <Container>
          {props.data?.map((el) => {

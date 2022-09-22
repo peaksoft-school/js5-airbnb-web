@@ -3,7 +3,6 @@ import UserProfileAnnouncementCard from '../UI/cards/UserProfilleAnnouncementCar
 import DatesOfBookedAnnouncements from '../UI/DatesOfBookedAnnouncements'
 
 function BookingRequests(props) {
-   console.log(props.data, 'data')
    return (
       <Container>
          {props.bookingresponse.length >= 1 && (
