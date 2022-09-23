@@ -13,7 +13,7 @@ export const getUserOrAdmin = createAsyncThunk(
          const provider = new GoogleAuthProvider()
          const { user } = await signInWithPopup(Auth, provider)
          const response = await appFetch({
-            url: `${LoginUserUrl}?token=${user.accessToken}&phoneNumber=${props.phonenumber}`,
+            url: `${LoginUserUrl}?token=${user.accessToken}`,
             method: 'POST',
          })
          response.name = user.displayName
@@ -39,10 +39,24 @@ export const getUserOrAdmin = createAsyncThunk(
       }
    }
 )
+export const sendPhoneNumber = createAsyncThunk(
+   'login/sendPhoneNumber',
+   async (number) => {
+      const response = await appFetch({
+         url: 'api/user/add/phone/number',
+         method: 'POST',
+         body: {
+            phoneNumber: number,
+         },
+      })
+      return response
+   }
+)
 const initialState = {
    status: null,
    error: null,
    modal: false,
+   phonestatus: null,
    login: LocalStorageFunction({
       type: 'getItem',
       key: 'login',
@@ -63,11 +77,17 @@ const LoginSlice = createSlice({
       closemodal: (state) => {
          state.modal = false
       },
-      clearlogin: (state) => {
+      clearLogin: (state) => {
          state.login = {}
       },
    },
    extraReducers: {
+      [sendPhoneNumber.fulfilled]: (state) => {
+         state.phonestatus = 'success'
+      },
+      [sendPhoneNumber.rejected]: (state) => {
+         state.phonestatus = 'error'
+      },
       [getUserOrAdmin.pending]: (state) => {
          state.status = 'pending'
       },
@@ -78,6 +98,7 @@ const LoginSlice = createSlice({
          state.login.jwt = action.payload.jwt
          state.login.userId = action.payload.userId
          state.login.name = action.payload?.name
+         state.login.phoneNumber = action.payload.phoneNumber
          state.modal = false
       },
       [getUserOrAdmin.rejected]: (state, action) => {
