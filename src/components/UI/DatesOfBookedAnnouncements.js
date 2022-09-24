@@ -10,7 +10,7 @@ const DatesOfBookedAnnouncements = (props) => {
                <Div height={props.data?.length}>
                   <StyledBookedCards>
                      <div>
-                        <CardContainer status="NEW">
+                        <CardContainer status={el.status}>
                            <Price>
                               ${el.price} / <span>day</span>
                            </Price>
@@ -36,10 +36,31 @@ const DatesOfBookedAnnouncements = (props) => {
                               <Email>{el.userPhoneNumber}</Email>
                            </div>
                         </UserContainer>
-                        <div>
-                           <Button variant="contained">REJECT</Button>
-                           <Button>ACCEPT</Button>
-                        </div>
+                        {el.status === 'ACCEPTED' ? null : (
+                           <div>
+                              <Button
+                                 variant="contained"
+                                 onClick={() =>
+                                    props.rejectUserBookingRequests(
+                                       props.id,
+                                       el.bookingId
+                                    )
+                                 }
+                              >
+                                 REJECT
+                              </Button>
+                              <Button
+                                 onClick={() =>
+                                    props.acceptBoogingRequests(
+                                       props.id,
+                                       el.bookingId
+                                    )
+                                 }
+                              >
+                                 ACCEPT
+                              </Button>
+                           </div>
+                        )}
                      </div>
                   </StyledBookedCards>
                </Div>
@@ -100,7 +121,8 @@ const CardContainer = styled.div`
    flex-direction: column;
    background: #ffff;
    padding: 20px;
-   border: ${(props) => (props.status === 'NEW' ? '2px solid red' : 'null')};
+   border: ${(props) =>
+      props.status === 'ACCEPTED' ? 'null' : '2px solid red'};
 `
 const Price = styled.p`
    font-style: normal;

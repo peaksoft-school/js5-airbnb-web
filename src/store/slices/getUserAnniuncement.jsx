@@ -19,6 +19,36 @@ export const getBookingRequests = createAsyncThunk(
       return response
    }
 )
+export const acceptBookingRequests = createAsyncThunk(
+   'getUserAnnouncementCard/acceptBookingRequests',
+   async ({ announcementId, bookingId }) => {
+      const response = await appFetch({
+         url: 'api/announcements/bookings/accept',
+         method: 'PUT',
+         body: {
+            announcementId,
+            bookingId,
+            status: 'ACCEPTED',
+         },
+      })
+      return response
+   }
+)
+export const rejectBookingRequests = createAsyncThunk(
+   'getUserAnnouncementCard/rejectBookingRequests',
+   async ({ announcementId, bookingId }) => {
+      const response = await appFetch({
+         url: 'api/announcements/bookings/accept',
+         method: 'PUT',
+         body: {
+            announcementId,
+            bookingId,
+            status: 'REJECTED',
+         },
+      })
+      return response
+   }
+)
 export const deleteUserMessage = createAsyncThunk(
    'getUserAnnouncementCard/deleteUserMessage',
    async (_, { dispatch }) => {

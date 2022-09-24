@@ -84,7 +84,7 @@ function UserProfile() {
                         element={
                            <BookingRequests
                               bookingresponse={bookingresponse}
-                              data={data.bookingsRequests}
+                              data={bookingresponse}
                            />
                         }
                      />
