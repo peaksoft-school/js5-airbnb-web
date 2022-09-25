@@ -4,7 +4,8 @@ import './App.css'
 // import AdminApplicationsInnerPage from './pages/AdminApplicationsInnerPage'
 import SignUp from './components/SignUp'
 import SignupPhoneNumber from './components/SignupPhoneNumber'
-import ApartmentHouseInnerPageFeedback from './pages/ApartmentHouseInnerPageFeedback'
+// import ApartmentHouseInnerPageFeedback from './pages/ApartmentHouseInnerPageFeedback'
+import { MinMaxDateRangePicker } from './components/UI/datepicker/DatePickerInnerPage'
 
 export const data = []
 
@@ -13,8 +14,9 @@ function App() {
       <div className="App">
          <SignUp />
          <SignupPhoneNumber />
+         <MinMaxDateRangePicker />
          {/* <SignupAdmin /> */}
-         <ApartmentHouseInnerPageFeedback />
+         {/* <ApartmentHouseInnerPageFeedback /> */}
          {/* <AdminApplication /> */}
       </div>
    )
