@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+// eslint-disable-next-line import/no-unresolved
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
 import appFetch from '../../api/appFetch'
 import { Auth } from '../../components/SignupFirebase'

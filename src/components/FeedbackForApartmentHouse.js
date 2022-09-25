@@ -1,59 +1,73 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux/es/exports'
 import styled from 'styled-components'
-import SkeletonUser from '../assets/icons/SkeletonUser.png'
 // eslint-disable-next-line import/no-useless-path-segments
 import CounterLikes from '../components/CounterLikes'
+import { getFeedbackInnerPage } from '../store/slices/getFeedbackInnerPage'
 import Rating from './UI/Rating'
 
-function ShowFeedback({ i }) {
+function ShowFeedback({ data }) {
    const [seeMore, setSeeMore] = useState(false)
-   const today = new Date()
-
    return (
-      <ContainerAddFeedback>
-         <RaitingUserContainer>
-            <UserContainer>
-               <SkeletoneUser src={SkeletonUser} />
-               <UserName>Anna Annov</UserName>
-            </UserContainer>
-            <RatingContainer>
-               <Rating defaultValue={i.ratingState} />
-               <span>({i.ratingState})</span>
-            </RatingContainer>
-         </RaitingUserContainer>
-         <ContainerText>
-            {seeMore ? (
-               <Text key={i.id}>{i.textState}</Text>
-            ) : (
-               <Text key={i.id}>{i.textState.substring(10, 250)}...</Text>
-            )}
-
-            <ContainerSeeMore>
-               <SeeMore onClick={() => setSeeMore(!seeMore)}>
-                  {seeMore ? 'See less' : 'See More'}
-               </SeeMore>
-            </ContainerSeeMore>
-         </ContainerText>
-         <ContainerImage>
-            {i.photos.map((i) => (
-               <ImageFeedback src={i.data_url} alt="photos" />
-            ))}
-         </ContainerImage>
-         <LikesAndDateContainer>
-            <DataToDay>{today.toLocaleDateString()}</DataToDay>
-            <CounterLikes />
-         </LikesAndDateContainer>
-      </ContainerAddFeedback>
+      <div>
+         <ContainerAddFeedback>
+            <RaitingUserContainer>
+               <UserContainer>
+                  <Logo>{`${data.feedbackOwnerFullName
+                     .charAt(0)
+                     .toUpperCase()}`}</Logo>
+                  <UserName>{data?.feedbackOwnerFullName}</UserName>
+               </UserContainer>
+               <RatingContainer>
+                  <Rating defaultValue={data?.rating} />
+                  <span>({data?.rating})</span>
+               </RatingContainer>
+            </RaitingUserContainer>
+            <ContainerText>
+               {seeMore ? (
+                  <Text key={data.id}>{data?.description}</Text>
+               ) : (
+                  <Text key={data.id}>{data?.description}...</Text>
+               )}
+               <ContainerSeeMore>
+                  <SeeMore onClick={() => setSeeMore(!seeMore)}>
+                     {seeMore ? 'See More' : 'See Less'}
+                  </SeeMore>
+               </ContainerSeeMore>
+            </ContainerText>
+            <ContainerImage>
+               {data?.images.map((i) => (
+                  <ImageFeedback src={i} alt="photos" />
+               ))}
+            </ContainerImage>
+            <LikesAndDateContainer>
+               <DataToDay>{data?.createdAt.toString()}</DataToDay>
+               <CounterLikes
+                  id={data.id}
+                  likeCount={data.likeCount}
+                  disLikeCount={data.disLikeCount}
+               />
+            </LikesAndDateContainer>
+         </ContainerAddFeedback>
+      </div>
    )
 }
 
-function FeedbackApartmentHouse({ add }) {
+function FeedbackApartmentHouse(props) {
+   const { likestatus, dislikestatus } = useSelector((store) => store.postLikes)
+
+   const { feedback } = useSelector((store) => store.getFeedback)
+   const dispatch = useDispatch()
+   useEffect(() => {
+      dispatch(getFeedbackInnerPage({ id: props.id, size: 3 }))
+   }, [dispatch, props?.id, likestatus, dislikestatus])
+
    return (
-      <>
-         {add.map((i) => {
-            return <ShowFeedback i={i} />
-         })}
-      </>
+      <div>
+         {feedback.map((data) => (
+            <ShowFeedback data={data} />
+         ))}
+      </div>
    )
 }
 
@@ -99,6 +113,16 @@ const Text = styled.p`
    }
 `
 
+const UserContainer = styled.span`
+   display: flex;
+   align-items: center;
+   & > :nth-child(2) {
+      margin-left: 16px;
+   }
+`
+
+const UserName = styled.span``
+
 const RaitingUserContainer = styled.div`
    width: 630px;
    display: flex;
@@ -109,14 +133,19 @@ const RaitingUserContainer = styled.div`
       align-items: center;
    }
 `
-
-const UserContainer = styled.div`
+const Logo = styled.div`
+   width: 36px;
+   height: 36px;
+   background: #c4c4c4;
+   border-radius: 50%;
+   font-style: normal;
+   font-weight: 350;
+   font-size: 22px;
+   line-height: 35px;
+   color: #ffffff;
    display: flex;
    align-items: center;
-`
-
-const UserName = styled.span`
-   margin-left: 10px;
+   justify-content: center;
 `
 
 const RatingContainer = styled.div`
@@ -132,8 +161,6 @@ const ContainerImage = styled.div`
    width: 330px;
    margin-top: 20px;
 `
-
-const SkeletoneUser = styled.img``
 
 const ImageFeedback = styled.img`
    display: flex;

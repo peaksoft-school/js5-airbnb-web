@@ -3,5 +3,8 @@
    margin: 0;
    padding: 0;
    box-sizing: border-box;
-   font-family: "Inter", sans-serif;
+   font-family: 'Inter', sans-serif;
+}
+.css-1yllih9-MuiPaper-root-MuiPickersPopper-paper > div > :nth-child(1) {
+   display: none;
 }

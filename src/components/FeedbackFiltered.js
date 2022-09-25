@@ -1,12 +1,24 @@
+import { useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import styled from 'styled-components'
+import { getPercentegCard } from '../store/slices/getApartmentHouseInnerPage'
 
-const FeedbackFiltered = () => {
+const FeedbackFiltered = (props) => {
+   const { datas } = useSelector((store) => store.getPercentegCar)
+   const dispatch = useDispatch()
+   useEffect(() => {
+      if (props.id) {
+         dispatch(getPercentegCard(props.id))
+      }
+   }, [props.id])
    return (
       <ContainerRatingFilter>
          <FilterRating>
             <ContainerFiltered>
                <ContainerRatingStar>
-                  <FilteredNumber>4.4</FilteredNumber>
+                  <FilteredNumber>
+                     {`${datas.rating}`.slice(0, 3)}
+                  </FilteredNumber>
                   <svg
                      width="31px"
                      height="31px"
@@ -24,48 +36,75 @@ const FeedbackFiltered = () => {
             <ContainerFilteredNum>
                <span>5</span>
                <ContainerLine>
-                  <LineFilter />
+                  <LineFilter width={datas?.percentageOfFive} />
                   <Line />
                </ContainerLine>
-               <span>52%</span>
+               <Span>
+                  {datas?.percentageOfFive
+                     ? `${`${datas?.percentageOfFive}`.slice(0, 4)}%`
+                     : 0}
+               </Span>
             </ContainerFilteredNum>
-            <ContainerFilteredNum2>
+            <ContainerFilteredNum>
                <span>4</span>
                <ContainerLine>
-                  <Linetwo />
-                  <Linefiltertwo />
+                  <LineFilter width={datas?.percentageOfFour} />
+                  <Line />
                </ContainerLine>
-               <span>15%</span>
-            </ContainerFilteredNum2>
-            <ContainerFilteredNum3>
+               <Span>
+                  {datas?.percentageOfFour
+                     ? `${`${datas?.percentageOfFour}`.slice(0, 4)}%`
+                     : 0}
+               </Span>
+            </ContainerFilteredNum>
+            <ContainerFilteredNum>
                <span>3</span>
-               <ContainerLineForZero>
-                  <LinefilteredThree />
-               </ContainerLineForZero>
-               <span>0</span>
-            </ContainerFilteredNum3>
-            <ContainerFilteredNum4>
-               <span>4</span>
-               <ContainerLineForZero>
-                  <LinefilteredThree />
-               </ContainerLineForZero>
-               <span>0</span>
-            </ContainerFilteredNum4>
-            <ContainerFilteredNum5>
-               <span>5</span>
-               <ContainerLineForZero>
-                  <LinefilteredThree />
-               </ContainerLineForZero>
-               <span>0</span>
-            </ContainerFilteredNum5>
+               <ContainerLine>
+                  <LineFilter width={datas?.percentageOfThree} />
+                  <Line />
+               </ContainerLine>
+               <Span>
+                  {datas?.percentageOfThree
+                     ? `${`${datas?.percentageOfThree}`.slice(0, 4)}%`
+                     : 0}
+               </Span>
+            </ContainerFilteredNum>
+            <ContainerFilteredNum>
+               <span>2</span>
+               <ContainerLine>
+                  <LineFilter width={datas?.percentageOfTwo} />
+                  <Line />
+               </ContainerLine>
+               <Span>
+                  {datas?.percentageOfTwo
+                     ? `${`${datas?.percentageOfTwo}`.slice(0, 4)}%`
+                     : 0}
+               </Span>
+            </ContainerFilteredNum>
+            <ContainerFilteredNum>
+               <span>1</span>
+               <ContainerLine>
+                  <LineFilter width={datas?.percentageOfOne} />
+                  <Line />
+               </ContainerLine>
+               <Span>
+                  {datas?.percentageOfOne
+                     ? `${`${datas?.percentageOfOne}`.slice(0, 4)}%`
+                     : 0}
+               </Span>
+            </ContainerFilteredNum>
          </FilterRating>
       </ContainerRatingFilter>
    )
 }
 
+const Span = styled.span`
+   width: 34px;
+   text-align: start;
+`
 const ContainerRatingFilter = styled.div`
    width: 424px;
-   height: 232px;
+   height: 240px;
    border: 1px solid #c4c4c4;
    border-radius: 16px;
    display: flex;
@@ -93,7 +132,7 @@ const ContainerRatingStar = styled.div`
 
 const FilterRating = styled.div`
    width: 344px;
-   height: 192px;
+   height: 205px;
    @media (max-width: 375px) {
       width: 343px;
       display: flex;
@@ -123,78 +162,27 @@ const ContainerFilteredNum = styled.div`
    display: flex;
    align-items: center;
    justify-content: space-between;
-   margin-top: 19px;
+   margin-top: 16px;
+   position: relative;
 `
-
-const ContainerFilteredNum2 = styled.div`
-   display: flex;
-   align-items: center;
-   justify-content: space-between;
-   margin-top: 12px;
-`
-
-const ContainerFilteredNum3 = styled.div`
-   display: flex;
-   align-items: center;
-   justify-content: space-between;
-   margin-top: 12px;
-`
-const ContainerFilteredNum4 = styled.div`
-   display: flex;
-   align-items: center;
-   justify-content: space-between;
-   margin-top: 12px;
-`
-const ContainerFilteredNum5 = styled.div`
-   display: flex;
-   align-items: center;
-   justify-content: space-between;
-   margin-top: 12px;
-`
-
 const ContainerLine = styled.div`
    width: 274px;
    display: flex;
    align-items: center;
+   position: absolute;
+   left: 23px;
 `
-
-const ContainerLineForZero = styled.div`
-   width: 295px;
-   display: flex;
-   align-items: center;
-   margin-right: 1px;
-`
-
-const Line = styled.div`
-   width: 137px;
-   height: 0px;
-   border-bottom: 1px solid #c4c4c4;
-`
-
-const Linetwo = styled.div`
-   width: 24px;
-   height: 0px;
-   border-bottom: 3px solid #4f7755;
-   background: #4f7755;
-`
-
 const LineFilter = styled.div`
-   width: 137px;
+   width: ${(props) => `${props?.width}%` || '0%'};
    height: 0px;
+   position: absolute;
    border-bottom: 3px solid #4f7755;
    background: #4f7755;
 `
-
-const Linefiltertwo = styled.div`
-   width: 250px;
-   height: 0;
+const Line = styled.div`
+   width: 100%;
+   height: 0px;
    border-bottom: 1px solid #c4c4c4;
-`
-const LinefilteredThree = styled.div`
-   width: 274px;
-   height: 0;
-   border-bottom: 1px solid #c4c4c4;
-   margin-right: 20px;
 `
 
 export default FeedbackFiltered
