@@ -38,6 +38,7 @@ const StyledContainer = styled.div`
    }
    & ._gestalt .react-datepicker__day--range-start {
       background-color: orange !important;
+      color: red;
    }
    & ._gestalt .react-datepicker__day--range-end {
       background-color: orange !important;
