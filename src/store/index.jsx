@@ -10,9 +10,7 @@ import getFeedbackSlice from './slices/getFeedbackInnerPage'
 import getUserAnnouncementCard from './slices/getUserAnniuncement'
 import LoginSlice from './slices/LoginSlice'
 import postFeedbackSlice from './slices/postFeedbackInnerPageSlice'
-import postLikedFeedbackSlice, {
-   postDisLikeFeedbackSlice,
-} from './slices/postLikesInnerPageFeedback'
+import postLikedFeedbackSlice from './slices/postLikesInnerPageFeedback'
 
 const store = configureStore({
    reducer: {
@@ -25,8 +23,7 @@ const store = configureStore({
       getApartmentHouseInnerpage: apartmentHouseSlice.reducer,
       getPercentegCar: percentegCardSlice.reducer,
       getFeedback: getFeedbackSlice.reducer,
-      postLike: postLikedFeedbackSlice.reducer,
-      postDislike: postDisLikeFeedbackSlice.reducer,
+      postLikes: postLikedFeedbackSlice.reducer,
       postFeedback: postFeedbackSlice.reducer,
    },
 })

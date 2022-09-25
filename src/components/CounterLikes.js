@@ -1,5 +1,4 @@
-// import { useEffect, useState } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
 import DisLike from '../assets/icons/DisLike.svg'
 import Liked from '../assets/icons/Like.svg'
@@ -9,33 +8,32 @@ import {
 } from '../store/slices/postLikesInnerPageFeedback'
 
 const CounterLikes = (props) => {
-   // const [countLike, setCountLike] = useState(0)
-   // const [disCountLike, setDisCountlike] = useState(0)
-   const { selector } = useSelector((store) => store.postLike)
-   console.log(selector)
-   // console.log(likeCount)
    const dispatch = useDispatch()
-
-   // useEffect(() => {
-   //    dispatch(postLikesInnerPage(likeCount))
-   //    dispatch(postDiSLikesInnerPage(disLikeCount))
-   // }, [dispatch])
-
+   const likeHandler = () => dispatch(postLikesInnerPage(props.id))
+   const disLikeHandler = () => dispatch(postDiSLikesInnerPage(props.id))
+   const counter = {
+      like: '',
+      dislike: '',
+   }
+   if (`${props.likeCount}`.includes('-')) {
+      counter.like = `${props.likeCount}`.slice(1)
+   } else {
+      counter.like = props.likeCount
+   }
+   if (`${props.disLikeCount}`.includes('-')) {
+      counter.dislike = `${props.disLikeCount}`.slice(1)
+   } else {
+      counter.dislike = props.disLikeCount
+   }
    return (
       <ContainerLikes>
          <LikedContainer>
-            <ImgLike
-               onClick={() => dispatch(postLikesInnerPage(2))}
-               src={Liked}
-            />
-            <CounText>{props.likeCount}</CounText>
+            <ImgLike onClick={likeHandler} src={Liked} />
+            <CounText>{counter.like}</CounText>
          </LikedContainer>
          <DisLikedContainer>
-            <ImgLike
-               onClick={dispatch(postDiSLikesInnerPage())}
-               src={DisLike}
-            />
-            {/* <CounText>{disCountLike}</CounText> */}
+            <ImgLike onClick={disLikeHandler} src={DisLike} />
+            <CounText>{counter.dislike}</CounText>
          </DisLikedContainer>
       </ContainerLikes>
    )
@@ -80,5 +78,4 @@ const DisLikedContainer = styled.div`
    justify-content: center;
    justify-content: space-around;
 `
-
 export default CounterLikes

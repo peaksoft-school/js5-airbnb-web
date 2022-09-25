@@ -14,19 +14,21 @@ import Rating from '../components/UI/Rating'
 import UserHeader from '../layout/headers/User-VendorHeader/UserHeader'
 import { apartmentHouseInnerPage } from '../store/slices/getApartmentHouseInnerPage'
 import { postFeedbackInnerPage } from '../store/slices/postFeedbackInnerPageSlice'
+// import { postAnnouncementsLike } from '../store/slices/postLikesInnerPageFeedback'
 
 const ApartmentHouseInnerPageFeedback = () => {
    const [photos, setPhotos] = useState([])
    const [textState, setTextState] = useState('')
    const [ratingState, setRatingState] = useState('')
    const [isfeedbackModal, setIsFeedbackModal] = useState(false)
-   const [isActive, setIsActive] = useState(false)
+   const [like, setLike] = useState(IconShape)
+   // const [disLike, setDisLike] = useState(false)
    const { datas } = useSelector((state) => state.getApartmentHouseInnerpage)
-   // console.log(datas, 'datas')
+   // const colorLike = useSelector((store) => store.getFeedback)
    const dispatch = useDispatch()
 
    const getDates = () => {
-      dispatch(apartmentHouseInnerPage(1))
+      dispatch(apartmentHouseInnerPage(3))
    }
 
    const toogleOpenModalForFeedback = () => {
@@ -46,8 +48,10 @@ const ApartmentHouseInnerPageFeedback = () => {
       setIsFeedbackModal((prevState) => !prevState)
    }
 
-   const handleClick = () => {
-      setIsActive((prevState) => !prevState)
+   const likeHandler = () => {
+      // dispatch(dispatch(postAnnouncementsLike(id)))
+      setLike(IsActiveLike)
+      // setDisLike((prevState) => !prevState)
    }
 
    return (
@@ -105,8 +109,8 @@ const ApartmentHouseInnerPageFeedback = () => {
                               </Button>
                               <ContainerLiked>
                                  <Liked
-                                    onClick={handleClick}
-                                    src={isActive ? IsActiveLike : IconShape}
+                                    onClick={likeHandler}
+                                    src={like}
                                     alt="like"
                                  />
                               </ContainerLiked>

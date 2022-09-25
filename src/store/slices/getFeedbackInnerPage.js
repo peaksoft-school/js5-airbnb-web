@@ -13,7 +13,7 @@ export const getFeedbackInnerPage = createAsyncThunk(
    async (data, { rejectWithValue }) => {
       try {
          const response = await appFetch({
-            url: `api/feedbacks/${data.id}?page=1&size=${data.size}`,
+            url: `api/feedbacks/${data.id}?page=1&size=${data.size || 3}`,
          })
          return response
       } catch (error) {

@@ -29,10 +29,9 @@ function ShowFeedback({ data }) {
                ) : (
                   <Text key={data.id}>{data?.description}...</Text>
                )}
-
                <ContainerSeeMore>
                   <SeeMore onClick={() => setSeeMore(!seeMore)}>
-                     {seeMore ? 'See less' : 'See More'}
+                     {seeMore ? 'See More' : 'See Less'}
                   </SeeMore>
                </ContainerSeeMore>
             </ContainerText>
@@ -55,12 +54,13 @@ function ShowFeedback({ data }) {
 }
 
 function FeedbackApartmentHouse(props) {
+   const { likestatus, dislikestatus } = useSelector((store) => store.postLikes)
+
    const { feedback } = useSelector((store) => store.getFeedback)
-   // console.log(status)
    const dispatch = useDispatch()
    useEffect(() => {
       dispatch(getFeedbackInnerPage({ id: props.id, size: 3 }))
-   }, [dispatch, props?.id])
+   }, [dispatch, props?.id, likestatus, dislikestatus])
 
    return (
       <div>
