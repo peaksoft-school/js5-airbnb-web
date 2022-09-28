@@ -1,10 +1,10 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import appFetch from '../../api/appFetch'
+import ApiFetch from '../../api/ApiFetch'
 
 export const acceptInnerPage = createAsyncThunk(
-   'adminInnerPage/acceptInnerPage',
+   'applications/acceptInnerPage',
    async (id) => {
-      const response = await appFetch({
+      const response = await ApiFetch({
          url: `api/admin/announcement/accept/${id}`,
          method: 'PUT',
       })
@@ -12,9 +12,9 @@ export const acceptInnerPage = createAsyncThunk(
    }
 )
 export const rejectInnerPage = createAsyncThunk(
-   'adminInnerPage/rejectInnerPage',
+   'applications/rejectInnerPage',
    async (id) => {
-      const response = await appFetch({
+      const response = await ApiFetch({
          url: `api/admin/announcement/reject/${id.id}`,
          method: 'PUT',
          body: {
@@ -22,5 +22,23 @@ export const rejectInnerPage = createAsyncThunk(
          },
       })
       return response
+   }
+)
+export const findAnnouncementInnerPage = createAsyncThunk(
+   'applications/findAnnouncementInnerPage',
+   async (id) => {
+      const namecard = await ApiFetch({
+         url: `api/announcements/find/${id}`,
+      })
+      return namecard
+   }
+)
+export const postStatusSee = createAsyncThunk(
+   'applications/postStatusSee',
+   async (id) => {
+      const namecard = await ApiFetch({
+         url: `api/admin/find/announcement/${id}`,
+      })
+      return namecard
    }
 )

@@ -19,10 +19,12 @@ const ImagePicker = ({ allPhotos, getPhoto, ...props }) => {
    // and give props function -> getPhoto
 
    const getAllPhotoAndSend = (getphotofile) => getPhoto(getphotofile)
-
+   useEffect(() => {
+      setPhotos(allPhotos)
+   }, [allPhotos])
    const onChange = (imageList) => {
       // eslint-disable-next-line array-callback-return, consistent-return
-      const errorImageText = imageList?.find((item) => {
+      const errorImageText = imageList.find((item) => {
          if (item.file.size > 1000000) {
             setImageSizeTextError(false)
             return item
@@ -35,18 +37,17 @@ const ImagePicker = ({ allPhotos, getPhoto, ...props }) => {
       setshowTextAfterInput(false)
    }
    useEffect(() => {
-      setPhotos(allPhotos)
-   }, [allPhotos])
-   useEffect(() => {
-      if (photos.length === 0) {
+      if (photos?.length === 0) {
          setshowTextAfterInput(true)
+      } else {
+         setshowTextAfterInput(false)
       }
-      if (photos.length === 4) {
+      if (photos?.length === 4) {
          setCloseInputFile(false)
       } else {
          setCloseInputFile(true)
       }
-   }, [photos])
+   }, [photos?.length])
 
    return (
       <DivWrapper>

@@ -1,9 +1,9 @@
-/* eslint-disable import/no-unresolved */
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
+import { region } from '../pages/InnerPageFilterCards'
 import { editAnnountcementPost } from '../store/slices/editAnnountcementSlice'
-import { options } from '../utils/constants/constants'
 import Button from './UI/Button'
 import ImagePicker from './UI/ImagePicker'
 import Input from './UI/Input'
@@ -11,11 +11,8 @@ import RadioButton from './UI/RadioButton'
 import Select from './UI/Select'
 import SnackBar from './UI/SnackBar'
 
-const EditForm = (props) => {
-   const edit = {
-      ...props.edit,
-   }
-   const { status, error } = useSelector((state) => state.editAnnountcement)
+const EditForm = () => {
+   const { status, data } = useSelector((state) => state.editAnnountcement)
    const dispatch = useDispatch()
    const [photos, setPhotos] = useState([])
    const [regionId, setRegionId] = useState('')
@@ -29,44 +26,76 @@ const EditForm = (props) => {
       townProvince: '',
       address: '',
    })
-   useEffect(() => {
-      if (edit?.image) {
-         setFormValue({
-            houseType: edit?.houseType,
-            maxGuests: edit?.maxGuests,
-            price: edit?.price,
-            title: edit?.title,
-            description: edit?.description,
-            townProvince: edit?.townProvince,
-            address: edit?.location,
-         })
-         setRegionId(edit?.regionId)
-         setPhotos(edit?.image)
+   const [type, settype] = useState({
+      radio1: false,
+      radio2: false,
+   })
+   const img = data?.images?.map((i) => {
+      return {
+         type: 'old',
+         data_url: i,
+         file: {
+            lastModified: 1660305041438,
+            lastModifiedDate: `${new Date()}{}`,
+            name: i.split('/')[3],
+            size: 109350,
+            type: `image/${i?.split('/')[3]?.split('.')[1]}`,
+            webkitRelativePath: '',
+         },
       }
-   }, [edit?.image])
+   })
+   useEffect(() => {
+      if (data?.houseType === 'APARTMENT') {
+         settype({
+            radio1: true,
+            radio2: false,
+         })
+      }
+      if (data?.houseType === 'HOUSE') {
+         settype({
+            radio1: false,
+            radio2: true,
+         })
+      }
+      setFormValue({
+         ...formValue,
+         houseType: data?.houseType,
+         maxGuests: data?.maxGuests,
+         price: data?.price,
+         title: data?.title,
+         description: data?.description,
+         townProvince: data?.townProvince,
+         address: data?.location,
+      })
+      setRegionId(data?.regionId)
+      setPhotos(img)
+   }, [data?.houseType])
    const handleChangeSelectId = (id) => {
       setRegionId(id)
    }
    const handleChange = (Event) => {
+      if (Event.target.value === 'APARTMENT') {
+         settype({
+            radio1: true,
+            radio2: false,
+         })
+      }
+      if (Event.target.value === 'HOUSE') {
+         settype({
+            radio1: false,
+            radio2: true,
+         })
+      }
       setFormValue({
          ...formValue,
          [Event.target.name]: Event.target.value,
       })
    }
-   const isValidForm = () => {
-      const valueIsValid =
-         formValue.price.length >= 1 &&
-         formValue.address.length >= 1 &&
-         formValue.description.length >= 1 &&
-         formValue.maxGuests.length >= 1 &&
-         formValue.townProvince.length >= 1
-      return valueIsValid
-   }
    const submitHandlerForm = (e) => {
       e.preventDefault()
       setOpen((prev) => !prev)
       const formObject = {
-         id: edit?.id,
+         id: data?.id,
          houseType: formValue.houseType,
          maxGuests: +formValue.maxGuests,
          price: +formValue.price,
@@ -88,10 +117,22 @@ const EditForm = (props) => {
       })
       setRegionId('')
       setPhotos([])
+      settype({
+         radio1: false,
+         radio2: false,
+      })
    }
+   const nav = useNavigate()
+   useEffect(() => {
+      if (open) {
+         setTimeout(() => {
+            nav(-1)
+         }, 3000)
+      }
+   }, [open])
    return (
       <div>
-         {error?.message === 'Rejected' ? (
+         {status === 'error' ? (
             <SnackBar
                message="что то пошло не так"
                text="повторите еще раз"
@@ -101,7 +142,7 @@ const EditForm = (props) => {
          ) : (
             ''
          )}
-         {status === 'succes' ? (
+         {status === 'success' ? (
             <SnackBar
                severity="success"
                message="Все успешно"
@@ -128,12 +169,16 @@ const EditForm = (props) => {
                   onChange={handleChange}
                   name="houseType"
                   value="APARTMENT"
+                  id="apartament"
+                  checked={type.radio1}
                />
                <label htmlFor="apartament">Apartament</label>
                <RadioButton
                   onChange={handleChange}
                   name="houseType"
                   value="HOUSE"
+                  checked={type.radio2}
+                  id="House"
                />
                <label htmlFor="House">House</label>
             </StyledDivRadioButton>
@@ -184,7 +229,7 @@ const EditForm = (props) => {
             </div>
             <StyledSelect>
                <Select
-                  options={options}
+                  options={region}
                   getOptionLabel={(option) => option?.regionName}
                   getOptionValue={(option) => option?.id}
                   onChange={handleChangeSelectId}
@@ -213,9 +258,7 @@ const EditForm = (props) => {
                />
             </StyledAddres>
             <StyledButton>
-               <Button disabled={isValidForm() || 'true'} height="37px">
-                  Submit
-               </Button>
+               <Button height="37px">Submit</Button>
             </StyledButton>
          </StyledForm>
       </div>

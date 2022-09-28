@@ -1,39 +1,76 @@
-import { useDispatch } from 'react-redux'
+import { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useSearchParams } from 'react-router-dom'
 import styled from 'styled-components'
 import DisLike from '../assets/icons/DisLike.svg'
-import Liked from '../assets/icons/Like.svg'
+import Liked from '../assets/icons/likehandle.svg'
 import {
-   postDiSLikesInnerPage,
-   postLikesInnerPage,
-} from '../store/slices/postLikesInnerPageFeedback'
+   leavedisLikeFeedback,
+   leaveLikeFeedback,
+} from '../store/slices/LikeAndBookmarkSlice'
+import { showSuccessMessage } from '../utils/helpers/ToastyfyFunction'
 
 const CounterLikes = (props) => {
+   const user = useSelector((s) => s.login?.login)
    const dispatch = useDispatch()
-   const likeHandler = () => dispatch(postLikesInnerPage(props.id))
-   const disLikeHandler = () => dispatch(postDiSLikesInnerPage(props.id))
-   const counter = {
-      like: '',
-      dislike: '',
-   }
-   if (`${props.likeCount}`.includes('-')) {
-      counter.like = `${props.likeCount}`.slice(1)
-   } else {
-      counter.like = props.likeCount
-   }
-   if (`${props.disLikeCount}`.includes('-')) {
-      counter.dislike = `${props.disLikeCount}`.slice(1)
-   } else {
-      counter.dislike = props.disLikeCount
-   }
+   const [, setopensignup] = useSearchParams()
+   const [bool, setbool] = useState(false)
+   const [dislike, setdislike] = useState(false)
    return (
       <ContainerLikes>
          <LikedContainer>
-            <ImgLike onClick={likeHandler} src={Liked} />
-            <CounText>{counter.like}</CounText>
+            <ImgLike
+               onClick={() => {
+                  if (user?.jwt) {
+                     setbool((p) => !p)
+                     if (!bool) {
+                        dispatch(
+                           leaveLikeFeedback({ id: props.id, bool: !bool })
+                        )
+                        showSuccessMessage('Successfully post like')
+                     } else {
+                        dispatch(
+                           leaveLikeFeedback({ id: props.id, bool: !bool })
+                        )
+                        showSuccessMessage('Successfully clear like')
+                     }
+                  } else {
+                     setopensignup({ userSignup: 'open' })
+                  }
+               }}
+               src={Liked}
+            />
+            <CounText>{props?.like}</CounText>
          </LikedContainer>
          <DisLikedContainer>
-            <ImgLike onClick={disLikeHandler} src={DisLike} />
-            <CounText>{counter.dislike}</CounText>
+            <ImgLike
+               onClick={() => {
+                  if (user?.jwt) {
+                     setdislike((p) => !p)
+                     if (!dislike) {
+                        dispatch(
+                           leavedisLikeFeedback({
+                              id: props.id,
+                              bool: !dislike,
+                           })
+                        )
+                        showSuccessMessage('Successfully post dislike')
+                     } else {
+                        dispatch(
+                           leavedisLikeFeedback({
+                              id: props.id,
+                              bool: !dislike,
+                           })
+                        )
+                        showSuccessMessage('Successfully clear dislike')
+                     }
+                  } else {
+                     setopensignup({ userSignup: 'open' })
+                  }
+               }}
+               src={DisLike}
+            />
+            <CounText>{props?.dislike}</CounText>
          </DisLikedContainer>
       </ContainerLikes>
    )
@@ -44,6 +81,7 @@ const ImgLike = styled.img`
    height: 25px;
    background: #f3f3f3;
    border-radius: 2px;
+   cursor: pointer;
 `
 
 const ContainerLikes = styled.div`
@@ -78,4 +116,5 @@ const DisLikedContainer = styled.div`
    justify-content: center;
    justify-content: space-around;
 `
+
 export default CounterLikes

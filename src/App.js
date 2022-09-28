@@ -1,24 +1,22 @@
-import './App.css'
-// import AdminApplication from './components/AdminApplication'
-// import SignupAdmin from './components/SignupAdmin'
-// import AdminApplicationsInnerPage from './pages/AdminApplicationsInnerPage'
-import SignUp from './components/SignUp'
-import SignupPhoneNumber from './components/SignupPhoneNumber'
-// import ApartmentHouseInnerPageFeedback from './pages/ApartmentHouseInnerPageFeedback'
-import { MinMaxDateRangePicker } from './components/UI/datepicker/DatePickerInnerPage'
-
-export const data = []
+import { useEffect } from 'react'
+import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import AdminRoute from './routes/AdminRoute'
+import UserRoute from './routes/UserRoute'
 
 function App() {
+   const role = useSelector((store) => store.login.login)
+   const nav = useNavigate()
+   useEffect(() => {
+      if (role?.role === 'ADMIN') {
+         nav('/application')
+      }
+   }, [role?.role])
    return (
-      <div className="App">
-         <SignUp />
-         <SignupPhoneNumber />
-         <MinMaxDateRangePicker />
-         {/* <SignupAdmin /> */}
-         {/* <ApartmentHouseInnerPageFeedback /> */}
-         {/* <AdminApplication /> */}
-      </div>
+      <>
+         <UserRoute />
+         <AdminRoute />
+      </>
    )
 }
 

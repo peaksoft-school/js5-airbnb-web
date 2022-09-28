@@ -3,15 +3,15 @@ import Button from './UI/Button'
 
 export const ErrorAdminLogin = (props) => {
    return (
-      <Container>
-         <p>Incorrect email or password</p>
+      <DivError>
+         <p>Password or login write wrong</p>
          <Button onClick={props.tryagain} height="35px">
             Try again
          </Button>
-      </Container>
+      </DivError>
    )
 }
-const Container = styled.div`
+const DivError = styled.div`
    width: 474px;
    height: 263px;
    display: flex;

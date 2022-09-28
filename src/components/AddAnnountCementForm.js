@@ -1,9 +1,8 @@
-/* eslint-disable import/no-unresolved */
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
+import { region } from '../pages/InnerPageFilterCards'
 import { addAnnountcementPost } from '../store/slices/addAnnountcementSlice'
-import { options } from '../utils/constants/constants'
 import Button from './UI/Button'
 import ImagePicker from './UI/ImagePicker'
 import Input from './UI/Input'
@@ -29,7 +28,21 @@ const AddAnnouncementForm = () => {
    const handleChangeSelectId = (id) => {
       setRegionId(id)
    }
+   const [radio, setradio] = useState({
+      radio1: false,
+      radio2: false,
+   })
    const handleChange = (Event) => {
+      if (Event.target.value === 'APARTMENT') {
+         setradio({
+            radio1: true,
+         })
+      }
+      if (Event.target.value === 'HOUSE') {
+         setradio({
+            radio2: true,
+         })
+      }
       setFormValue({
          ...formValue,
          [Event.target.name]: Event.target.value,
@@ -42,7 +55,7 @@ const AddAnnouncementForm = () => {
          formValue.description.length >= 1 &&
          formValue.maxGuests.length >= 1 &&
          formValue.townProvince.length >= 1
-      return !valueIsValid
+      return valueIsValid
    }
    const submitHandlerForm = (e) => {
       e.preventDefault()
@@ -59,7 +72,7 @@ const AddAnnouncementForm = () => {
       }
       dispatch(addAnnountcementPost({ photos, formObject }))
       setFormValue({
-         houseType: '',
+         houseType: null,
          maxGuests: '',
          price: '',
          title: '',
@@ -67,9 +80,14 @@ const AddAnnouncementForm = () => {
          townProvince: '',
          address: '',
       })
+      setradio({
+         radio1: false,
+         radio2: false,
+      })
       setRegionId('')
       setPhotos([])
    }
+
    return (
       <div>
          {error?.message === 'Rejected' ? (
@@ -96,27 +114,37 @@ const AddAnnouncementForm = () => {
             <StyledDivImagePicker>
                <StyledH1>Hi! Lets get started listing your place.</StyledH1>
                <StyledParagraf>
-                  In this form, we ll collect some basic and additionalл
-                  information about your listing.
+                  In this form, we ll collect some basic and additional
+                  information
+                  <br /> about your listing.
                </StyledParagraf>
-               <StyledSpan>Image Max 4 photo</StyledSpan>
+               <StyledSpan>
+                  <p>Image</p> <p>Max 4 photo</p>
+               </StyledSpan>
                <ImagePicker allPhotos={photos} getPhoto={setPhotos} />
-               <StyledSpanHome>Home type</StyledSpanHome>
             </StyledDivImagePicker>
-
+            <StyledSpanHome>Home type</StyledSpanHome>
             <StyledDivRadioButton>
-               <RadioButton
-                  onChange={handleChange}
-                  name="houseType"
-                  value="APARTMENT"
-               />
-               <label htmlFor="apartament">Apartament</label>
-               <RadioButton
-                  onChange={handleChange}
-                  name="houseType"
-                  value="HOUSE"
-               />
-               <label htmlFor="House">House</label>
+               <WrapperRadio>
+                  <RadioButton
+                     onChange={handleChange}
+                     name="houseType"
+                     value="APARTMENT"
+                     checked={radio.radio1}
+                     id="Apartament"
+                  />
+                  <label htmlFor="Apartament">Apartament</label>
+               </WrapperRadio>
+               <WrapperRadio>
+                  <RadioButton
+                     onChange={handleChange}
+                     name="houseType"
+                     value="HOUSE"
+                     checked={radio.radio2}
+                     id="House"
+                  />
+                  <label htmlFor="House">House</label>
+               </WrapperRadio>
             </StyledDivRadioButton>
 
             <StyedDivInput>
@@ -165,7 +193,7 @@ const AddAnnouncementForm = () => {
             </div>
             <StyledSelect>
                <Select
-                  options={options}
+                  options={region}
                   getOptionLabel={(option) => option?.regionName}
                   getOptionValue={(option) => option?.id}
                   onChange={handleChangeSelectId}
@@ -202,6 +230,14 @@ const AddAnnouncementForm = () => {
       </div>
    )
 }
+const WrapperRadio = styled.div`
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   & > :nth-child(2) {
+      margin-left: 10px;
+   }
+`
 const StyledForm = styled.form`
    margin-left: 415px;
    padding: 0;
@@ -215,7 +251,7 @@ const StyledH1 = styled.h1`
    height: 19px;
    margin-bottom: 20px;
    margin-top: 40px;
-   font-family: 'sans-serif';
+   font-family: 'Inter';
    font-style: normal;
    font-weight: 500;
    font-size: 16px;
@@ -230,7 +266,7 @@ const StyledParagraf = styled.p`
    width: 610px;
    height: 38px;
    margin-bottom: 30px;
-   font-family: 'sans-serif';
+   font-family: 'Inter';
    font-style: normal;
    font-weight: 400;
    font-size: 16px;
@@ -241,20 +277,32 @@ const StyledParagraf = styled.p`
    }
 `
 const StyledSpan = styled.span`
-   width: 47px;
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   width: 150px;
    height: 19px;
    font-family: 'Inter';
    font-style: normal;
    font-weight: 400;
    font-size: 16px;
    line-height: 19px;
-   color: #363636;
+   margin-bottom: 14px;
+   & > :nth-child(1) {
+      color: #363636;
+   }
+   & > :nth-child(2) {
+      display: flex;
+      align-items: center;
+      color: gray;
+   }
    @media screen and (max-width: 375px) {
       width: 47px;
       margin-left: 6px;
    }
 `
 const StyledDivImagePicker = styled.div`
+   margin-bottom: 30px;
    & .fhthZJ {
       height: 148px !important;
       margin-top: 14px;

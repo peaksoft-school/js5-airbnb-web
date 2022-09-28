@@ -1,10 +1,19 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import appFetch, { appFile } from '../../api/appFetch'
+import ApiFetch, { appFile } from '../../api/ApiFetch'
 import {
    addAnnountFileUrl,
    editAnnountUrl,
-} from '../../utils/constants/constants'
+} from '../../utils/constants/fetchConstants'
 
+export const getSingleUserAnnouncement = createAsyncThunk(
+   'addAnnoutcement/getSingleUserAnnouncement',
+   async (id) => {
+      const data = await ApiFetch({
+         url: `api/announcements/find/${id}`,
+      })
+      return data
+   }
+)
 export const editAnnountcementPost = createAsyncThunk(
    'addAnnoutcement/editAnnountcementPost',
    async ({ formObject, photos }, { rejectWithValue }) => {
@@ -16,17 +25,21 @@ export const editAnnountcementPost = createAsyncThunk(
          // eslint-disable-next-line no-plusplus
          for (let index = 0; index < photos.length; index++) {
             const image = photos[index]
-            const formData = new FormData()
-            formData.append('file', image.file)
-            // eslint-disable-next-line no-await-in-loop
-            const response = await appFile({
-               url: addAnnountFileUrl,
-               body: formData,
-            })
-            dataWith.images.push(response?.link)
+            if (!image.type) {
+               const formData = new FormData()
+               formData.append('file', image.file)
+               // eslint-disable-next-line no-await-in-loop
+               const response = await appFile({
+                  url: addAnnountFileUrl,
+                  body: formData,
+               })
+               dataWith.images.push(response?.link)
+            } else {
+               dataWith.images.push(image?.data_url)
+            }
          }
-         const response = await appFetch({
-            url: `${editAnnountUrl} ${dataWith.id}`,
+         const response = await ApiFetch({
+            url: editAnnountUrl + dataWith.id,
             method: 'PUT',
             body: dataWith,
          })
@@ -39,7 +52,8 @@ export const editAnnountcementPost = createAsyncThunk(
 
 const initialState = {
    status: null,
-   error: null,
+   data: null,
+   message: null,
 }
 const editAnnouncementSlice = createSlice({
    name: 'addAnnoutcement',
@@ -49,12 +63,16 @@ const editAnnouncementSlice = createSlice({
       [editAnnountcementPost.pending]: (state) => {
          state.status = 'pending'
       },
-      [editAnnountcementPost.fulfilled]: (state) => {
-         state.status = 'succes'
-         state.error = null
+      [editAnnountcementPost.fulfilled]: (state, action) => {
+         console.log(action.payload)
+         state.status = 'success'
+         state.message = action.payload.message
       },
-      [editAnnountcementPost.rejected]: (state, action) => {
-         state.error = action.error
+      [editAnnountcementPost.rejected]: (state) => {
+         state.status = 'error'
+      },
+      [getSingleUserAnnouncement.fulfilled]: (state, action) => {
+         state.data = action.payload
       },
    },
 })

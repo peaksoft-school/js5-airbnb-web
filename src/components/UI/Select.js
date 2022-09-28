@@ -21,23 +21,32 @@ function Select({
 
    return (
       <BoxStyled variant={variant}>
-         <StyledInputLabel>{label}</StyledInputLabel>
-         <FormControl fullWidth>
+         <Label>{label}</Label>
+         <Form fullWidth>
             <SelectMui onChange={handleChange} value={value}>
                {options?.map((item) => {
                   return (
-                     <MenuItem value={getOptionValue(item)}>
+                     <MenuItem value={getOptionValue(item)} key={item.id}>
                         {getOptionLabel(item)}
                      </MenuItem>
                   )
                })}
             </SelectMui>
-         </FormControl>
+         </Form>
       </BoxStyled>
    )
 }
 export default Select
 
+const Label = styled(InputLabel)`
+   margin-bottom: 15px;
+   color: black !important;
+`
+const Form = styled(FormControl)`
+   & > div {
+      height: 39px;
+   }
+`
 const BoxStyled = styled(Box)`
    width: ${(props) => (props.variant === 'sort' ? '271px' : '610px')};
    height: 120px;
@@ -46,28 +55,11 @@ const BoxStyled = styled(Box)`
    & fieldset {
       border: 1px solid #c4c4c4 !important;
    }
-   & div {
-      width: 610px;
-      margin: 0px;
-      padding: 5px;
-      height: 39px;
-   }
-
    @media (max-width: 375px) {
       width: 343px;
-      height: 120px;
+      height: 262px;
       background: #ffffff;
       border-radius: 2px;
-      margin: 16px;
-      & div {
-         width: 343px;
-         height: 39px;
-         margin: 0px;
-         padding: 5px;
-         height: 39px;
-      }
+      margin: 20px;
    }
-`
-const StyledInputLabel = styled(InputLabel)`
-   margin-bottom: 18px;
 `

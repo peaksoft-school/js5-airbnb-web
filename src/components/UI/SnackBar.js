@@ -30,7 +30,10 @@ export default function SnackBar({ severity, open, onClose, message, text }) {
 const NotificationAlert = styled(Alert)`
    width: 800px;
    padding: 40px;
-   height: ${(props) => (props.severity === 'success' ? '70px' : '100px')};
+   & > :nth-child(2) {
+      overflow: unset;
+   }
+   height: ${(props) => (props.severity === 'success' ? '66px' : '100px')};
    background-color: ${(props) =>
       props.severity === 'success' ? ' #F0FFF1' : '#FFF1F0'} !important;
    color: #000000;
@@ -38,7 +41,7 @@ const NotificationAlert = styled(Alert)`
       font-family: 'Inter';
       font-style: normal;
       font-weight: 500;
-      font-size: 16px;
+      font-size: 20px;
       line-height: 19px;
       margin-bottom: ${(props) =>
          props.severity === 'success' ? '4px' : '5px'};
@@ -48,15 +51,14 @@ const NotificationAlert = styled(Alert)`
       height: 19px;
       font-family: 'Inter';
       font-style: normal;
-      font-weight: 400;
-      font-size: 14px;
+      font-weight: 600;
+      font-size: 16px;
       line-height: 19px;
       color: #646464;
    }
    @media (max-width: 375px) {
       width: 322px;
-      height: ${(props) => (props.severity === 'success' ? '70px' : '100px')};
-      overflow: hidden;
+      height: ${(props) => (props.severity === 'success' ? '66px' : '100px')};
       background: #fff1f0;
       & h1 {
          width: 246px;
@@ -77,9 +79,6 @@ const NotificationAlert = styled(Alert)`
          font-size: 14px;
          line-height: 17px;
          color: #646464;
-      }
-      .css-1pxa9xg-MuiAlert-message {
-         overflow: hidden;
       }
    }
 `

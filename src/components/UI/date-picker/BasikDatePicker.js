@@ -1,9 +1,10 @@
-/* eslint-disable import/no-unresolved */
 import React from 'react'
 import { Flex } from 'gestalt'
+import DateRangePicker from 'gestalt-datepicker'
+import { useSelector } from 'react-redux'
 import 'gestalt/dist/gestalt.css'
 import 'gestalt-datepicker/dist/gestalt-datepicker.css'
-import DateRangePicker from 'gestalt-datepicker'
+import { useSearchParams } from 'react-router-dom'
 
 export default function BasicDatePicker({
    onChangeHandlerIn,
@@ -12,15 +13,25 @@ export default function BasicDatePicker({
 }) {
    const [startDate, setStartDate] = React.useState(undefined)
    const [endDate, setEndDate] = React.useState(undefined)
-
+   const login = useSelector((store) => store.login.login?.jwt)
+   const [, setSearchParams] = useSearchParams()
    const handleChangeIn = (value) => {
-      setStartDate(value)
-      onChangeHandlerIn(value)
+      if (!login) {
+         setSearchParams({ userSignup: 'open' })
+      } else {
+         setStartDate(value)
+         onChangeHandlerIn(value)
+      }
    }
    const handleChangeOut = (value) => {
-      setEndDate(value)
-      onChangeHandlerOut(value)
+      if (!login) {
+         setSearchParams({ userSignup: 'open' })
+      } else {
+         setEndDate(value)
+         onChangeHandlerOut(value)
+      }
    }
+   console.log(login)
 
    return (
       <Flex gap={2}>
@@ -32,6 +43,9 @@ export default function BasicDatePicker({
             value={startDate}
             placeholder="Select date"
             excludeDates={excludedDates}
+            minDate={new Date()}
+            disabled={!login}
+            localeDataCode="en-US"
          />
          <DateRangePicker
             rangeStartDate={startDate}
@@ -41,6 +55,9 @@ export default function BasicDatePicker({
             value={endDate}
             placeholder="Select date"
             excludeDates={excludedDates}
+            minDate={new Date()}
+            disabled={!login}
+            localeDataCode="en-US"
          />
       </Flex>
    )

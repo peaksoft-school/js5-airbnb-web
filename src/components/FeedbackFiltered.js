@@ -1,23 +1,25 @@
 import { useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
-import { getPercentegCard } from '../store/slices/getApartmentHouseInnerPage'
+import { getPercentegCard } from '../store/slices/LikeAndBookmarkSlice'
 
 const FeedbackFiltered = (props) => {
-   const { datas } = useSelector((store) => store.getPercentegCar)
+   const { percentegcard, leavefeedbackstatus } = useSelector(
+      (store) => store.likeandbookmark
+   )
    const dispatch = useDispatch()
    useEffect(() => {
       if (props.id) {
          dispatch(getPercentegCard(props.id))
       }
-   }, [props.id])
+   }, [props.id, leavefeedbackstatus])
    return (
       <ContainerRatingFilter>
          <FilterRating>
             <ContainerFiltered>
                <ContainerRatingStar>
                   <FilteredNumber>
-                     {`${datas.rating}`.slice(0, 3)}
+                     {`${percentegcard?.rating}`.slice(0, 3)}
                   </FilteredNumber>
                   <svg
                      width="31px"
@@ -36,60 +38,60 @@ const FeedbackFiltered = (props) => {
             <ContainerFilteredNum>
                <span>5</span>
                <ContainerLine>
-                  <LineFilter width={datas?.percentageOfFive} />
+                  <LineFilter width={percentegcard?.percentageOfFive} />
                   <Line />
                </ContainerLine>
                <Span>
-                  {datas?.percentageOfFive
-                     ? `${`${datas?.percentageOfFive}`.slice(0, 4)}%`
+                  {percentegcard?.percentageOfFive
+                     ? `${`${percentegcard?.percentageOfFive}`.slice(0, 4)}%`
                      : 0}
                </Span>
             </ContainerFilteredNum>
             <ContainerFilteredNum>
                <span>4</span>
                <ContainerLine>
-                  <LineFilter width={datas?.percentageOfFour} />
+                  <LineFilter width={percentegcard?.percentageOfFour} />
                   <Line />
                </ContainerLine>
                <Span>
-                  {datas?.percentageOfFour
-                     ? `${`${datas?.percentageOfFour}`.slice(0, 4)}%`
+                  {percentegcard?.percentageOfFour
+                     ? `${`${percentegcard?.percentageOfFour}`.slice(0, 4)}%`
                      : 0}
                </Span>
             </ContainerFilteredNum>
             <ContainerFilteredNum>
                <span>3</span>
                <ContainerLine>
-                  <LineFilter width={datas?.percentageOfThree} />
+                  <LineFilter width={percentegcard?.percentageOfThree} />
                   <Line />
                </ContainerLine>
                <Span>
-                  {datas?.percentageOfThree
-                     ? `${`${datas?.percentageOfThree}`.slice(0, 4)}%`
+                  {percentegcard?.percentageOfThree
+                     ? `${`${percentegcard?.percentageOfThree}`.slice(0, 4)}%`
                      : 0}
                </Span>
             </ContainerFilteredNum>
             <ContainerFilteredNum>
                <span>2</span>
                <ContainerLine>
-                  <LineFilter width={datas?.percentageOfTwo} />
+                  <LineFilter width={percentegcard?.percentageOfTwo} />
                   <Line />
                </ContainerLine>
                <Span>
-                  {datas?.percentageOfTwo
-                     ? `${`${datas?.percentageOfTwo}`.slice(0, 4)}%`
+                  {percentegcard?.percentageOfTwo
+                     ? `${`${percentegcard?.percentageOfTwo}`.slice(0, 4)}%`
                      : 0}
                </Span>
             </ContainerFilteredNum>
             <ContainerFilteredNum>
                <span>1</span>
                <ContainerLine>
-                  <LineFilter width={datas?.percentageOfOne} />
+                  <LineFilter width={percentegcard?.percentageOfOne} />
                   <Line />
                </ContainerLine>
                <Span>
-                  {datas?.percentageOfOne
-                     ? `${`${datas?.percentageOfOne}`.slice(0, 4)}%`
+                  {percentegcard?.percentageOfOne
+                     ? `${`${percentegcard?.percentageOfOne}`.slice(0, 4)}%`
                      : 0}
                </Span>
             </ContainerFilteredNum>
@@ -97,6 +99,7 @@ const FeedbackFiltered = (props) => {
       </ContainerRatingFilter>
    )
 }
+export default FeedbackFiltered
 
 const Span = styled.span`
    width: 34px;
@@ -173,7 +176,7 @@ const ContainerLine = styled.div`
    left: 23px;
 `
 const LineFilter = styled.div`
-   width: ${(props) => `${props?.width}%` || '0%'};
+   width: ${(props) => `${props.width}%` || '0%'};
    height: 0px;
    position: absolute;
    border-bottom: 3px solid #4f7755;
@@ -184,5 +187,3 @@ const Line = styled.div`
    height: 0px;
    border-bottom: 1px solid #c4c4c4;
 `
-
-export default FeedbackFiltered

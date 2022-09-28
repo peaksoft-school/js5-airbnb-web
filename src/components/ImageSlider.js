@@ -1,16 +1,18 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
 const ImageSlider = (props) => {
-   const [selectImg, setSelectImage] = useState(props.images[0])
-   const arrayImages = props.images.filter((i) => i !== selectImg)
-
+   const [selectImg, setSelectImage] = useState({})
+   const arrayImages = props?.images.filter((i) => i !== selectImg)
+   useEffect(() => {
+      setSelectImage(props?.images[0])
+   }, [])
    return (
       <div>
          <ContainerPhotos>
             <DateImg src={selectImg} alt="#" />
             <LittleContainerImage>
-               {arrayImages.map((i, index) => (
+               {arrayImages?.map((i, index) => (
                   <Dateimg2
                      onClick={() => {
                         setSelectImage(i)
@@ -49,8 +51,8 @@ const DateImg = styled.img`
 
 const LittleContainerImage = styled.div`
    display: flex;
-   align-items: flex-start;
-   justify-content: space-between;
+   justify-content: flex-start;
+   gap: 20px;
    margin-top: 10px;
    @media (max-width: 375px) {
       transition: 0.8s all ease;

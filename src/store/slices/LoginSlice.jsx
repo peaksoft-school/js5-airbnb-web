@@ -1,10 +1,12 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-// eslint-disable-next-line import/no-unresolved
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
-import appFetch from '../../api/appFetch'
+import ApiFetch from '../../api/ApiFetch'
 import { Auth } from '../../components/SignupFirebase'
-import { LoginUserUrl, LoginAdminUrl } from '../../utils/constants/constants'
-import { LocalStorageFunction } from '../../utils/helpers/LocalStorageFunction'
+import {
+   LoginUserUrl,
+   LoginAdminUrl,
+} from '../../utils/constants/fetchConstants'
+import { LocalStorageFunction } from '../../utils/helpers/LocalStorageFunctions/LocalStorajeFunction'
 
 export const getUserOrAdmin = createAsyncThunk(
    'login/getUserOrAdmin',
@@ -13,10 +15,11 @@ export const getUserOrAdmin = createAsyncThunk(
       if (props.fetchrole === 'USER') {
          const provider = new GoogleAuthProvider()
          const { user } = await signInWithPopup(Auth, provider)
-         const response = await appFetch({
+         const response = await ApiFetch({
             url: `${LoginUserUrl}?token=${user.accessToken}`,
             method: 'POST',
          })
+         console.log(response, 'response')
          response.name = user.displayName
          LocalStorageFunction({
             type: 'setItem',
@@ -26,7 +29,7 @@ export const getUserOrAdmin = createAsyncThunk(
          return response
       }
       if (props.fetchrole === 'ADMIN') {
-         const response = await appFetch({
+         const response = await ApiFetch({
             url: `${LoginAdminUrl}`,
             method: 'POST',
             body: props.body,
@@ -43,7 +46,7 @@ export const getUserOrAdmin = createAsyncThunk(
 export const sendPhoneNumber = createAsyncThunk(
    'login/sendPhoneNumber',
    async (number) => {
-      const response = await appFetch({
+      const response = await ApiFetch({
          url: 'api/user/add/phone/number',
          method: 'POST',
          body: {
@@ -99,7 +102,7 @@ const LoginSlice = createSlice({
          state.login.jwt = action.payload.jwt
          state.login.userId = action.payload.userId
          state.login.name = action.payload?.name
-         state.login.phoneNumber = action.payload.phoneNumber
+         state.login.phoneNumber = action.payload?.phoneNumber
          state.modal = false
       },
       [getUserOrAdmin.rejected]: (state, action) => {

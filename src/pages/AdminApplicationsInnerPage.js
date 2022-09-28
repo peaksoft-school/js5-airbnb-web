@@ -1,26 +1,37 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import ImageSlider from '../components/ImageSlider'
+import BreadCrumbs from '../components/UI/BreadCrumbs'
 import Button from '../components/UI/Button'
 import Modal from '../components/UI/Modal'
 import SnackBar from '../components/UI/SnackBar'
-import UserNavbar from '../layout/headers/AdminHeader/AdminNavbar/AdminNavbar'
 import {
    acceptInnerPage,
+   postStatusSee,
    rejectInnerPage,
 } from '../store/slices/adminInnerPageActions'
 
 const AdminApplicationsInnerPage = () => {
+   const { findapplication } = useSelector((state) => state.applications)
+   const navigate = useNavigate()
+   const dispatch = useDispatch()
+   const path = useParams()
+   const loc = useLocation()
+   useEffect(() => {
+      dispatch(postStatusSee(path.id))
+   }, [])
+   useEffect(() => {
+      dispatch(postStatusSee(path.id))
+   }, [path.id])
    const [isAccepted, setIsAccepted] = useState(false)
    const [isRejectModal, setIsRejectModal] = useState(false)
    const [isSent, setIsSent] = useState(false)
-   const dispatch = useDispatch()
-   const { data } = useSelector((state) => state.getAdminApplicationById)
-
    const togleHandlerAccept = (announcementId) => {
       setIsAccepted(true)
       dispatch(acceptInnerPage(announcementId))
+      navigate(-1)
    }
    const togleHandlerReject = () => {
       setIsRejectModal((prevState) => !prevState)
@@ -28,56 +39,71 @@ const AdminApplicationsInnerPage = () => {
    const [text, settext] = useState('')
    const togleHandlerSent = (announcementId) => {
       dispatch(rejectInnerPage({ id: announcementId, message: text }))
+      navigate(-1)
       setIsSent(true)
       setIsRejectModal(false)
    }
-
+   const [show, setshow] = useState(false)
+   const [show2, setshow2] = useState(false)
+   useEffect(() => {
+      if (findapplication[0]?.status === 'SEEN') {
+         setshow(true)
+         setshow2(true)
+      }
+   }, [findapplication[0]?.status])
+   console.log(findapplication, 'findapplication')
    return (
-      <div>
-         <UserNavbar />
-         {data?.map((data) => (
-            <div>
-               <NameApartment>{data.title}</NameApartment>
+      <Container>
+         {findapplication?.map((data) => (
+            <Box>
+               <BreadCrumbs
+                  fontSize="16px"
+                  location={loc}
+                  translate={data.title}
+               />
+               <NameApartment>{data?.title}</NameApartment>
                <GlobalContainer>
-                  <ImageSlider images={data.images} />
+                  <ImageSlider images={data?.images} />
                   <ContainerDates>
                      <DivClikc>
-                        <TextInDivClick1>{data.houseType}</TextInDivClick1>
+                        <TextInDivClick1>{data?.houseType}</TextInDivClick1>
                         <TextInDivClick2>
-                           {data.maxGuests} Guests
+                           {data?.maxGuests} Guests
                         </TextInDivClick2>
                      </DivClikc>
-                     <TitleHome>{data.title}</TitleHome>
-                     <AdressHome>{data.location}</AdressHome>
-                     <TextHome>{data.description}</TextHome>
+                     <TitleHome>{data?.title}</TitleHome>
+                     <AdressHome>{data?.location}</AdressHome>
+                     <TextHome>{data?.description}</TextHome>
                      <UserContainer>
                         <Logo>
-                           {data.ownerFullName.charAt(0).toUpperCase()}
+                           {data?.ownerFullName.charAt(0).toUpperCase()}
                         </Logo>
                         <UserInformationContainer>
-                           <UserEmail>{data.ownerFullName}</UserEmail>
-                           <UserName>{data.ownerEmail}</UserName>
+                           <UserEmail>{data?.ownerFullName}</UserEmail>
+                           <UserName>{data?.ownerEmail}</UserName>
                         </UserInformationContainer>
                      </UserContainer>
                      <ContainerButton>
-                        <Button
-                           onClick={togleHandlerReject}
-                           border="1px solid #DD8A08"
-                           variant="contained"
-                           width="196px"
-                           height="37px"
-                        >
-                           REJECT
-                        </Button>
-                        <Button
-                           onClick={() =>
-                              togleHandlerAccept(data.announcementId)
-                           }
-                           width="196px"
-                           height="37px"
-                        >
-                           ACCEPT
-                        </Button>
+                        {show ? (
+                           <Button
+                              onClick={togleHandlerReject}
+                              border="1px solid #DD8A08"
+                              variant="contained"
+                              width="196px"
+                              height="37px"
+                           >
+                              REJECT
+                           </Button>
+                        ) : null}
+                        {show2 ? (
+                           <Button
+                              onClick={() => togleHandlerAccept(data.id)}
+                              width="196px"
+                              height="37px"
+                           >
+                              ACCEPT
+                           </Button>
+                        ) : null}
                      </ContainerButton>
                      {isAccepted && (
                         <SnackBar
@@ -121,9 +147,7 @@ const AdminApplicationsInnerPage = () => {
                               <Button
                                  width="197px"
                                  height="37px"
-                                 onClick={() =>
-                                    togleHandlerSent(data.announcementId)
-                                 }
+                                 onClick={() => togleHandlerSent(data.id)}
                               >
                                  SEND
                               </Button>
@@ -132,19 +156,27 @@ const AdminApplicationsInnerPage = () => {
                      )}
                   </ContainerDates>
                </GlobalContainer>
-            </div>
+            </Box>
          ))}
-      </div>
+      </Container>
    )
 }
 
 export default AdminApplicationsInnerPage
-
+const Container = styled.div`
+   width: 100%;
+   background: #e5e5e5;
+   min-height: 900px;
+`
+const Box = styled.div`
+   margin: 0 auto;
+   width: 1240px;
+   overflow: hidden;
+   padding-top: 46px;
+`
 const GlobalContainer = styled.div`
-   width: 1362px;
-   height: 1024px;
    display: flex;
-   justify-content: space-around;
+   justify-content: space-between;
    @media screen and (max-width: 375px) {
       transition: 0.8s all ease;
       width: 375px;
@@ -159,9 +191,8 @@ const NameApartment = styled.h1`
    height: 59px;
    display: flex;
    align-items: center;
-   margin-left: 47px;
    margin-bottom: 30px;
-   margin-top: 40px;
+   padding-top: 40px;
    line-height: 24px;
    font-weight: 500;
    font-size: 20px;
@@ -215,6 +246,8 @@ const TitleHome = styled.h3`
    line-height: 24px;
    margin-top: 25px;
    color: #000000;
+   width: 490px;
+   word-break: break-all;
 `
 
 const AdressHome = styled.span`

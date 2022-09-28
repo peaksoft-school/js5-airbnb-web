@@ -1,9 +1,10 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import appFetch, { appFile } from '../../api/appFetch'
+import ApiFetch, { appFile } from '../../api/ApiFetch'
+
 import {
    addAnnoutnCementUrl,
    addAnnountFileUrl,
-} from '../../utils/constants/constants'
+} from '../../utils/constants/fetchConstants'
 
 export const addAnnountcementPost = createAsyncThunk(
    'addAnnoutcement/addAnnountcementPost',
@@ -25,7 +26,7 @@ export const addAnnountcementPost = createAsyncThunk(
             })
             dataWith.images.push(response?.link)
          }
-         const response = await appFetch({
+         const response = await ApiFetch({
             url: addAnnoutnCementUrl,
             method: 'POST',
             body: dataWith,

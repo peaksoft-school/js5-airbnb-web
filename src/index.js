@@ -1,11 +1,11 @@
 import React from 'react'
+import './index.css'
 import ReactDOM from 'react-dom/client'
 import { Provider } from 'react-redux'
 import { BrowserRouter } from 'react-router-dom'
-import { injectStore } from './api/appFetch'
+import { injectStore } from './api/ApiFetch'
 import App from './App'
-import './index.css'
-import { store } from './store/index'
+import store from './store/slices/Store'
 
 injectStore(store)
 

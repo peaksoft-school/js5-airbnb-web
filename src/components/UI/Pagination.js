@@ -1,13 +1,14 @@
-import { Pagination } from '@mui/material'
+/* eslint-disable import/order */
 import styled from 'styled-components'
+import { Pagination } from '@mui/material'
 
 const Paginations = (props) => {
    return (
       <StyledPagination
-         count={props?.count}
-         page={props?.page}
-         size={props?.size}
-         onChange={props?.onChange}
+         count={props.count}
+         page={props.page}
+         size={props.size}
+         onChange={props.onChange}
       />
    )
 }

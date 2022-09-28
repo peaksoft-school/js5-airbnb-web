@@ -1,24 +1,32 @@
-/* eslint-disable import/no-unresolved */
 import React from 'react'
 import styled from 'styled-components'
 import BasikDatePicker from './BasikDatePicker'
-// eslint-disable-next-line import/no-unresolved
 import 'gestalt-datepicker/dist/gestalt-datepicker.css'
 
-const DateRangePicker = (props) => {
-   const { onDateRangeDates, day, dayNow } = props
-
+const DateRangePicker = ({
+   onDateRangeDates,
+   day,
+   dayNow,
+   checkin,
+   checkout,
+   blocked,
+}) => {
    const dateSubmitHandler = (e) => {
       e.preventDefault()
       onDateRangeDates()
    }
+
    return (
       <StyledContainer>
          <StyledH4>
             ${day}/<DayNow>{dayNow}</DayNow>
          </StyledH4>
          <form onSubmit={dateSubmitHandler}>
-            <BasikDatePicker />
+            <BasikDatePicker
+               onChangeHandlerIn={checkin}
+               onChangeHandlerOut={checkout}
+               excludedDates={blocked}
+            />
          </form>
       </StyledContainer>
    )
@@ -38,7 +46,6 @@ const StyledContainer = styled.div`
    }
    & ._gestalt .react-datepicker__day--range-start {
       background-color: orange !important;
-      color: red;
    }
    & ._gestalt .react-datepicker__day--range-end {
       background-color: orange !important;

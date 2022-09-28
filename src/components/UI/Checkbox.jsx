@@ -12,13 +12,11 @@ const Checkbox = ({
    width,
    height,
    colorcheck,
+   border,
 }) => {
    return (
       <FormGroup>
          <FormLabelStyle
-            sx={{
-               margin: '10px 0px 0px 0px',
-            }}
             control={
                <ChesckboxStyle
                   sx={{
@@ -29,6 +27,7 @@ const Checkbox = ({
                   width={width}
                   height={height}
                   colorcheck={colorcheck}
+                  border={border}
                />
             }
             label={label}
@@ -51,6 +50,7 @@ const ChesckboxStyle = styled(MuiCheckbox)`
    .MuiSvgIcon-root {
       width: ${({ width }) => width || '30px'};
       height: ${({ height }) => height || '30px'};
+      border: ${({ border }) => border || '2px'};
    }
 
    &.Mui-checked {

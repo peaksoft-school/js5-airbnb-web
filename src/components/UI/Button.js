@@ -2,19 +2,19 @@ import styled from 'styled-components'
 
 function Button({
    onClick,
-   widthMedia,
    variant,
    disabled,
    children,
+   mediawidth,
    ...props
 }) {
    return (
       <CustomButton
-         widthMedia={widthMedia}
          onClick={onClick}
          variant={variant}
          style={props}
-         disabled={disabled === true}
+         disabled={disabled === 'true'}
+         mediawidth={mediawidth}
       >
          {children}
       </CustomButton>
@@ -33,7 +33,8 @@ const CustomButton = styled.button`
          : props.variant === 'contained'
          ? 'white'
          : '#dd8a08'};
-   border-radius: ${(props) => (props.variant === 'outlined' ? 'none' : '2px')};
+   border-radius: ${(props) =>
+      props.variant === 'outlined' ? `${props.borderRadius}` : '2px'};
    border: ${(props) =>
       // eslint-disable-next-line no-nested-ternary
       props.variant === 'outlined'
@@ -79,7 +80,6 @@ const CustomButton = styled.button`
    }
 
    @media screen and (max-width: 375px) {
-      width: ${(props) => props.width || '168px !important;'};
-      width: 168px !important;
+      width: ${({ mediawidth }) => mediawidth || '109px'};
    }
 `

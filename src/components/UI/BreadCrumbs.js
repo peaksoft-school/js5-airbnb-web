@@ -1,35 +1,24 @@
 import { Breadcrumbs, Typography, Link, styled } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 
-const BreadCrumbs = ({
-   firstpath,
-   location: { pathname },
-   translate,
-   ...props
-}) => {
+const BreadCrumbs = ({ location: { pathname }, translate, ...props }) => {
    const navigate = useNavigate()
-   const pathnames = pathname.split('/').filter((x) => x)
-   const updatedPathnames = pathnames.map((path) => {
+   const pathnames = pathname?.split('/')?.filter((x) => x)
+   const updatedPathnames = pathnames?.map((path) => {
       if (/[0-9]/.test(path)) {
-         return translate[0].name
+         return translate
       }
       return path
    })
-   const toUpperFirstPath = firstpath[0].toUpperCase() + firstpath.slice(1)
-   const showfirstpath = { showfirstpath: false }
-   if (updatedPathnames.length >= 1) {
-      showfirstpath.showfirstpath = true
-   }
    return (
       <LayoutBreadcrumbs aria-label="breadcrumb">
-         {showfirstpath.showfirstpath ? (
-            <LinkStyle onClick={() => navigate('/')} fontSize={props.fontSize}>
-               {toUpperFirstPath}
-            </LinkStyle>
-         ) : null}
-         {updatedPathnames.map((element, index) => {
-            const toUpperPathName = element[0].toUpperCase() + element.slice(1)
-            const routeTo = `${updatedPathnames.slice(0, index + 1).join('/')}`
+         {updatedPathnames?.map((element, index) => {
+            const toUpperPathName =
+               // eslint-disable-next-line no-unsafe-optional-chaining
+               element[0]?.toUpperCase() + element?.slice(1)
+            const routeTo = `/${updatedPathnames
+               ?.slice(0, index + 1)
+               ?.join('/')}`
             const isLast = index === updatedPathnames.length - 1
             return isLast ? (
                <Title
@@ -41,8 +30,11 @@ const BreadCrumbs = ({
                </Title>
             ) : (
                <LinkStyle
+                  fontSize={props.fontSize}
                   key={toUpperPathName}
-                  onClick={() => navigate(routeTo)}
+                  onClick={() => {
+                     navigate(routeTo)
+                  }}
                >
                   {toUpperPathName}
                </LinkStyle>
