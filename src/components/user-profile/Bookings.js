@@ -16,11 +16,13 @@ function Bookings(props) {
                   <Block>
                      <div>
                         <Par>Check in</Par>
-                        <StyledDate>02.02.22</StyledDate>
+                        <StyledDate>{el.checkIn}</StyledDate>
                      </div>
                      <div>
                         <Par>Check out</Par>
-                        <StyledDate className="leftText">02.02.22</StyledDate>
+                        <StyledDate className="leftText">
+                           {el.checkOut}
+                        </StyledDate>
                      </div>
                   </Block>
                   <Button>CHANGE</Button>

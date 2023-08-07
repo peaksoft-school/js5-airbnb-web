@@ -10,6 +10,45 @@ export const getUserBooking = createAsyncThunk(
       return response
    }
 )
+export const getBookingRequests = createAsyncThunk(
+   'getUserAnnouncementCard/getBookingRequests',
+   async () => {
+      const response = await appFetch({
+         url: 'user/profile/myBookingRequests',
+      })
+      return response
+   }
+)
+export const acceptBookingRequests = createAsyncThunk(
+   'getUserAnnouncementCard/acceptBookingRequests',
+   async ({ announcementId, bookingId }) => {
+      const response = await appFetch({
+         url: 'api/announcements/bookings/accept',
+         method: 'PUT',
+         body: {
+            announcementId,
+            bookingId,
+            status: 'ACCEPTED',
+         },
+      })
+      return response
+   }
+)
+export const rejectBookingRequests = createAsyncThunk(
+   'getUserAnnouncementCard/rejectBookingRequests',
+   async ({ announcementId, bookingId }) => {
+      const response = await appFetch({
+         url: 'api/announcements/bookings/accept',
+         method: 'PUT',
+         body: {
+            announcementId,
+            bookingId,
+            status: 'REJECTED',
+         },
+      })
+      return response
+   }
+)
 export const deleteUserMessage = createAsyncThunk(
    'getUserAnnouncementCard/deleteUserMessage',
    async (_, { dispatch }) => {
@@ -35,6 +74,7 @@ export const deleteUserAnnouncementCard = createAsyncThunk(
 const initialState = {
    user: {},
    bookings: [],
+   bookingsRequests: [],
    announcements: [],
    status: null,
    deleteStatus: null,
@@ -47,8 +87,18 @@ const getUserAnnouncementCard = createSlice({
       [deleteUserAnnouncementCard.fulfilled]: (state) => {
          state.deleteStatus = 'success'
       },
+      [getBookingRequests.pending]: (state) => {
+         state.status = 'pending'
+      },
+      [getBookingRequests.rejected]: (state) => {
+         state.status = 'error'
+      },
       [deleteUserAnnouncementCard.rejected]: (state) => {
          state.deleteStatus = 'error'
+      },
+      [getBookingRequests.fulfilled]: (state, action) => {
+         state.status = 'success'
+         state.bookingsRequests = action.payload
       },
       [getUserBooking.pending]: (state) => {
          state.status = 'pending'
